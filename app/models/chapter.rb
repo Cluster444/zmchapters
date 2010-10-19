@@ -1,3 +1,3 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :title, :description, :parent_id
+  attr_accessible :region, :description, :parent_id
 end

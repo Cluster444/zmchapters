@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(:version => 20101019082300) do
 
   create_table "chapters", :force => true do |t|
-    t.string   "title"
+    t.string   "region"
     t.text     "description"
     t.integer  "parent_id"
     t.text     "language"

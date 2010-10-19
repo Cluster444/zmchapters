@@ -1,0 +1,41 @@
+<h3 style="text-align:center">Zeitgeist Movement Chapters</h3>
+<h1 style="text-align:center"><%= @chapter.region %></h1>
+
+<div class="chapter-container">
+  <table>
+    <tr>
+      <td>
+        <div class="placeholder3"></div>
+      </td>
+      <td align="left">
+        <table>
+          <tr>
+            <td>
+              <h4>Members: 9999</h4>
+              <h4>Regional Chapters: 7</h4>
+            </td>
+            <td style="vertical-align:middle;">
+              <%= link_to 'Request A Chapter', new_chapter_path, :class => 'new_chapter_button' %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <h5><a href="">News</a></h5>
+              <%= render :partial => '/debug/news_small' %>
+              <%= render :partial => '/debug/news_small' %>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+<br /><br />
+
+<!-- If the chapter contains many chapters we want to display that. For example a country
+     may have state chapters, states have regionals, or a country chapter may just have
+     regionals. Simplest case is to assume only countries and regions and break it down
+     when needed after that. USA stands out as an exception... imagine that -->
+<div class="chapters-container">
+  
+</div>

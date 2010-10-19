@@ -1,0 +1,17 @@
+<div class="chapters-container">
+  <div class="chapter-search-container">
+    <label>Find a Chapter</label>
+    <input name="search" />
+  </div>
+  <% if @chapters.any? %>
+    <div class="global-chapter">
+      <h3>TZM Global</h3>
+      Countries: 99<br />
+      Chapters: 999<br />
+      Members: 9999
+    </div>
+    <%= render :partial => 'chapter', :collection => @chapters %>
+  <% else %>
+    <span class="error">No chapters found!</span>
+  <% end %>
+</div>

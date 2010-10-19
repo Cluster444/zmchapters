@@ -1,0 +1,49 @@
+<div class="new-chapter-container">
+  <table width="100%">
+    <tr>
+      <td width="40%">
+        <div class="chapter-container canada">
+          <h2><%= link_to 'Canada', '/chapters/canada' %></h2>
+          <br /><br />
+          <table>
+            <tr>
+              <td>
+                <h5>Earth</h5>
+                <h5>English</h5>
+                <h5>Members: 800</h5>
+                <div class="placeholder2"></div>
+                <div class="placeholder2"></div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="clear"></div>
+        <h4>Other chapters in Canada</h4>
+        <div style="margin:10px;">
+          <h2 class="chapter calgary">Calgary</h2>
+          <h2 class="chapter calgary">Edmonton</h2>
+          <h2 class="chapter calgary">Toronto</h2>
+          <h2 class="chapter calgary">Vancouver</h2>
+        </div>
+      </td>
+      <td style="padding-top:20px;">
+        <%= form_for @chapter do |f| %>
+          <div class="field">
+            <%= f.label :region %>
+            <%= t.text_field :region %>
+          </div>
+          <div class="field">
+            <%= f.label :size %>
+            <%= f.select :size, %w(1-10 10-50 50+) %>
+          </div>
+          <div class="field">
+            <%= f.label :message %>
+            <%= f.text_area :message %>
+          </div>
+          <div class="actions">
+            <%= f.submit 'Request Chapter Status' %>
+          </div>
+        <% end %>
+      </td>
+  </table>
+</div>
