@@ -6,9 +6,16 @@
   <% if @chapters.any? %>
     <div class="global-chapter">
       <h3>TZM Global</h3>
-      Countries: 99<br />
-      Chapters: 999<br />
-      Members: 9999
+      Countries: <%= Country.all.count %><br />
+      Chapters: <%= Chapter.all.count %><br />
+      Members: <%= Member.all.count %>
+    </div>
+    <div id="index-letters">
+    <ul>
+      <% ('A'..'Z').each do |n| %>
+        <li><%= link_to n, :controller => 'chapters', :like => n %></li>
+      <% end %>
+    </ul>
     </div>
     <%= render :partial => 'chapter', :collection => @chapters %>
   <% else %>

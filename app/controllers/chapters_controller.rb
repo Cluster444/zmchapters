@@ -1,6 +1,11 @@
 class ChaptersController < ApplicationController
   def index
-    @chapters = Chapter.all
+    unless params[:search].blank?
+      @chapters = Chapter.where(["region LIKE ?", "%#{params[:search]}%"])
+    else
+      params[:like] = 'A' if params[:like].blank?
+      @chapters = Chapter.where(["region LIKE ?", "#{params[:like]}%"])
+    end
   end
 
   def show

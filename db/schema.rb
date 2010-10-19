@@ -10,13 +10,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101019082300) do
+ActiveRecord::Schema.define(:version => 20101019205840) do
 
   create_table "chapters", :force => true do |t|
     t.string   "region"
     t.text     "description"
-    t.integer  "parent_id"
     t.text     "language"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "chapters_countries", :id => false, :force => true do |t|
+    t.integer "chapter_id"
+    t.integer "country_id"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string   "geoname_id"
+    t.string   "country_code"
+    t.string   "fips_code"
+    t.string   "currency_code"
+    t.string   "iso_numeric"
+    t.string   "iso_alpha3"
+    t.string   "continent"
+    t.string   "name"
+    t.string   "capital"
+    t.string   "languages"
+    t.string   "area_in_sq_km"
+    t.string   "population"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

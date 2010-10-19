@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.0'
 gem 'mysql2'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'

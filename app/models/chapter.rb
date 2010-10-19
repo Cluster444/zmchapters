@@ -1,3 +1,7 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :region, :description, :parent_id
+  attr_accessible :region, :description
+
+  has_and_belongs_to_many :country
+
+  default_scope order('region')
 end
