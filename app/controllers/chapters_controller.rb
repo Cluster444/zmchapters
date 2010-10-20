@@ -9,14 +9,22 @@ class ChaptersController < ApplicationController
     end
   end
 
-  def index_group
-    if params[:type] == 'country'
-      @country = Country.where ['name LIKE ?', "#{params[:value]}"]
-      @chapters = @country.chapters
-      render :index_country
+  def index_country
+    if params[:name].nil?
+      @country = Country.find_by_id params[:id]
     else
-      @chapters = Chapters.where ['region LIKE ?', 'A%']
-      render :index
+      @country = Country.find_by_name params[:name]
+    end
+    
+    if @country.nil?
+      if params[:name].nil?
+        flash[:notice] = "No country found by the id " + params[:id]
+      else
+        flash[:notice] = "No country found by the name " + params[:name]
+      end
+      redirect_to chapters_url
+    else
+      @chapters = @country.chapters
     end
   end
 

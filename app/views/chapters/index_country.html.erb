@@ -1,0 +1,13 @@
+<div class="country-chapters-container">
+  <% if @chapters.any? %>
+    <div class="country">
+      <h3><%= @country.name %></h3>
+      Chapters: <%= @chapters.count %><br />
+      Members: <%= @country.member_count %>
+    </div>
+    <%= render :partial => 'chapter', :collection => @chapters %>
+    <div style="clear:both"></div>
+  <% else %>
+    <span class="error">No chapters found!</span>
+  <% end %>
+</div>

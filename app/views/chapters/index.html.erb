@@ -1,7 +1,15 @@
 <div class="chapters-container">
   <div class="search">
-    <label>Find a Chapter</label>
-    <input name="search" />
+    <%= form_tag '/chapters', :method => 'get' do %>
+      <%= label_tag 'Find a Chapter' %>
+      <%= text_field_tag :search %>
+    <% end %>
+    <!--
+    <form action="/chapters" method="get">
+      <label>Find a Chapter</label>
+      <input name="search" />
+    </form>
+    -->
   </div>
   <% if @chapters.any? %>
     <div class="global">
@@ -10,6 +18,7 @@
       Chapters: <%= Chapter.all.count %><br />
       Members: <%= Member.all.count %>
     </div>
+
     <div class="index">
       <ul>
         <% ('A'..'Z').each do |n| %>
@@ -21,8 +30,25 @@
         <% end %>
       </ul>
     </div>
+
+    <% if params[:search].nil? %>
+      <div class="countries">
+        <% limit = Country.all.count/5 + 1 %>
+        <% (1..5).each do |n| %>
+          <ul>
+            <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
+              <% name = truncate country.name, :length => 21 %>
+              <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <div style="clear:both"></div>
+      </div>
+    <% end %>
+
     <%= render :partial => 'chapter', :collection => @chapters %>
     <div style="clear:both"></div>
+
   <% else %>
     <span class="error">No chapters found!</span>
   <% end %>

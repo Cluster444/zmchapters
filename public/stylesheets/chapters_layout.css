@@ -6,15 +6,29 @@
 .chapters-container .search input {width:285px; height:40px; font-size:33px; padding:0; margin:0; vertical-align:middle;}
 
 .chapters-container .global {background:#eee;}
-.chapters-container .global {padding:10px;}
+.chapters-container .global {padding:10px; margin-top:10px;}
 .chapters-container .global h3 {margin:0;}
 
 .chapters-container .index {background:#ddd;}
 .chapters-container .index ul {text-align:center; padding:10px 0;}
 .chapters-container .index li {padding:0 5px;}
 
+.chapters-container .countries {background:#ccc;}
+.chapters-container .countries {width:860px; margin:auto; margin-top:10px;}
+.chapters-container .countries ul {display:block; float:left; padding:10px 5px;}
+.chapters-container .countries li {display:block;}
+
 .chapters-container .chapter {background:#ccc;}
-.chapters-container .chapter {width:300px; float:left; margin-top:10px; margin-left:15px;}
+.chapters-container .chapter {width:300px; float:left; margin:10px 0 0 15px; padding-bottom:10px; }
+
+/* Chapters#index_country */
+.country-chapters-container {width:100%; height:100%;}
+.country-chapters-container .country {background:#eee}
+.country-chapters-container .country {padding:10px; margin-top:10px;}
+.country-chapters-container .country h3 {margin:0;}
+
+.country-chapters-container .chapter {background:#ccc;}
+.country-chapters-container .chapter {width:300px; float:left; margin:10px 0 0 15px; padding-bottom:10px;}
 
 /* Chapters#show */
 .chapter-container {background:#eee;}
