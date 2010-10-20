@@ -4,12 +4,6 @@
       <%= label_tag 'Find a Chapter' %>
       <%= text_field_tag :search %>
     <% end %>
-    <!--
-    <form action="/chapters" method="get">
-      <label>Find a Chapter</label>
-      <input name="search" />
-    </form>
-    -->
   </div>
   <% if @chapters.any? %>
     <div class="global">
@@ -33,7 +27,7 @@
 
     <% if params[:search].nil? %>
       <div class="countries">
-        <% limit = Country.all.count/5 + 1 %>
+        <% limit = Country.limit(80).count/5 + 1 %>
         <% (1..5).each do |n| %>
           <ul>
             <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>

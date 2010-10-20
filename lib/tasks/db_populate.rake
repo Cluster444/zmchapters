@@ -40,7 +40,7 @@ namespace :db do
                                 :continent     => element[:continent],
                                 :geoname_id    => element[:geonameId],
                                 :population    => element[:population]
-      (1..(Random.rand(29)+1)).each do |n|
+      (1..(Random.rand(4)+1)).each do |n|
         chapter = country.chapters.create! :region => Faker::Address.city, :description => chapter_desc
         (1..(Random.rand(10)+1)).each do |n|
           chapter.members.create! :name => Faker::Name.name,

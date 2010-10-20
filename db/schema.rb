@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101020203218) do
+ActiveRecord::Schema.define(:version => 20101020224030) do
 
   create_table "chapters", :force => true do |t|
     t.string   "region"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20101020203218) do
     t.text     "language"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "member_count"
   end
 
   add_index "chapters", ["region"], :name => "index_chapters_on_region"
@@ -26,6 +27,9 @@ ActiveRecord::Schema.define(:version => 20101020203218) do
     t.integer "chapter_id"
     t.integer "country_id"
   end
+
+  add_index "chapters_countries", ["chapter_id"], :name => "index_chapter_id_on_chapters_countries"
+  add_index "chapters_countries", ["country_id"], :name => "index_country_id_on_chapters_countries"
 
   create_table "countries", :force => true do |t|
     t.string   "geoname_id"
