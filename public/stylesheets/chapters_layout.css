@@ -1,0 +1,31 @@
+/* Chapters#index */
+.chapters-container {width:100%; height:100%;}
+.chapters-container .search {background:#f5f5f5;}
+.chapters-container .search {width: 520px; height:40px; margin:auto; padding:10px;}
+.chapters-container .search {font-size:33px;}
+.chapters-container .search input {width:285px; height:40px; font-size:33px; padding:0; margin:0; vertical-align:middle;}
+
+.chapters-container .global {background:#eee;}
+.chapters-container .global {padding:10px;}
+.chapters-container .global h3 {margin:0;}
+
+.chapters-container .index {background:#ddd;}
+.chapters-container .index ul {text-align:center; padding:10px 0;}
+.chapters-container .index li {padding:0 5px;}
+
+.chapters-container .chapter {background:#ccc;}
+.chapters-container .chapter {width:300px; float:left; margin-top:10px; margin-left:15px;}
+
+/* Chapters#show */
+.chapter-container {background:#eee;}
+.chapter-container .top {background:#ddd;}
+
+.chapter-container h3 {text-align:center}
+
+.chapter-container .top {height:82px;}
+.chapter-container .top h1 {width:600px; margin:0; padding:0; font-size:44px;}
+.chapter-container .top span {font-size:14px;}
+.chapter-container .top .new_chapter {float:right;}
+.chapter-container .top .new_chapter {vertical-align:middle;}
+.chapter-container .top .new_chapter a {text-decoration:none; background:#888; color:#eee;}
+.chapter-container .top .new_chapter a {padding:10px 5px; vertical-align:middle;}

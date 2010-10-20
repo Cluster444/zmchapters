@@ -37,7 +37,6 @@ hgroup, nav, section {
 
 /* Line-height should always be unitless! */
 body {
-  line-height: 1.5;
   background: white; 
 }
 

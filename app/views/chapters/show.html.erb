@@ -1,34 +1,14 @@
-<h3 style="text-align:center">Zeitgeist Movement Chapters</h3>
-<h1 style="text-align:center"><%= @chapter.region %></h1>
-
 <div class="chapter-container">
-  <table>
-    <tr>
-      <td>
-        <div class="placeholder3"></div>
-      </td>
-      <td align="left">
-        <table>
-          <tr>
-            <td>
-              <h4>Members: 9999</h4>
-              <h4>Regional Chapters: 7</h4>
-            </td>
-            <td style="vertical-align:middle;">
-              <%= link_to 'Request A Chapter', new_chapter_path, :class => 'new_chapter_button' %>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <h5><a href="">News</a></h5>
-              <%= render :partial => '/debug/news_small' %>
-              <%= render :partial => '/debug/news_small' %>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+  <div class="top">
+    <h1><%= @chapter.region %></h1>
+    <span>Members: <%= @chapter.members.count %></span>
+    <span class="new_chapter"><%= link_to_chapter_request @chapter %></span>
+  </div>
+  <div class="middle">
+    <h5>News</h5>
+    <%= render :partial => '/debug/news_small' %>
+    <%= render :partial => '/debug/news_small' %>
+  </div>
 </div>
 <br /><br />
 

@@ -1,23 +1,28 @@
 <div class="chapters-container">
-  <div class="chapter-search-container">
+  <div class="search">
     <label>Find a Chapter</label>
     <input name="search" />
   </div>
   <% if @chapters.any? %>
-    <div class="global-chapter">
+    <div class="global">
       <h3>TZM Global</h3>
       Countries: <%= Country.all.count %><br />
       Chapters: <%= Chapter.all.count %><br />
       Members: <%= Member.all.count %>
     </div>
-    <div id="index-letters">
-    <ul>
-      <% ('A'..'Z').each do |n| %>
-        <li><%= link_to n, :controller => 'chapters', :like => n %></li>
-      <% end %>
-    </ul>
+    <div class="index">
+      <ul>
+        <% ('A'..'Z').each do |n| %>
+          <% if Country.where("name LIKE ?", "#{n}%").any? %>
+            <li><%= link_to n, :controller => 'chapters', :like => n %></li>
+          <% else %>
+            <li><%= n %></li>
+          <% end %>
+        <% end %>
+      </ul>
     </div>
     <%= render :partial => 'chapter', :collection => @chapters %>
+    <div style="clear:both"></div>
   <% else %>
     <span class="error">No chapters found!</span>
   <% end %>

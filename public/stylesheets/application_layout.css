@@ -1,0 +1,13 @@
+#page #header, #page #footer {background:#eee;}
+
+#page #header {width:100%;  font-size:22px;}
+
+#page #header ul, 
+#page #footer ul {padding:3px 0;}
+#page #header li, 
+#page #footer li {padding:0 5px;}
+
+#page #body {width:960px; min-height:500px; margin:auto; padding:10px 0;}
+
+#page #footer {width:100%; font-size:14px;}
+#page #footer {text-align:center;}
