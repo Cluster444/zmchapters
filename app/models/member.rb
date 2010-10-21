@@ -2,11 +2,8 @@ class Member < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :alias, :email, :password, :password_confirmation
   
+  devise :database_authenticatable, :registerable, :confirmable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   belongs_to :chapter
-
-  validates :password, :confirmation => true
-
-  validates :email, :presence => true,
-                    :uniqueness => true
-
 end

@@ -7,6 +7,9 @@
 #page #header li, 
 #page #footer li {padding:0 5px;}
 
+#page #header ul {float:left}
+#page #header ul.auth {float:right}
+
 #page #body {width:960px; min-height:500px; margin:auto; padding:10px 0;}
 
 #page #footer {width:100%; font-size:14px;}

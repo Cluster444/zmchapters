@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101020224030) do
+ActiveRecord::Schema.define(:version => 20101021000953) do
 
   create_table "chapters", :force => true do |t|
     t.string   "region"
@@ -52,12 +52,27 @@ ActiveRecord::Schema.define(:version => 20101020224030) do
     t.string   "name"
     t.string   "alias"
     t.string   "email"
-    t.string   "password_hash"
-    t.string   "salt"
+    t.string   "encrypted_password"
+    t.string   "password_salt"
     t.string   "status"
     t.integer  "chapter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "reset_password_token"
+    t.string   "remember_token"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",        :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
+
+  add_index "members", ["confirmation_token"], :name => "index_members_on_confirmation_token", :unique => true
+  add_index "members", ["email"], :name => "index_members_on_email", :unique => true
+  add_index "members", ["reset_password_token"], :name => "index_members_on_reset_password_token", :unique => true
 
 end

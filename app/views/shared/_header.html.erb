@@ -2,6 +2,11 @@
   <ul>
     <li><%= link_to 'Home', root_url %></li>
     <li><%= link_to 'Chapters', chapters_url %></li>
-    <li><%= link_to 'Members', members_url %></li>
   </ul>
+  <ul class="auth">
+    <li><%= link_to 'Sign Up', new_member_registration_url %></li>
+    <li><%= link_to 'Sign In', new_member_session_path %></li>
+    <li><%= link_to 'Sign_Out', destroy_member_session_path %></li>
+  </ul>
+  <div style="clear:both;"></div>
 </div>
