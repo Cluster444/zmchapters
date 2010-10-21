@@ -1,3 +1,4 @@
+<% title '' %>
 <div class="chapter-container">
   <div class="top">
     <h1><%= @chapter.region %></h1>
@@ -9,13 +10,4 @@
     <%= render :partial => '/debug/news_small' %>
     <%= render :partial => '/debug/news_small' %>
   </div>
-</div>
-<br /><br />
-
-<!-- If the chapter contains many chapters we want to display that. For example a country
-     may have state chapters, states have regionals, or a country chapter may just have
-     regionals. Simplest case is to assume only countries and regions and break it down
-     when needed after that. USA stands out as an exception... imagine that -->
-<div class="chapters-container">
-  
 </div>
