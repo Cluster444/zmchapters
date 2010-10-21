@@ -1,2 +1,30 @@
-<h1>Members#show</h1>
-<p>Find me in app/views/members/show.html.erb</p>
+<div class="member-container">
+  <% if @member.alias.blank? or @member.name.blank? %>
+    <ul class="todo">
+      <% if @member.alias.blank? %>
+        <li>Set your alias.</li>
+      <% end %>
+      <% if @member.name.blank? %>
+        <li>Set your name.</li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="member">
+    <h2><%= @member.name %></h2>
+    <span class="info">
+      <%= @member.alias %><br />
+      <%= @country.name %>
+    </span>
+  </div>
+
+  <div class="chapter">
+    <h2><%= @chapter.region %></h2>
+    <span class="info">
+      <%= @country.name %><br />
+      Members: <%= @chapter.member_count %><br />
+      Languages: <%= @country.languages %><br />
+    </span>
+    <p><%= @chapter.description %></p>
+  </div>
+  <div style="clear:both"></div>
+</div>

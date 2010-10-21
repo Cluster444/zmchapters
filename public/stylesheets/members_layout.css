@@ -1,0 +1,13 @@
+/* Members#show */
+.member-container {width:100%;, height:100%;}
+
+.member-container .todo {background:#eee;}
+.member-container .todo {padding:10px; display:block;}
+
+.member-container .member {background:#ddd;}
+.member-container .member {width: 440px; height:200px; padding:10px; margin:10px; float:left;}
+.member-container .member .info {}
+
+.member-container .chapter {background:#ddd;}
+.member-container .chapter {width: 440px; height:200px; padding:10px; margin:10px; float:right;}
+.member-container .chapter .info {}

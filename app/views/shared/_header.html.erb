@@ -1,14 +1,15 @@
 <div id="header">
   <ul>
-    <li><%= link_to 'Home', root_url %></li>
-    <li><%= link_to 'Chapters', chapters_url %></li>
+    <li><%= link_to 'Home', root_path %></li>
+    <li><%= link_to 'Chapters', chapters_path %></li>
   </ul>
   <ul class="auth">
     <% if member_signed_in? %>
       <li>Signed in as <%= current_member.email %>.</li>
+      <li><%= link_to 'Profile', member_path(current_member) %></li>
       <li><%= link_to 'Sign_Out', destroy_member_session_path %></li>
     <% else %>
-      <li><%= link_to 'Sign Up', new_member_registration_url %></li>
+      <li><%= link_to 'Sign Up', new_member_registration_path %></li>
       <li><%= link_to 'Sign In', new_member_session_path %></li>
     <% end %>
   </ul>
