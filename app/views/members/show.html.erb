@@ -1,4 +1,5 @@
 <div class="member-container">
+  
   <% if current_member == @member and (@member.alias.blank? or @member.name.blank?) %>
     <%= form_for current_member, :url => registration_path(current_member), :html => {:method => :put} do |f| %>
       <% if @member.name.blank? %>
@@ -18,6 +19,7 @@
       </div>
     <% end %>
   <% end %>
+
   <div class="member">
     <h2><%= @member.name %></h2>
     <span class="info">
@@ -30,10 +32,11 @@
     <h2><%= @chapter.region %></h2>
     <span class="info">
       <%= @country.name %><br />
-      Members: <%= @chapter.member_count %><br />
+      <%= pluralize @chapter.members_count, 'Member' %><br />
       Languages: <%= @country.languages %><br />
     </span>
     <p><%= @chapter.description %></p>
   </div>
   <div style="clear:both"></div>
+
 </div>

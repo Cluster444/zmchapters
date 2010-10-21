@@ -9,9 +9,11 @@
   <% if @chapters.any? %>
     <div class="global">
       <h3>TZM Global</h3>
-      Countries: <%= Country.all.count %><br />
-      Chapters: <%= Chapter.all.count %><br />
-      Members: <%= Member.all.count %>
+      <span class="info">
+        <%= pluralize Country.all.count, 'Country' %><br />
+        <%= pluralize Chapter.all.count, 'Chapter' %><br />
+        <%= pluralize Member.all.count, 'Member' %>
+      </span>
     </div>
 
     <div class="index">

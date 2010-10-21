@@ -5,14 +5,4 @@ class Chapter < ActiveRecord::Base
   has_many :members
 
   default_scope order('region')
-
-  def members_count
-    unless member_count.nil?
-      member_count
-    else
-      member_count = members.count
-      self.update_attributes :member_count => member_count
-      member_count
-    end
-  end
 end

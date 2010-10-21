@@ -3,8 +3,8 @@
   <% if @chapters.any? %>
     <div class="country">
       <h3><%= @country.name %></h3>
-      Chapters: <%= @chapters.count %><br />
-      Members: <%= @country.member_count %>
+      <%= pluralize @chapters.count, 'Chapter' %><br />
+      <%= pluralize @country.member_count, 'Member' %>
     </div>
     <%= render :partial => 'chapter', :collection => @chapters %>
     <div style="clear:both"></div>

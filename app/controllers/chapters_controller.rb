@@ -30,6 +30,7 @@ class ChaptersController < ApplicationController
 
   def show
     @chapter = Chapter.find params[:id]
+    @country = @chapter.country.first
   end
 
   def new

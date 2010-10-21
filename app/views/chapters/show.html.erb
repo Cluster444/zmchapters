@@ -1,9 +1,11 @@
-<% title '' %>
+<% title @chapter.region + '-' + @country.name %>
 <div class="chapter-container">
   <div class="top">
-    <h1><%= @chapter.region %></h1>
-    <span>Members: <%= @chapter.members.count %></span>
-    <span class="new_chapter"><%= link_to_chapter_request @chapter %></span>
+    <h2><%= @chapter.region %></h2>
+    <span class="info">
+      <%= @country.name %><br />
+      <%= pluralize @chapter.members_count, 'Member' %>
+    </span>
   </div>
   <div class="middle">
     <h5>News</h5>

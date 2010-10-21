@@ -6,5 +6,5 @@ class Member < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :chapter
+  belongs_to :chapter, :counter_cache => true
 end
