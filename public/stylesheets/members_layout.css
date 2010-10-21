@@ -1,8 +1,9 @@
 /* Members#show */
 .member-container {width:100%;, height:100%;}
 
-.member-container .todo {background:#eee;}
-.member-container .todo {padding:10px; display:block;}
+.member-container form {background:#eee;}
+.member-container form {padding:10px;}
+.member-container form .field {margin-bottom:10px;}
 
 .member-container .member {background:#ddd;}
 .member-container .member {width: 440px; height:200px; padding:10px; margin:10px; float:left;}

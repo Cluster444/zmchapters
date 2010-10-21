@@ -1,13 +1,22 @@
 <div class="member-container">
-  <% if @member.alias.blank? or @member.name.blank? %>
-    <ul class="todo">
-      <% if @member.alias.blank? %>
-        <li>Set your alias.</li>
-      <% end %>
+  <% if current_member == @member and (@member.alias.blank? or @member.name.blank?) %>
+    <%= form_for current_member, :url => registration_path(current_member), :html => {:method => :put} do |f| %>
       <% if @member.name.blank? %>
-        <li>Set your name.</li>
+        <div class="field">
+          <%= f.label 'Set your name.' %><br />
+          <%= f.text_field :name %>
+        </div>
       <% end %>
-    </ul>
+      <% if @member.alias.blank? %>
+        <div class="field">
+          <%= f.label 'Set your alias.' %><br />
+          <%= f.text_field :alias %>
+        </div>
+      <% end %>
+      <div class="actions">
+        <%= f.submit "Update Info" %>
+      </div>
+    <% end %>
   <% end %>
   <div class="member">
     <h2><%= @member.name %></h2>
