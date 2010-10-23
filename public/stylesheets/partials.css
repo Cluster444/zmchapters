@@ -1,0 +1,4 @@
+/* :partial => 'chapter/chapter' */
+.chapter {background:#ccc;}
+.chapter {width:290px; float:left; margin:10px 0 0 15px; padding:0 0 10px 10px;}
+
