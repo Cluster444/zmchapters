@@ -8,7 +8,7 @@ class Chapter < ActiveRecord::Base
 
   def self.search(search, page, options = {})
     paginate :per_page => 20, :page => page,
-             :conditions => ['region like ?', "#{search}%"],
+             :conditions => ['region like ?', "#{search}"],
              :order => 'region'
   end
 end
