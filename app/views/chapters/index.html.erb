@@ -21,11 +21,13 @@
     <div class="index">
       <ul>
         <% ('A'..'Z').each do |n| %>
+          <li<%=raw ' class="current"' if n == params[:like] %>>
           <% if Country.where("name LIKE ?", "#{n}%").any? %>
-            <li><%= link_to n, :controller => 'chapters', :like => n %></li>
+            <%= link_to n, :controller => 'chapters', :like => n %>
           <% else %>
-            <li><%= n %></li>
+            <%= n %>
           <% end %>
+          </li>
         <% end %>
       </ul>
     </div>

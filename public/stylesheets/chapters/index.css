@@ -12,6 +12,13 @@
 .chapters-container .index ul {text-align:center; padding:10px 0;}
 .chapters-container .index li {padding:0 5px;}
 
+.chapters-container .index li {background:#fff;}
+.chapters-container .index li a {color:#000;}
+.chapters-container .index li.current {background:#000;}
+.chapters-container .index li.current a {color:#fff;}
+.chapters-container .index li:hover {color:#fff; background:#888; cursor:pointer;}
+.chapters-container .index li:hover a {color:#fff;}
+
 .chapters-container .countries {background:#ccc;}
 .chapters-container .countries {width:860px; margin:auto; margin-top:10px;}
 .chapters-container .countries ul {display:block; float:left; padding:10px 5px;}
