@@ -2,14 +2,14 @@
 <% css 'chapters/index' %>
 
 <div class="chapters-container">
-  <div class="search">
+  <div class="search  grid_14 push_5">
     <%= form_tag '/chapters', :method => 'get' do %>
       <%= label_tag 'Find a Chapter' %>
       <%= text_field_tag :search %>
     <% end %>
   </div>
   <% if @chapters.any? %>
-    <div class="global">
+    <div class="global grid_24">
       <h3>TZM Global</h3>
       <span class="info">
         <%= pluralize Country.all.count, 'Country' %><br />
@@ -18,7 +18,7 @@
       </span>
     </div>
     
-    <div class="index">
+    <div class="index grid_24">
       <ul>
         <% ('A'..'Z').each do |n| %>
           <li<%=raw ' class="current"' if n == params[:like] %>>
@@ -44,7 +44,7 @@
             <% end %>
           </ul>
         <% end %>
-        <div style="clear:both"></div>
+        
       </div>
     <% end %>
     -->
