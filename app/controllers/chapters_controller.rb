@@ -2,10 +2,12 @@ class ChaptersController < ApplicationController
   def index
     @countries = Country.all
     unless params[:search].blank?
-      @chapters = Chapter.where(['region LIKE ?', "%#{params[:search]}%"])
+      @chapters = Chapter.search params[:search], params[:page]
+      #@chapters = Chapter.where(['region LIKE ?', "%#{params[:search]}%"]).paginate(params[:page])
     else
       params[:like] = 'A' if params[:like].blank?
-      @chapters = Chapter.where(['region LIKE ?', "#{params[:like]}%"])
+      @chapters = Chapter.search params[:like], params[:page], :wildcard => 'suffix'
+      #@chapters = Chapter.where(['region LIKE ?', "#{params[:like]}%"]).paginate(params[:page] || 1)
     end
   end
 
@@ -24,7 +26,7 @@ class ChaptersController < ApplicationController
       end
       redirect_to chapters_url
     else
-      @chapters = @country.chapters
+      @chapters = @country.chapters.paginate(:per_page => 20, :page => params[:page])
     end
   end
 

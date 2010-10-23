@@ -32,7 +32,7 @@
       </ul>
     </div>
     
-    <% params[:search] = '1' %>
+    <!--
     <% if params[:search].nil? %>
       <div class="countries">
         <% limit = Country.limit(80).count/5 + 1 %>
@@ -47,9 +47,12 @@
         <div style="clear:both"></div>
       </div>
     <% end %>
+    -->
 
+    <%= will_paginate @chapters %>
     <%= render :partial => 'chapter', :collection => @chapters %>
     <div style="clear:both"></div>
+    <%= will_paginate @chapters %>
 
   <% else %>
     <span class="error">No chapters found!</span>

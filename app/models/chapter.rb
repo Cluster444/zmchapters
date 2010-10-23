@@ -5,4 +5,10 @@ class Chapter < ActiveRecord::Base
   has_many :members
 
   default_scope order('region')
+
+  def self.search(search, page, options = {})
+    paginate :per_page => 20, :page => page,
+             :conditions => ['region like ?', "#{search}%"],
+             :order => 'region'
+  end
 end
