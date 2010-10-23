@@ -51,10 +51,10 @@
 
     <%= will_paginate @chapters %>
     <%= render :partial => 'chapter', :collection => @chapters %>
-    <div style="clear:both"></div>
+    
     <%= will_paginate @chapters %>
 
   <% else %>
-    <span class="error">No chapters found!</span>
+    <span class="error grid_24">No chapters found!</span>
   <% end %>
 </div>
