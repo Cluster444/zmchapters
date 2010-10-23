@@ -1,0 +1,24 @@
+== Setup
+
+  bundle
+  cp config/database.yml.example config/database.yml
+  # Edit database config
+  rake db:migrate
+
+== Populate Data
+
+Once the database is setup you can populate it. The task brings in countries from a web service and populates the database with chapters and members. Each type of data is runnable on it's own, some of the data types are dependent on others and may trigger other populate tasks to run.
+
+To populate everything.(Shorthand for `rake db:reset && rake db:populate:all`
+  rake db:populate
+
+To populate individual models (including dependencies)
+  rake db:populate:all       # :countries, :chapters, :members, :links
+  rake db:populate:members   # :countries, :chapters
+  rake db:populate:links     # :countries, :chapters
+  rake db:populate:chapters  # :countries
+  rake db:populate:countries # nil
+
+Also keep in mind that these tasks do not run db:reset and will not execute if they
+find any information. This allows you to run a partial set like :members, then later
+run :links without having to run :countries and :chapters again.
