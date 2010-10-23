@@ -17,7 +17,7 @@
         <%= pluralize Member.all.count, 'Member' %>
       </span>
     </div>
-
+    
     <div class="index">
       <ul>
         <% ('A'..'Z').each do |n| %>
@@ -29,7 +29,8 @@
         <% end %>
       </ul>
     </div>
-
+    
+    <% params[:search] = '1' %>
     <% if params[:search].nil? %>
       <div class="countries">
         <% limit = Country.limit(80).count/5 + 1 %>
