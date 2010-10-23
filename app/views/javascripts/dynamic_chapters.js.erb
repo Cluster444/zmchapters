@@ -1,0 +1,35 @@
+var chapters = new Array();
+var prompt_option = optionFor('',"Select a Chapter");
+<% for chapter in @chapters %>
+  chapters.push(new Array(<%= chapter.country.first.id %>, "<%= chapter.region %>", <%= chapter.id %>));
+<% end %>
+
+function countrySelected() {
+  country_id = $('#member_id').val();
+  select = $("#member_chapter_id").empty().append(prompt_option);
+  count = 0;
+  for(i = 0; i < chapters.length; i++) {
+    chapter = chapters[i];
+    if(chapter[0] == country_id) {
+      count++;
+      select.append(optionFor(chapter[2],chapter[1]));
+    }
+  }
+
+  if(count == 0) {
+    $("#member_chapter_id").attr('disabled','disabled');
+//    $("#chapter_field").hide();
+  } else {
+    $("#member_chapter_id").removeAttr('disabled');
+//    $("#chapter_field").show();
+  }
+}
+
+function optionFor(value, text) {
+  return $("<option value=\""+value+"\">"+text+"</option>");
+}
+
+$(function() {
+  countrySelected();
+  $("#member_id").change(countrySelected);
+});

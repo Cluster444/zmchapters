@@ -1,4 +1,6 @@
 <% title 'Sign Up' %>
+<% js 'dynamic_chapters' %>
+
 <div class="registration-new">
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
@@ -17,10 +19,15 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation %>
     </div>
-
+    
     <div class="field">
+      <%= f.label :country %><br />
+      <%= f.collection_select(:id, Country.all, :id, :name, :prompt => "Select a Country") %>
+    </div>
+
+    <div id="chapter_field" class="field">
       <%= f.label :chapter %><br />
-      <%= f.collection_select(:chapter_id, Chapter.all, :id, :region) %>
+      <%= f.collection_select(:chapter_id, Chapter.all, :id, :region, :prompt => "Select a Chapter") %>
     </div>
     
     <div class="actions">
