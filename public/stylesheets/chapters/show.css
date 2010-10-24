@@ -3,7 +3,10 @@
 
 .chapter-container h3 {text-align:center}
 
-.chapter-container .top {padding:10px;}
-.chapter-container .top h1 { margin:0; padding:0; font-size:44px;}
-.chapter-container .top span {font-size:14px;}
+.chapter-container .top {overflow:hidden;}
+.chapter-container .top .left {width:50%; float:left;}
+.chapter-container .top .left h1 { margin:0; padding:0; font-size:44px;}
+.chapter-container .top .left span {font-size:14px;}
+.chapter-container .top .right {width:50%; float:right;}
+
 .chapter-container .middle {padding:10px;}

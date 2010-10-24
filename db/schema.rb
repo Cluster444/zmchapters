@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101021183019) do
+ActiveRecord::Schema.define(:version => 20101023195238) do
 
   create_table "chapters", :force => true do |t|
     t.string   "region"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(:version => 20101021183019) do
     t.string   "languages"
     t.string   "area_in_sq_km"
     t.string   "population"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "external_urls", :force => true do |t|
+    t.string   "url"
+    t.string   "title"
+    t.string   "type"
+    t.integer  "sort_order", :default => 0
+    t.integer  "chapter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

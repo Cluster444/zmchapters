@@ -3,6 +3,7 @@ class Chapter < ActiveRecord::Base
 
   has_and_belongs_to_many :country
   has_many :members
+  has_many :external_urls
 
   default_scope order('region')
 

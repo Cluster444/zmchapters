@@ -1,13 +1,23 @@
 <% title @chapter.region + '-' + @country.name %>
 <% css 'chapters/show' %>
 
+<%= render :partial => 'chapter_editor', :locals => {:chapter => @chapter} %>
 <div class="chapter-container grid_24">
   <div class="top">
-    <h2><%= @chapter.region %></h2>
-    <span class="info">
-      <%= @country.name %><br />
-      <%= pluralize @chapter.members_count, 'Member' %>
-    </span>
+    <div class="left">
+      <h2><%= @chapter.region %></h2>
+      <span class="info">
+        <%= @country.name %><br />
+        <%= pluralize @chapter.members_count, 'Member' %>
+      </span>
+    </div>
+    <div class="right">
+      <ul>
+        <% @chapter.external_urls.each do |link| %>
+          <li><%= link_to "Our #{link.title}", "#{link.url}" %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
   <div class="middle">
     <h5>News</h5>

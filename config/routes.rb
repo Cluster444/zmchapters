@@ -6,6 +6,9 @@ Tzm::Application.routes.draw do
 
   resources :chapters
   resources :members, :only => [:show]
+  resources :external_urls
+
+  get '/external_urls/chapter/:chapter_id/edit', :to => 'external_urls#edit', :as => 'edit_chapter_external_urls'
   
   get '/javascripts/dynamic_chapters.js', :to => 'javascripts#dynamic_chapters'
 
