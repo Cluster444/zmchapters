@@ -4,23 +4,14 @@
 .chapters-container .search {font-size:33px;}
 .chapters-container .search input {width:285px; height:40px; font-size:33px; padding:0; margin:0; vertical-align:middle;}
 
-.chapters-container .global-stats {background:#eee;border: 1px solid #AAA;margin-top:10px;}
+.chapters-container .global-stats {border: 1px solid #AAA;margin-top:10px;}
 .chapters-container .global-stats h3 {color: #222;background:#DDD;border-bottom: 1px solid #AAA; margin:0;padding: 5px;text-shadow: 0 1px #FFF;-moz-box-shadow: 0 1px #EEE inset;}
-.chapters-container .global-stats span{display:block;padding: 5px;}
+.chapters-container .global-stats span{background:#eee;display:block;padding: 5px;}
 .chapters-container .index {background:#ddd;border: 1px solid #AAA; border-top: 0;}
 .chapters-container .index ul {text-align:center;text-align:center;overflow:hidden;margin:0 auto;width: 747px;margin-top: -1px;}
 .chapters-container .index li {float:left;}
 
-.chapters-container .index li a, .chapters-container .index li span {
-	color:#000;
-	border-top: 1px solid #999 ;
-	display:block;
-	padding:8px 8px;
-	text-shadow: 0 1px #FFF;
-	box-shadow: 0 1px #fff inset;
-	-moz-box-shadow: 0 1px #fff inset;
-	-webkit-box-shadow: 0 1px #fff inset;
-}
+.chapters-container .index li a, .chapters-container .index li span {color:#000;border-top: 1px solid #999;display:block;padding:8px 8px;text-shadow: 0 1px #FFF;box-shadow: 0 1px #fff inset;-moz-box-shadow: 0 1px #fff inset;-webkit-box-shadow: 0 1px #fff inset;}
 
 .chapters-container .index li span {color:#555;cursor: default;}
 .chapters-container .index li + li {border-left: 1px solid #999;}
