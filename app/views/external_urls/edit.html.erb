@@ -1,0 +1,37 @@
+<% title 'Edit External URLs' %>
+<% css 'external_urls/edit' %>
+
+<div class="external-urls">
+  <table>
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Sort Order</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @external_urls.each do |url| %>
+      <%= form_for url do |f| %>
+        <tr>
+          <td><%= f.text_field :url %></td>
+          <td><%= f.text_field :title %></td>
+          <td><%= f.text_field :type %></td>
+          <td><%= f.text_field :sort_order %></td>
+          <td><%= f.submit 'Change' %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>URL</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Sort Order</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

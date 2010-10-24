@@ -70,7 +70,20 @@ namespace :db do
     desc 'Populate database with links'
     task :links => :chapters do
       unless ExternalUrl.all.any?
-        puts "Links not implemented yet"
+        puts "Generate external urls"
+        i = 1
+        count = Chapter.all.count
+        Chapter.all.each do |chapter|
+          puts "#{i}/#{count}"
+          i += 1
+          url = Faker::Internet.domain_name
+          chapter.external_urls.create! :url => "#{url}",                 :title => 'website', :type => 'hyperlink', :sort_order => 1
+          chapter.external_urls.create! :url => "#{url}/forum",           :title => 'forum',   :type => 'hyperlink', :sort_order => 2
+          chapter.external_urls.create! :url => "#{url}/blog",            :title => 'blog',    :type => 'hyperlink', :sort_order => 3
+          chapter.external_urls.create! :url => "#{url}/feeds.rss",       :title => 'website', :type => 'rss', :sort_order => 1
+          chapter.external_urls.create! :url => "#{url}/forum/feeds.rss", :title => 'forum',   :type => 'rss', :sort_order => 2
+          chapter.external_urls.create! :url => "#{url}/blog/feeds.rss",  :title => 'blog',    :type => 'rss', :sort_order => 3
+        end
       end
     end
 
