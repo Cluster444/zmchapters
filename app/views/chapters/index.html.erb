@@ -25,7 +25,7 @@
           <% if Country.where("name LIKE ?", "#{n}%").any? %>
             <%= link_to n, :controller => 'chapters', :like => n %>
           <% else %>
-            <%= n %>
+            <%=raw '<span>'+n+'</span>' %>
           <% end %>
           </li>
         <% end %>

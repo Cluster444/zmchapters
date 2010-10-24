@@ -5,19 +5,32 @@
 .chapters-container .search input {width:285px; height:40px; font-size:33px; padding:0; margin:0; vertical-align:middle;}
 
 .chapters-container .global {background:#eee;}
-.chapters-container .global { margin-top:10px;}
+.chapters-container .global {margin-top:10px;}
 .chapters-container .global h3 {margin:0;}
 
 .chapters-container .index {background:#ddd;}
-.chapters-container .index ul {text-align:center; padding:10px 0;}
-.chapters-container .index li {padding:0 5px;}
+.chapters-container .index ul {text-align:center;text-align:center;overflow:hidden; margin:0 auto; width: 747px; }
+.chapters-container .index li {float:left;}
 
-.chapters-container .index li {background:#fff;}
-.chapters-container .index li a {color:#000;}
-.chapters-container .index li.current {background:#000;}
-.chapters-container .index li.current a {color:#fff;}
-.chapters-container .index li:hover {color:#fff; background:#888; cursor:pointer;}
-.chapters-container .index li:hover a {color:#fff;}
+.chapters-container .index li a, .chapters-container .index li span {
+	color:#000;
+	border-top: 1px solid #999 ;
+	border-bottom: 1px solid #999 ;
+	display:block;
+	padding:8px 8px;
+	text-shadow: 0 1px #FFF;
+	box-shadow: 0 1px #fff inset;
+	-moz-box-shadow: 0 1px #fff inset;
+	-webkit-box-shadow: 0 1px #fff inset;
+}
+
+.chapters-container .index li span {color:#555;cursor: default;}
+.chapters-container .index li + li { border-left: 1px solid #999;}
+.chapters-container .index li:first-child {border-left: 1px solid #999;}
+.chapters-container .index li:last-child {border-right: 1px solid #999;}
+.chapters-container .index li.current {box-shadow: 0 0 20px #fff inset;-moz-box-shadow: 0 0 20px #fff inset;-webkit-box-shadow: 0 0 20px #fff inset;}
+.chapters-container .index li.current a:hover {color: #000; background: #DDD;text-shadow: 0 1px #FFF;box-shadow: 0 0 20px #fff inset;-webkit-box-shadow: 0 0 20px #fff inset;-moz-box-shadow: 0 0 20px #fff inset;}
+.chapters-container .index li a:hover {color:#fff; background:#AAA; cursor:pointer;text-shadow: 0 -1px #777;box-shadow: 0 1px #DDD inset;-webkit-box-shadow: 0 1px #DDD inset;-moz-box-shadow: 0 1px #DDD inset;}
 
 .chapters-container .countries {background:#ccc;}
 .chapters-container .countries {width:860px; margin:auto; margin-top:10px;}
