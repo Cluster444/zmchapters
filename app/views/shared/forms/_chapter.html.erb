@@ -1,0 +1,14 @@
+  <%= form_for chapter do |f| %>
+    <%= render :partial => '/shared/error_messages', :locals => {:object => chapter} %>
+    <div class="field">
+      <%= f.label :region %>
+      <%= f.text_field :region %>
+    </div>
+    <div class="field">
+      <%= f.label :country %>
+      <%= collection_select(:chapter, :country, Country.all, :id, :name, {:prompt => true, :selected => chapter.country.first.id}) %>
+    </div>
+    <div class="actions">
+      <%= f.submit submit %>
+    </div>
+  <% end %>

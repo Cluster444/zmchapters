@@ -1,2 +1,5 @@
-<h1>Chapters#edit</h1>
-<p>Find me in app/views/chapters/edit.html.erb</p>
+<% title 'Edit Chapter' %>
+
+<div class="chapter-edit">
+  <%= render :partial => '/shared/forms/chapter', :locals => {:chapter => @chapter, :submit => "Update Chapter"} %>
+</div>

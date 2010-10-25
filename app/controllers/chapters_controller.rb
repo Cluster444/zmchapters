@@ -40,5 +40,24 @@ class ChaptersController < ApplicationController
   def edit
     @chapter = Chapter.find params[:id]
   end
+  
+  def create
+    @chapter = Chapter.new params[:chapter]
+    if @chapter.save
+      flash[:notice] = "Chapter created"
+      redirect_to chapter_path @chapter
+    else
+      render :new
+    end
+  end
 
+  def update
+    @chapter = Chapter.find params[:id]
+    if @chapter.update_attributes params[:chapter]
+      flash[:notice] = "Chapter updated"
+      redirect_to chapter_path @chapter
+    else
+      render :edit
+    end
+  end
 end
