@@ -28,9 +28,6 @@ ActiveRecord::Schema.define(:version => 20101023195238) do
     t.integer "country_id"
   end
 
-  add_index "chapters_countries", ["chapter_id"], :name => "index_chapter_id_on_chapters_countries"
-  add_index "chapters_countries", ["country_id"], :name => "index_country_id_on_chapters_countries"
-
   create_table "countries", :force => true do |t|
     t.string   "geoname_id"
     t.string   "country_code"

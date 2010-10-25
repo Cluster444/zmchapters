@@ -1,14 +1,11 @@
 <div class="grid_8 chapter">
+  <div>
   <% region = truncate chapter.region, :length => 18 %>
   <h3><%= link_to region, chapter_path(chapter) %></h3>
   <span class="info">
     <%= truncate chapter.country.first.name, :length => 35 %><br />
-    <% if not chapter.country.first.languages.blank? %>
-      <%= chapter.country.first.languages %>
-    <% else %>
-      No Language Info
-    <% end %>
-    <br />
+
     <%= pluralize chapter.members_count, 'Member' %>
   </span>
+  </div>
 </div>

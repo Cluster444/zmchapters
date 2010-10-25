@@ -1,4 +1,7 @@
 /* :partial => 'chapter/chapter' */
-.chapter {background:#ccc;}
-.chapter {margin-top:5px;margin-bottom:5px;}
+.chapter {background:#ccc;height: auto;overflow:hidden;margin-top:5px;margin-bottom:5px;}
+.chapter div {border:1px solid #AAA;padding:.3em;-moz-box-shadow: 0 1px #EEE inset;}
+.chapter div a {color: #333;display:block;margin-top:-2px;text-decoration:none;}
+.chapter div:hover {background: #EEE;-moz-box-shadow: 0 1px #FFF inset;}
+.chapter div:hover a {color: #000;}
 
