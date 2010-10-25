@@ -1,0 +1,7 @@
+<% title "External URLs for #{@chapter.region}" %>
+<% css 'external_urls/index' %>
+
+<div class="external_urls-index">
+  <%= link_to "Add External URL", new_chapter_external_url_path(@chapter) %>
+  <%= render :partial => 'external_url', :collection => @external_urls %>
+</div>

@@ -1,34 +1,35 @@
 class ExternalUrlsController < ApplicationController
+  before_filter :load_chapter
 
   def index
-    @external_urls = ExternalUrl.all
+    @external_urls = @chapter.external_urls
   end
 
   def new
-    @external_url = ExternalUrl.new
+    @external_url = @chapter.external_urls.new
   end
 
   def edit
-    @chapter = Chapter.find params[:chapter_id]
-    unless @chapter.nil?
-      @external_urls = @chapter.external_urls
-    else
-      flash[:error] = "Chapter not found."
-      redirect_to root_url
-    end
+    @external_url = ExternalUrl.find params[:id]
   end
 
   def create
+    @external_url = @chapter.external_urls.new params[:external_url]
+    if @external_url.save
+      flash[:notice] = "External URL added"
+      redirect_to chapter_external_urls_path @chapter
+    else
+      render :new
+    end
   end
 
   def update
     @external_url = ExternalUrl.find params[:id]
-    logger.debug(params[:id] + ":" + @external_url.to_s)
     if @external_url.update_attributes! params[:external_url]
       flash[:notice] = "External URL updated."
-      redirect_to @external_url.chapter
+      redirect_to chapter_external_urls_path @chapter
     else
-      redirect_to edit_chapter_external_urls_path @external_url.chapter
+      render :edit
     end
   end
 
@@ -36,5 +37,9 @@ class ExternalUrlsController < ApplicationController
   end
 
 private
+  
+  def load_chapter
+    @chapter = Chapter.find params[:chapter_id]
+  end
   
 end

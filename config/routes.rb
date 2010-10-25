@@ -4,12 +4,12 @@ Tzm::Application.routes.draw do
   get '/chapters/country/:id', :to => 'chapters#index_country', :constraints => {:id => /[1-9][0-9]*/}
   get '/chapters/country/:name', :to => 'chapters#index_country', :as => 'country_chapters'
 
-  resources :chapters
-  resources :members, :except => [:index], :path => 'member'
-  resources :external_urls
+  resources :chapters do
+    resources :external_urls, :except => [:show]
+  end
 
-  get '/external_urls/chapter/:chapter_id/edit', :to => 'external_urls#edit', :as => 'edit_chapter_external_urls'
-  
+  resources :members, :except => [:index], :path => 'member'
+
   get '/javascripts/dynamic_chapters.js', :to => 'javascripts#dynamic_chapters'
 
   root :to => 'chapters#index'
