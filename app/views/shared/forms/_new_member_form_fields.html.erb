@@ -1,0 +1,38 @@
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :alias %><br />
+      <%= f.text_field :alias %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.text_field :email %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :country %><br />
+      <%= f.collection_select(:id, Country.all, :id, :name, :prompt => "Select a Country") %>
+    </div>
+
+    <div id="chapter_field" class="field">
+      <%= f.label :chapter %><br />
+      <%= f.collection_select(:chapter_id, Chapter.all, :id, :region, :prompt => "Select a Chapter") %>
+    </div>
+    
+    <div class="actions">
+      <%= f.submit submit %>
+    </div>
