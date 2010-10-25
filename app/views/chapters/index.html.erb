@@ -9,27 +9,29 @@
     <% end %>
   </div>
   <% if @chapters.any? %>
-    <div class="global-stats grid_24">
-      <h3>TZM Global</h3>
-      <span class="info">
-        <%= pluralize Country.all.count, 'Country' %><br />
-        <%= pluralize Chapter.all.count, 'Chapter' %><br />
-        <%= pluralize Member.all.count, 'Member' %>
-      </span>
-    </div>
-    
-    <div class="index grid_24">
-      <ul>
-        <% ('A'..'Z').each do |n| %>
-          <li<%=raw ' class="current"' if n == params[:like] %>>
-          <% if Country.where("name LIKE ?", "#{n}%").any? %>
-            <%= link_to n, :controller => 'chapters', :like => n %>
-          <% else %>
-            <%=raw '<span>'+n+'</span>' %>
+    <div id="body-header" class="grid_24">
+      <div class="global-stats">
+        <h3>TZM Global</h3>
+        <span class="info">
+          <%= pluralize Country.all.count, 'Country' %><br />
+          <%= pluralize Chapter.all.count, 'Chapter' %><br />
+          <%= pluralize Member.all.count, 'Member' %>
+        </span>
+      </div>
+      
+      <div class="index">
+        <ul>
+          <% ('A'..'Z').each do |n| %>
+            <li<%=raw ' class="current"' if n == params[:like] %>>
+            <% if Country.where("name LIKE ?", "#{n}%").any? %>
+              <%= link_to n, :controller => 'chapters', :like => n %>
+            <% else %>
+              <%=raw '<span>'+n+'</span>' %>
+            <% end %>
+            </li>
           <% end %>
-          </li>
-        <% end %>
-      </ul>
+        </ul>
+      </div>
     </div>
     
     <!--
