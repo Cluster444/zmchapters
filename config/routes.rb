@@ -5,7 +5,7 @@ Tzm::Application.routes.draw do
   get '/chapters/country/:name', :to => 'chapters#index_country', :as => 'country_chapters'
 
   resources :chapters
-  resources :members, :only => [:show]
+  resources :members, :except => [:index], :path => 'member'
   resources :external_urls
 
   get '/external_urls/chapter/:chapter_id/edit', :to => 'external_urls#edit', :as => 'edit_chapter_external_urls'

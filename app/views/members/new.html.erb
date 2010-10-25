@@ -1,2 +1,9 @@
-<h1>Members#new</h1>
-<p>Find me in app/views/members/new.html.erb</p>
+<% title 'Create Member' %>
+<% js 'dynamic_chapters' %>
+
+<div class="member-new">
+  <%= form_for @member do |f| %>
+    <%= render :partial => '/shared/error_messages', :locals => {:object => @member} %>
+    <%= render :partial => '/shared/forms/new_member_form_fields', :locals => {:f => f, :submit => "Create Member"} %>
+  <% end %>
+</div>
