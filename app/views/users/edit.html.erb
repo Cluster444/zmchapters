@@ -1,0 +1,10 @@
+<% title 'Update User' %>
+<% js 'dynamic_chapters' %>
+
+<h1><%= @user.name %></h1>
+<div class="user-edit">
+  <%= form_for @user do |f| %>
+    <%= render :partial => '/shared/error_messages', :locals => {:object => @user} %>
+    <%= render :partial => '/shared/forms/edit_user_form_fields', :locals => {:f => f, :submit => "Update User", :user => @user} %>
+  <% end %>
+</div>

@@ -25,12 +25,12 @@
     
     <div class="field">
       <%= f.label :country %><br />
-      <%= collection_select(:chapter, :country_id, Country.all, :id, :name, {:selected => member.chapter.country.first.id}) %>
+      <%= collection_select(:chapter, :country_id, Country.all, :id, :name, {:selected => user.chapter.country.first.id}) %>
     </div>
 
     <div id="chapter_field" class="field">
       <%= f.label :chapter %><br />
-      <%= f.collection_select(:chapter_id, member.chapter.country.first.chapters, :id, :region, :prompt => true) %>
+      <%= f.collection_select(:chapter_id, user.chapter.country.first.chapters, :id, :region, :prompt => true) %>
     </div>
 
     <div id="field">

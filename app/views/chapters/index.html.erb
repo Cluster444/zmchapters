@@ -15,7 +15,7 @@
         <span class="info">
           <%= pluralize Country.all.count, 'Country' %><br />
           <%= pluralize Chapter.all.count, 'Chapter' %><br />
-          <%= pluralize Member.all.count, 'Member' %>
+          <%= pluralize User.all.count, 'User' %>
         </span>
       </div>
       
@@ -29,33 +29,32 @@
               <%=raw '<span>'+n+'</span>' %>
             <% end %>
             </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-    
-    <!--
-    <% if params[:search].nil? %>
-      <div class="countries">
-        <% limit = Country.limit(80).count/5 + 1 %>
-        <% (1..5).each do |n| %>
-          <ul>
-            <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
-              <% name = truncate country.name, :length => 21 %>
-              <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
-            <% end %>
           </ul>
-        <% end %>
-        
+        </div>
       </div>
-    <% end %>
-    -->
+      
+      <!--
+      <% if params[:search].nil? %>
+        <div class="countries">
+          <% limit = Country.limit(80).count/5 + 1 %>
+          <% (1..5).each do |n| %>
+            <ul>
+              <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
+                <% name = truncate country.name, :length => 21 %>
+                <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+      -->
 
-    <%= will_paginate @chapters %>
-    <%= render :partial => 'chapter', :collection => @chapters %>
-    
-    <%= will_paginate @chapters %>
+      <%= will_paginate @chapters %>
+      <%= render :partial => 'chapter', :collection => @chapters %>
+      
+      <%= will_paginate @chapters %>
 
+    </div>
   <% else %>
     <span class="error grid_24">No chapters found!</span>
   <% end %>

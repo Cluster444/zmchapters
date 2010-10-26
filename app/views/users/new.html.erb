@@ -1,0 +1,9 @@
+<% title 'Create User' %>
+<% js 'dynamic_chapters' %>
+
+<div class="user-new">
+  <%= form_for @user do |f| %>
+    <%= render :partial => '/shared/error_messages', :locals => {:object => @user} %>
+    <%= render :partial => '/shared/forms/new_user_form_fields', :locals => {:f => f, :submit => "Create User"} %>
+  <% end %>
+</div>

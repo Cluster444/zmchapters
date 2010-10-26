@@ -5,8 +5,8 @@ var prompt_option = optionFor('',"Select a Chapter");
 <% end %>
 
 function countrySelected() {
-  country_id = $('#member_id').val();
-  select = $("#member_chapter_id").empty().append(prompt_option);
+  country_id = $('#user_id').val();
+  select = $("#user_chapter_id").empty().append(prompt_option);
   count = 0;
   for(i = 0; i < chapters.length; i++) {
     chapter = chapters[i];
@@ -17,10 +17,10 @@ function countrySelected() {
   }
 
   if(count == 0) {
-    $("#member_chapter_id").attr('disabled','disabled');
+    $("#user_chapter_id").attr('disabled','disabled');
 //    $("#chapter_field").hide();
   } else {
-    $("#member_chapter_id").removeAttr('disabled');
+    $("#user_chapter_id").removeAttr('disabled');
 //    $("#chapter_field").show();
   }
 }
@@ -31,5 +31,5 @@ function optionFor(value, text) {
 
 $(function() {
   countrySelected();
-  $("#member_id").change(countrySelected);
+  $("#user_id").change(countrySelected);
 });

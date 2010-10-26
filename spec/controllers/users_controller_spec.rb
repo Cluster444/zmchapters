@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe MembersController do
+describe UsersController do
   before :each do
-    @member = Factory :member
+    @user = Factory :user
   end
 
   describe "GET 'index'" do
@@ -14,7 +14,7 @@ describe MembersController do
 
   describe "GET 'show'" do
     it "should be successful" do
-      get 'show', :id => @member
+      get 'show', :id => @user
       response.should be_success
     end
   end
@@ -28,7 +28,7 @@ describe MembersController do
 
   describe "GET 'edit'" do
     it "should be successful" do
-      get 'edit', :id => @member
+      get 'edit', :id => @user
       response.should be_success
     end
   end

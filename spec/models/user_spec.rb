@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Member do
+describe User do
   
   before :each do
     @chapter = Factory :chapter
@@ -15,6 +15,6 @@ describe Member do
   end
   
   it 'should create a record with valid attributes' do
-    Member.create! @attr
+    User.create! @attr
   end
 end

@@ -6,10 +6,10 @@ class Country < ActiveRecord::Base
 
   default_scope order('name')
 
-  def member_count
+  def user_count
     count = 0
     self.chapters.each do |chapter|
-      count += chapter.members.count
+      count += chapter.users.count
     end
     count
   end
