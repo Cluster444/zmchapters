@@ -1,6 +1,7 @@
 .chapter-container {background:#eee;}
 .chapter-container .top {background:#ddd;}
 
+.chapter-container {margin-top:10px;}
 .chapter-container h3 {text-align:center}
 
 .chapter-container .top {overflow:hidden;}

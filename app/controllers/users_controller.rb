@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :load_user, :only => [:show,:edit,:update]
+  load_and_authorize_resource :user
 
   def show
     @chapter = @user.chapter
@@ -7,14 +7,12 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
   end
 
   def edit
   end
 
   def create
-    @user = User.new params[:user]
     @user.skip_confirmation!
     if @user.save
       flash[:notice] = "User registered."
@@ -34,11 +32,5 @@ class UsersController < ApplicationController
   end
 
   def destroy
-  end
-
-private
-  
-  def load_user
-    @user = User.find params[:id]
   end
 end

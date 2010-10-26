@@ -13,8 +13,8 @@
     </div>
     <div class="right">
       <ul>
-        <% @chapter.external_urls.each do |link| %>
-          <li><%= link_to "Our #{link.title}", "#{link.url}" %></li>
+        <% @chapter.hyperlinks.each do |link| %>
+          <li><%= link_to "#{link.title.humanize}", "#{link.url}" %></li>
         <% end %>
       </ul>
     </div>

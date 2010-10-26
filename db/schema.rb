@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101026192858) do
+ActiveRecord::Schema.define(:version => 20101026215730) do
 
   create_table "chapters", :force => true do |t|
     t.string   "region"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(:version => 20101026192858) do
     t.integer "chapter_id"
     t.integer "country_id"
   end
+
+  add_index "chapters_countries", ["chapter_id"], :name => "index_chapter_id_on_chapters_countries"
+  add_index "chapters_countries", ["country_id"], :name => "index_country_id_on_chapters_countries"
 
   create_table "countries", :force => true do |t|
     t.string   "geoname_id"
@@ -76,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20101026192858) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "roles_mask",           :default => 0
   end
 
   add_index "users", ["confirmation_token"], :name => "index_members_on_confirmation_token", :unique => true

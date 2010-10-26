@@ -7,6 +7,10 @@ class Chapter < ActiveRecord::Base
 
   default_scope order('region')
 
+  def hyperlinks
+    external_urls.where("type = 'hyperlink'")
+  end
+
   def self.search(search, page, options = {})
     paginate :per_page => 20, :page => page,
              :conditions => ['region like ?', "#{search}"],

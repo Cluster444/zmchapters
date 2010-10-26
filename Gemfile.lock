@@ -33,6 +33,7 @@ GEM
       activesupport (~> 3.0.0)
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
+    cancan (1.4.0)
     devise (1.1.3)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 0.10.7)
@@ -102,6 +103,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate-models (= 1.0.4)
+  cancan
   devise
   factory_girl_rails (= 1.0)
   faker (= 0.3.1)

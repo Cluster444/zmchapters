@@ -23,38 +23,37 @@
         <ul>
           <% ('A'..'Z').each do |n| %>
             <li<%=raw ' class="current"' if n == params[:like] %>>
-            <% if Country.where("name LIKE ?", "#{n}%").any? %>
+            <% if Chapter.where("region LIKE ?", "#{n}%").any? %>
               <%= link_to n, :controller => 'chapters', :like => n %>
             <% else %>
               <%=raw '<span>'+n+'</span>' %>
             <% end %>
             </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!--
-      <% if params[:search].nil? %>
-        <div class="countries">
-          <% limit = Country.limit(80).count/5 + 1 %>
-          <% (1..5).each do |n| %>
-            <ul>
-              <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
-                <% name = truncate country.name, :length => 21 %>
-                <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
-              <% end %>
-            </ul>
           <% end %>
-        </div>
-      <% end %>
-      -->
-
-      <%= will_paginate @chapters %>
-      <%= render :partial => 'chapter', :collection => @chapters %>
-      
-      <%= will_paginate @chapters %>
-
+        </ul>
+      </div>
     </div>
+      
+    <!--
+    <% if params[:search].nil? %>
+      <div class="countries">
+        <% limit = Country.limit(80).count/5 + 1 %>
+        <% (1..5).each do |n| %>
+          <ul>
+            <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
+              <% name = truncate country.name, :length => 21 %>
+              <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+    -->
+
+    <%= will_paginate @chapters %>
+    <%= render :partial => 'chapter', :collection => @chapters %>
+    
+    <%= will_paginate @chapters %>
   <% else %>
     <span class="error grid_24">No chapters found!</span>
   <% end %>

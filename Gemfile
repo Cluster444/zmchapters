@@ -5,6 +5,7 @@ gem 'mysql2'
 gem 'will_paginate'
 gem 'devise'
 gem 'role_model'
+gem 'cancan'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'

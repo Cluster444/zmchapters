@@ -1,4 +1,7 @@
 class ChaptersController < ApplicationController
+  # Makes @chapter available after authorization runs
+  load_and_authorize_resource :chapter
+
   def index
     @countries = Country.all
     unless params[:search].blank?
@@ -29,20 +32,16 @@ class ChaptersController < ApplicationController
   end
 
   def show
-    @chapter = Chapter.find params[:id]
     @country = @chapter.country.first
   end
 
   def new
-    @chapter = Chapter.new
   end
 
   def edit
-    @chapter = Chapter.find params[:id]
   end
   
   def create
-    @chapter = Chapter.new params[:chapter]
     if @chapter.save
       flash[:notice] = "Chapter created"
       redirect_to chapter_path @chapter
@@ -52,7 +51,6 @@ class ChaptersController < ApplicationController
   end
 
   def update
-    @chapter = Chapter.find params[:id]
     if @chapter.update_attributes params[:chapter]
       flash[:notice] = "Chapter updated"
       redirect_to chapter_path @chapter
