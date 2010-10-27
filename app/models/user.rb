@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessor :password
   #FIXME - Probably shouldn't expose chapter_id like this...
-  attr_accessible :name, :alias, :email, :password, :password_confirmation, :chapter_id, :roles_mask
+  attr_accessible :name, :alias, :email, :password, :password_confirmation, :chapter_id, :roles_mask, :country_id
 
   include RoleModel
 
@@ -13,4 +13,5 @@ class User < ActiveRecord::Base
   validates :chapter_id, :presence => true
 
   belongs_to :chapter, :counter_cache => true
+  belongs_to :country, :counter_cache => true
 end

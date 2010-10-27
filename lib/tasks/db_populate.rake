@@ -45,23 +45,24 @@ namespace :db do
       end
     end
 
-    desc 'Populate database with members'
-    task :members => :chapters do
-      unless Member.all.any?
-        puts "Generating members"
+    desc 'Populate database with users'
+    task :users => :chapters do
+      unless User.all.any?
+        puts "Generating users"
         i = 1
         count = Chapter.all.count
         Chapter.all.each do |chapter|
           puts "#{i}/#{count}"
           i += 1
           (1..(Random.rand(10)+1)).each do |n|
-            member = chapter.members.new :name => Faker::Name.name,
+            user = chapter.users.new :name => Faker::Name.name,
                                     :alias => Faker::Internet.user_name,
                                     :email => Faker::Internet.email,
                                     :password => 'foobarbaz',
-                                    :password_confirmation => 'foobarbaz'
-            member.skip_confirmation!
-            member.save!
+                                    :password_confirmation => 'foobarbaz',
+                                    :country_id => chapter.country.id
+            user.skip_confirmation!
+            user.save!
           end
         end
       end
@@ -88,7 +89,7 @@ namespace :db do
     end
 
     desc 'Populate the database with all information'
-    task :all => [:members, :links] do
+    task :all => [:users, :links] do
     end
   end
   

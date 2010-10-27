@@ -3,7 +3,7 @@
   <% region = truncate chapter.region, :length => 18 %>
   <h3><%= link_to region, chapter_path(chapter) %></h3>
   <span class="info">
-    <%= truncate chapter.country.first.name, :length => 35 %><br />
+    <%= truncate chapter.country.name, :length => 35 %><br />
     <%= pluralize chapter.users_count, 'User' %>
   </span>
   </div>

@@ -1,7 +1,7 @@
 class Chapter < ActiveRecord::Base
   attr_accessible :region, :description
 
-  has_and_belongs_to_many :country
+  belongs_to :country
   has_many :users
   has_many :external_urls
 

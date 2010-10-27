@@ -32,7 +32,7 @@ class ChaptersController < ApplicationController
   end
 
   def show
-    @country = @chapter.country.first
+    @country = @chapter.country
   end
 
   def new

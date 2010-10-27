@@ -10,7 +10,7 @@ Tzm::Application.routes.draw do
 
   resources :users, :except => [:index], :path => 'user'
 
-  get '/javascripts/dynamic_chapters.js', :to => 'javascripts#dynamic_chapters'
+  get '/javascripts/dynamic_chapters.(:format)', :to => 'javascripts#dynamic_chapters'
 
   root :to => 'chapters#index'
 end

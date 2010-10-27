@@ -15,7 +15,7 @@
         <span class="info">
           <%= pluralize Country.all.count, 'Country' %><br />
           <%= pluralize Chapter.all.count, 'Chapter' %><br />
-          <%= pluralize User.all.count, 'User' %>
+          <%= pluralize User.all.count, 'Member' %>
         </span>
       </div>
       
@@ -35,7 +35,7 @@
     </div>
       
     <!--
-    <% if params[:search].nil? %>
+    <% if params[:search].nil? && false %>
       <div class="countries">
         <% limit = Country.limit(80).count/5 + 1 %>
         <% (1..5).each do |n| %>
