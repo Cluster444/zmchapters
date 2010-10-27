@@ -1,13 +1,52 @@
-#page #header, #page #footer {background:#eee;background:-moz-linear-gradient(100% 4% 270deg, #D3D4D5, #BBB 100%);}
 
-#page #header {width:100%;font-size:22px;overflow:hidden;}
+#page #header, #page #footer {
+  background:#555;
+  background:-moz-linear-gradient(100% 4% 270deg, #888, #333 100%);
+  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#333), to(#888));
+  -moz-box-shadow: 0 1px #CCC inset;
+  -webkit-box-shadow: 0 1px #CCC inset;
+}
 
-#page #header ul, 
-#page #footer ul {padding:3px 0;}
+#page #header {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  font:1.2em Lucida Sans;
+  height: 30px; 
+  text-shadow: 0 -1px #000;
+  width:100%;
+}
+#page #footer {
+  
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  text-shadow: 0 -1px #000;
+}
+#page #footer ul {clear:right;}
+
+#page #header ul.auth {}
+
 #page #header li, 
-#page #footer li {padding:0 5px;}
+#page #footer li{}
 
-#page #header ul {float:left}
+#page #header li a, #page #header li, #page #footer li,
+#page #footer li a{color: #FFF;padding:4px; text-decoration:none;}
+
+#page #header li a:hover {
+  background:#888;
+  background:-moz-linear-gradient(100% 4% 270deg, #AAA, #555 100%);
+  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#555), to(#AAA));
+  -moz-box-shadow: 0 1px #CCC inset;
+  -webkit-box-shadow: 0 1px #CCC inset;
+}
+#page #header li a:active {
+  background:#AAA;
+  background:-moz-linear-gradient(100% 4% 270deg, #BBB, #666 100%);
+  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#666), to(#BBB));
+  -moz-box-shadow: 0 1px #CCC inset;
+  -webkit-box-shadow: 0 1px #CCC inset;
+}
+
+#page #header ul li {float:left}
 #page #header ul.auth {float:right}
 
 #page #footer {width:100%; font-size:14px;}
