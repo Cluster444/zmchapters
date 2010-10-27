@@ -1,8 +1,12 @@
 .chapters-container {overflow:hidden;}
 .chapters-container .search {background:#f5f5f5;}
-.chapters-container .search {margin:auto; padding:10px;margin-top: 10px;}
+.chapters-container .search {margin-top:10px;}
 .chapters-container .search {font-size:33px;}
-.chapters-container .search input {width:285px; height:40px; font-size:33px; padding:0; margin:0; vertical-align:middle;}
+.chapters-container .search form {border: 1px solid #AAA;height: 44px;padding:5px;position:relative;}
+.chapters-container .search label {left: 5px;top:8px;position:absolute;text-shadow: 0 1px #FFF}
+.chapters-container .search input {background: #FCFCFC;border: 1px solid #CCC; font-size:26px; padding:.2em;position:absolute;right: 5px; margin:0;width:600px;vertical-align:middle;border-radius:3px;}
+.chapters-container .search input:hover {background: #FDFDFD;border-color: #BBB;}
+.chapters-container .search input:focus {background: #FFF;border-color: #AAA;outline:none;box-shadow: 0 0 4px #07F;-moz-box-shadow: 0 0 4px #07F;-webkit-box-shadow: 0 0 4px #3AF;}
 
 .chapters-container .global-stats {border: 1px solid #AAA;margin-top:10px;}
 .chapters-container .global-stats h3 {color: #222;background:#DDD;border-bottom: 1px solid #AAA; margin:0;padding: 5px;text-shadow: 0 1px #FFF;-moz-box-shadow: 0 1px #EEE inset;}
