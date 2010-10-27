@@ -18,11 +18,11 @@
 .chapters-container .index li:first-child {border-left: 1px solid #999;}
 .chapters-container .index li:last-child {border-right: 1px solid #999;}
 .chapters-container .index li.current {box-shadow: 0 0 20px #fff inset;-moz-box-shadow: 0 0 20px #fff inset;-webkit-box-shadow: 0 0 20px #fff inset;}
-.chapters-container .index li.current a:hover {color: #000; background: #DDD;text-shadow: 0 1px #FFF;box-shadow: 0 0 20px #fff inset;-webkit-box-shadow: 0 0 20px #fff inset;-moz-box-shadow: 0 0 20px #fff inset;}
+.chapters-container .index li.current a {background: #EEE;text-decoration:none;}
+.chapters-container .index li.current a:hover {color: #000; background: #EEE;text-shadow: 0 1px #FFF;box-shadow: 0 0 20px #fff inset;-webkit-box-shadow: 0 0 20px #fff inset;-moz-box-shadow: 0 0 20px #fff inset;}
 .chapters-container .index li a:hover {color:#fff; background:#AAA; cursor:pointer;text-shadow: 0 -1px #777;box-shadow: 0 1px #DDD inset;-webkit-box-shadow: 0 1px #DDD inset;-moz-box-shadow: 0 1px #DDD inset;}
 
 .chapters-container .countries {background:#ccc;}
 .chapters-container .countries {width:860px; margin:auto; margin-top:10px;}
 .chapters-container .countries ul {display:block; float:left; padding:10px 5px;}
 .chapters-container .countries li {display:block;}
-
