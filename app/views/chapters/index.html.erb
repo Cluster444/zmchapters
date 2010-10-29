@@ -13,7 +13,7 @@
       <div class="global-stats">
         <h3>TZM Global</h3>
         <span class="info">
-          <%= pluralize Country.all.count, 'Country' %><br />
+          <%= pluralize GeographicTerritory.countries_with_chapters.count, 'Country' %><br />
           <%= pluralize Chapter.all.count, 'Chapter' %><br />
           <%= pluralize User.all.count, 'Member' %>
         </span>
@@ -23,37 +23,24 @@
         <ul>
           <% ('A'..'Z').each do |n| %>
             <li<%=raw ' class="current"' if n == params[:like] %>>
-            <% if Chapter.where("region LIKE ?", "#{n}%").any? %>
+            <% if Chapter.where("name LIKE ?", "#{n}%").any? %>
               <%= link_to n, :controller => 'chapters', :like => n %>
             <% else %>
               <%=raw '<span>'+n+'</span>' %>
             <% end %>
             </li>
           <% end %>
+          <li<%=raw ' class="current"' if params[:like] == '%' %>>
+            <%= link_to 'All', chapters_path %>
+          </li>
         </ul>
       </div>
     </div>
       
-    <!--
-    <% if params[:search].nil? && false %>
-      <div class="countries">
-        <% limit = Country.limit(80).count/5 + 1 %>
-        <% (1..5).each do |n| %>
-          <ul>
-            <% Country.limit(limit).offset(limit*(n-1)).each do |country| %>
-              <% name = truncate country.name, :length => 21 %>
-              <li><%= link_to name, country_chapters_path(country.name) rescue ''  %></li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    <% end %>
-    -->
-
     <%= will_paginate @chapters %>
     <%= render :partial => 'chapter', :collection => @chapters %>
-    
     <%= will_paginate @chapters %>
+
   <% else %>
     <span class="error grid_24">No chapters found!</span>
   <% end %>

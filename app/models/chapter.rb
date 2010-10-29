@@ -1,11 +1,11 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :region, :description
-
-  belongs_to :country
+  attr_accessible :name, :description, :geographic_territory_id
+  
+  belongs_to :geographic_territory
   has_many :users
   has_many :external_urls
 
-  default_scope order('region')
+  default_scope order('name')
 
   def hyperlinks
     external_urls.where("type = 'hyperlink'")
@@ -13,7 +13,7 @@ class Chapter < ActiveRecord::Base
 
   def self.search(search, page, options = {})
     paginate :per_page => 20, :page => page,
-             :conditions => ['region like ?', "#{search}"],
-             :order => 'region'
+             :conditions => ['name like ?', "#{search}"],
+             :order => 'name'
   end
 end

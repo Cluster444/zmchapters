@@ -1,10 +1,10 @@
 <div class="grid_8 chapter">
   <div>
-  <% region = truncate chapter.region, :length => 18 %>
-  <h3><%= link_to region, chapter_path(chapter) %></h3>
+  <% name = truncate chapter.name, :length => 18 %>
+  <h3><%= link_to name, chapter_path(chapter) %></h3>
   <span class="info">
-    <%= truncate chapter.country.name, :length => 35 %><br />
-    <%= pluralize chapter.users_count, 'User' %>
+    <%= truncate chapter.geographic_territory.parent.name, :length => 35 %><br />
+    <%= pluralize chapter.users_count, 'Member' %>
   </span>
   </div>
 </div>

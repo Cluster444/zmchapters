@@ -1,0 +1,13 @@
+<% title 'Geo:Continent:'+@continent.name %>
+<% css 'geographic_territories/show_continent' %>
+
+<div class="geographic-territories-show-continent">
+  <h2><%= @continent.name %>
+  <ul class="countries">
+  <% @continent.children.each do |country| %>
+    <li class="country">
+      <%= link_to country.name, geo_path(country) %>
+    </li>
+  <% end %>
+  </ul>
+</div>

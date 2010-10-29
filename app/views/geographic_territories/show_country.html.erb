@@ -1,0 +1,21 @@
+<% title 'Geo:Country:'+@country.name %>
+<% css 'geographic_territories/show_country' %>
+
+<div class="geographic-territories-show-country">
+  <h2><%= @country.name %></h2>
+  <% unless @country.has_chapter? %>
+    <%= form_for Chapter.new do |f| %>
+      <%= f.hidden_field :name, :value => @country.name %>
+      <%= f.hidden_field :geographic_territory_id, :value => @country.id %>
+      <%= f.submit "Create Chapter" %>
+    <% end %>
+  <% end %>
+  <ul class="territories">
+  <% @country.children.each do |territory| %>
+    <li class="territory">
+      <%= link_to territory.name, geo_path(territory) %>
+    </li>
+  <% end %>
+  </ul>
+</div>
+

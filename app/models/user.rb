@@ -11,5 +11,4 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :chapter, :counter_cache => true
-  belongs_to :country, :counter_cache => true
 end

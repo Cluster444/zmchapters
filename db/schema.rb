@@ -10,37 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101027011235) do
+ActiveRecord::Schema.define(:version => 20101029205750) do
 
   create_table "chapters", :force => true do |t|
-    t.string   "region"
+    t.string   "name"
     t.text     "description"
     t.text     "language"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "users_count", :default => 0
-    t.integer  "country_id"
+    t.integer  "users_count",             :default => 0
+    t.integer  "geographic_territory_id"
   end
 
-  add_index "chapters", ["region"], :name => "index_chapters_on_region"
-
-  create_table "countries", :force => true do |t|
-    t.string   "geoname_id"
-    t.string   "country_code"
-    t.string   "fips_code"
-    t.string   "currency_code"
-    t.string   "iso_numeric"
-    t.string   "iso_alpha3"
-    t.string   "continent"
-    t.string   "name"
-    t.string   "capital"
-    t.string   "languages"
-    t.string   "area_in_sq_km"
-    t.string   "population"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "users_count"
-  end
+  add_index "chapters", ["name"], :name => "index_chapters_on_region"
 
   create_table "external_urls", :force => true do |t|
     t.string   "url"
@@ -48,6 +30,18 @@ ActiveRecord::Schema.define(:version => 20101027011235) do
     t.string   "type"
     t.integer  "sort_order", :default => 0
     t.integer  "chapter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "geographic_territories", :force => true do |t|
+    t.string   "name"
+    t.integer  "geoname_id"
+    t.string   "fcode"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -74,7 +68,6 @@ ActiveRecord::Schema.define(:version => 20101027011235) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "roles_mask",           :default => 0
-    t.integer  "country_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_members_on_confirmation_token", :unique => true

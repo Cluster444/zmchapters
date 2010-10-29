@@ -1,33 +1,69 @@
 require 'faker'
 
+GEONAME_DIR = Rails.root + "geonames"
+
+def ws_fetch_children(geoname_id)
+  cache_name = "#{GEONAME_DIR}/#{geoname_id}.json"
+  unless File.exist? cache_name
+    uri = URI.parse("http://ws.geonames.org/childrenJSON?geonameId=#{geoname_id}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request.initialize_http_header({"User-Agent" => "Rails 3.0.0"})
+    response = http.request(request)
+    data = response.body
+    data.force_encoding('UTF-8').encode!
+    File.open(cache_name, 'w') {|f| f.write(data)}
+  else
+    data = ""
+    File.open(cache_name, 'r') do |cache_file|
+      while(line = cache_file.gets)
+        data += line
+      end
+    end
+  end
+  JSON.parse(data, :symbolize_names => true)
+end
+
+def make_territory(territory)
+  GeographicTerritory.create! :name => territory[:name],
+                              :geoname_id => territory[:geonameId],
+                              :fcode => territory[:fcode]
+end
+
+EARTH = {
+  :name => "Earth",
+  :geoname_id => 6295630,
+  :fcode => "EARTH"
+}
+
 namespace :db do
   
   namespace :populate do
     desc 'Pull in country info from web service'
     
     task :countries => :environment do
-      unless Country.all.any?
-        puts "Fetching country information from geonames.org"
-        uri = URI.parse("http://ws.geonames.org/countryInfoJSON")
-        http = Net::HTTP.new(uri.host, uri.port)
-        request = Net::HTTP::Get.new(uri.request_uri)
-        request.initialize_http_header({"User-Agent" => "Ruby/Rails"})
-        response = http.request(request)
-        data = JSON.parse(response.body, :symbolize_names => true)
-        
-        data[:geonames].each do |country|
-          Country.create! :name          => country[:countryName],
-                          :currency_code => country[:currencyCode],
-                          :fips_code     => country[:fipsCode],
-                          :country_code  => country[:countryCode],
-                          :iso_numeric   => country[:isoNumeric],
-                          :capital       => country[:capital],
-                          :area_in_sq_km => country[:areaInSqKm],
-                          :languages     => country[:languages],
-                          :iso_alpha3    => country[:isoAlpha3],
-                          :continent     => country[:continent],
-                          :geoname_id    => country[:geonameId],
-                          :population    => country[:population]
+      unless GeographicTerritory.all.any?
+        puts "Fetching geographic territories from geonames"
+        earth = GeographicTerritory.create! EARTH
+        ws_continents = ws_fetch_children(earth.geoname_id)
+
+        ws_continents[:geonames].each do |ws_continent|
+          puts "Generating #{ws_continent[:name]}"
+          continent = make_territory(ws_continent)
+          continent.move_to_child_of earth
+          ws_countries = ws_fetch_children(continent.geoname_id)
+          
+          ws_countries[:geonames].each do |ws_country|
+            puts " - Generating #{ws_country[:name]}"
+            country = make_territory(ws_country)
+            country.move_to_child_of continent
+            ws_territories = ws_fetch_children(country.geoname_id)
+
+              ws_territories[:geonames].each do |ws_territory|
+                territory = make_territory(ws_territory)
+                territory.move_to_child_of country
+              end unless ws_territories[:geonames].nil?
+          end
         end
       end
     end
@@ -36,12 +72,12 @@ namespace :db do
     task :chapters => :countries do
       unless Chapter.all.any?
         puts "Generating chapters"
-        chapter_desc = Faker::Lorem.paragraph 10
-        Country.all.each do |country|
-          (1..(Random.rand(4)+1)).each do |n|
-            country.chapters.create! :region => Faker::Address.city, :description => chapter_desc
+        GeographicTerritory.countries.each do |country|
+          Chapter.create! :region => country.name, :geographic_territory_id => country.id
+          country.children.each do |territory|
+            Chapter.create! :region => territory.name, :geographic_territory_id => territory.id
           end
-        end
+        end 
       end
     end
 
@@ -51,18 +87,20 @@ namespace :db do
         puts "Generating users"
         i = 1
         count = Chapter.all.count
-        Chapter.all.each do |chapter|
+        Chapter.roots.each do |country_chapter|
           puts "#{i}/#{count}"
           i += 1
-          (1..(Random.rand(10)+1)).each do |n|
-            user = chapter.users.new :name => Faker::Name.name,
-                                    :alias => Faker::Internet.user_name,
-                                    :email => Faker::Internet.email,
-                                    :password => 'foobarbaz',
-                                    :password_confirmation => 'foobarbaz',
-                                    :country_id => chapter.country.id
-            user.skip_confirmation!
-            user.save!
+          country_chapter.leaves.each do |sub_chapter|
+            (1..(Random.rand(10)+1)).each do |n|
+              user = sub_chapter.users.new :name => Faker::Name.name,
+                                       :alias => Faker::Internet.user_name,
+                                       :email => Faker::Internet.email,
+                                       :password => 'foobarbaz',
+                                       :password_confirmation => 'foobarbaz',
+                                       :country_id => country_chapter.country.id
+              user.skip_confirmation!
+              user.save!
+            end
           end
         end
       end

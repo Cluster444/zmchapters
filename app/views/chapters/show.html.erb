@@ -1,14 +1,14 @@
-<% title @chapter.region + '-' + @country.name %>
+<% title 'Chapter:'+@chapter.name %>
 <% css 'chapters/show' %>
 
 <%= render :partial => 'chapter_editor', :locals => {:chapter => @chapter} %>
 <div class="chapter-container grid_24">
   <div class="top">
     <div class="left">
-      <h2><%= @chapter.region %></h2>
+      <h2><%= @chapter.name %></h2>
       <span class="info">
-        <%= @country.name %><br />
-        <%= pluralize @chapter.users_count, 'User' %>
+        <%= @chapter.geographic_territory.name %><br />
+        <%= pluralize @chapter.users_count, 'Member' %>
       </span>
     </div>
     <div class="right">
