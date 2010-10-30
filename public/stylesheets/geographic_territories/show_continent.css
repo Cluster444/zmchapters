@@ -1,0 +1,7 @@
+.country {overflow:hidden; margin:5px 0; height:25px;}
+.country {background:#ccc; border:1px solid #aaa; padding:.3em; -mox-box-shadow:0 1px #eee inset; -webkit-box-shadow:0 1px #eee inset;}
+.country a {color:#333; display:block; padding-bottom:10px; text-decoration:none; text-shadow:0 1px #eee;}
+
+.country:hover {background:#eee; -mox-box-shadow:0 1px #fff inset; -webkit-box-shadow:0 1px #fff inset;}
+.country:hover a {color:#000; text-shadow:0 1px #fff;}
+

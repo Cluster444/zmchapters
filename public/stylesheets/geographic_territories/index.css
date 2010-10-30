@@ -1,0 +1,7 @@
+.continent {overflow:hidden; margin:5px 0; height:80px;}
+.continent {background:#ccc; border:1px solid #aaa; padding:.3em; -mox-box-shadow:0 1px #eee inset; -webkit-box-shadow:0 1px #eee inset;}
+.continent a {color:#333; display:block; padding-bottom:32px; text-decoration:none; text-shadow:0 1px #eee;}
+
+.continent:hover {background:#eee; -mox-box-shadow:0 1px #fff inset; -webkit-box-shadow:0 1px #fff inset;}
+.continent:hover a {color:#000; text-shadow:0 1px #fff;}
+

@@ -2,12 +2,17 @@
 <% css 'geographic_territories/show_continent' %>
 
 <div class="geographic-territories-show-continent">
-  <h2><%= @continent.name %>
-  <ul class="countries">
-  <% @continent.children.each do |country| %>
-    <li class="country">
+  <h2><%= @continent.name %></h2>
+  <h4>Countries with chapters</h4>
+  <% @continent.children_with_chapters.each do |country| %>
+    <div class="country">
       <%= link_to country.name, geo_path(country) %>
-    </li>
+    </div>
   <% end %>
-  </ul>
+  <h4>Countries without chapters</h4>
+  <% @continent.children_without_chapters.each do |country| %>
+    <div class="country">
+      <%= link_to country.name, geo_path(country) %>
+    </div>
+  <% end %>
 </div>

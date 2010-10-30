@@ -10,4 +10,5 @@
       <%= f.submit "Create Chapter" %>
     <% end %>
   <% end %>
+  <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>
 </div>

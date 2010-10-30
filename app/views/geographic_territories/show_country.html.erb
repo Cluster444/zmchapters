@@ -3,19 +3,17 @@
 
 <div class="geographic-territories-show-country">
   <h2><%= @country.name %></h2>
-  <% unless @country.has_chapter? %>
-    <%= form_for Chapter.new do |f| %>
-      <%= f.hidden_field :name, :value => @country.name %>
-      <%= f.hidden_field :geographic_territory_id, :value => @country.id %>
-      <%= f.submit "Create Chapter" %>
-    <% end %>
-  <% end %>
-  <ul class="territories">
-  <% @country.children.each do |territory| %>
-    <li class="territory">
+  <h4>Territories with chapters</h4>
+  <% @country.children_with_chapters.each do |territory| %>
+    <div class="territory">
       <%= link_to territory.name, geo_path(territory) %>
-    </li>
+    </div>
   <% end %>
-  </ul>
+  <h4>Territories without chapters</h4>
+  <% @country.children_without_chapters.each do |territory| %>
+    <div class="territory">
+      <%= link_to territory.name, geo_path(territory) %>
+    </div>
+  <% end %>
 </div>
 

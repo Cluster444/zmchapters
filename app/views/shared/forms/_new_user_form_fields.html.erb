@@ -23,16 +23,6 @@
       <%= f.password_field :password_confirmation %>
     </div>
     
-    <div class="field">
-      <%= f.label :country %>
-      <%= f.collection_select(:country_id, Country.all, :id, :name, :prompt => "Select a Country") %>
-    </div>
-
-    <div id="chapter_field" class="field">
-      <%= f.label :chapter %>
-      <%= f.collection_select(:chapter_id, Chapter.all, :id, :region, :prompt => "Select a Chapter") %>
-    </div>
-    
     <div class="actions">
       <%= f.submit submit %>
     </div>

@@ -7,23 +7,31 @@ class GeographicTerritory < ActiveRecord::Base
   scope :countries, where(:depth => 2)
   scope :territories, where(:depth => 3)
 
-  def continent?
+  def is_continent?
     depth == 1
   end
 
-  def country?
+  def is_country?
     depth == 2
   end
 
-  def territory?
+  def is_territory?
     depth == 3
   end
 
   def has_chapter?
     !Chapter.find_by_geographic_territory_id(id).nil?
   end
+  
+  def children_with_chapters
+    children.joins(:chapters)
+  end
 
-  def self.countries_with_chapters
+  def children_without_chapters
+    children.reject {|geo| Chapter.find_by_geographic_territory_id(geo.id)}
+  end
+
+  def self.find_countries_with_chapters
     countries.joins(:chapters)
   end
 end
