@@ -2,6 +2,7 @@
 <% css 'geographic_territories/show_continent' %>
 
 <div class="geographic-territories-show-continent">
+  <%= render :partial => 'breadcrumb', :locals => {:node => @continent} %>
   <h2><%= @continent.name %></h2>
   <h4>Countries with chapters</h4>
   <% @continent.children_with_chapters.each do |country| %>

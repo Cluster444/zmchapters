@@ -2,6 +2,7 @@
 <% css 'geographic_territories/show_country' %>
 
 <div class="geographic-territories-show-country">
+  <%= render :partial => 'breadcrumb', :locals => {:node => @country} %>
   <h2><%= @country.name %></h2>
   <% unless @country.has_chapter? %>
     <% if can? :create, Chapter %>

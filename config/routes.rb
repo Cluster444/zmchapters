@@ -7,7 +7,8 @@ Tzm::Application.routes.draw do
   resources :chapters do
     resources :external_urls, :except => [:show]
   end
-
+  
+  get '/geo/1', :to => redirect("/geo")
   resources :geographic_territories, :as => 'geo', :path => 'geo', :only => [:index,:show] 
 
   resources :users, :except => [:index], :path => 'user'
