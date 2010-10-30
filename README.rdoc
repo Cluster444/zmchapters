@@ -3,6 +3,7 @@
   bundle
   cp config/database.yml.example config/database.yml
   # Edit database config
+  # Setup the database server itself with the database
   rake db:migrate
 
 == Populate Data
