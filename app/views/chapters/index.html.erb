@@ -13,7 +13,7 @@
       <div class="global-stats">
         <h3>TZM Global</h3>
         <span class="info">
-          <%= pluralize GeographicTerritory.countries_with_chapters.count, 'Country' %><br />
+          <%= pluralize GeographicTerritory.find_countries_with_chapters.count, 'Country' %><br />
           <%= pluralize Chapter.all.count, 'Chapter' %><br />
           <%= pluralize User.all.count, 'Member' %>
         </span>
