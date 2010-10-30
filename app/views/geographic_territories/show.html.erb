@@ -3,11 +3,13 @@
 
 <div class="geographic_territories-show">
   <h2><%= @territory.name %></h2>
-  <% unless @territory.has_chapter? %>
-    <%= form_for Chapter.new do |f| %>
-      <%= f.hidden_field :name, :value => @territory.name %>
-      <%= f.hidden_field :geographic_territory_id, :value => @territory.id %>
-      <%= f.submit "Create Chapter" %>
+  <% if can? :create, Chapter %>
+    <% unless @territory.has_chapter? %>
+      <%= form_for Chapter.new do |f| %>
+        <%= f.hidden_field :name, :value => @territory.name %>
+        <%= f.hidden_field :geographic_territory_id, :value => @territory.id %>
+        <%= f.submit "Create Chapter" %>
+      <% end %>
     <% end %>
   <% end %>
   <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>
