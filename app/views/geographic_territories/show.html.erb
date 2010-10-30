@@ -5,12 +5,11 @@
   <%= render :partial => 'breadcrumb', :locals => {:node => @territory} %>
   <h2><%= @territory.name %></h2>
   <% if can? :create, Chapter %>
-    <% unless @territory.has_chapter? %>
-      <%= form_for Chapter.new do |f| %>
-        <%= f.hidden_field :name, :value => @territory.name %>
-        <%= f.hidden_field :geographic_territory_id, :value => @territory.id %>
-        <%= f.submit "Create Chapter" %>
-      <% end %>
+    <%= form_for Chapter.new do |f| %>
+      <%= f.hidden_field :geographic_territory_id, :value => @territory.id %>
+      <%= f.text_field :name %>
+      <%= f.select :type, Chapter::TYPES, :prompt => true %>
+      <%= f.submit "Create Chapter" %>
     <% end %>
   <% end %>
   <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>

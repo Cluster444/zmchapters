@@ -9,6 +9,7 @@
       <%= form_for Chapter.new do |f| %>
         <%= f.hidden_field :name, :value => @country.name %>
         <%= f.hidden_field :geographic_territory_id, :value => @country.id %>
+        <%= f.hidden_field :type, :value => 'country' %>
         <%= f.submit "Create Chapter" %>
       <% end %>
     <% end %>

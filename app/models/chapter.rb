@@ -7,6 +7,8 @@ class Chapter < ActiveRecord::Base
 
   default_scope order('name')
 
+  TYPES=%w(state province territory city county university college)
+
   def hyperlinks
     external_urls.where("type = 'hyperlink'")
   end

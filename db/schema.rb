@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029205750) do
+ActiveRecord::Schema.define(:version => 20101030210832) do
 
   create_table "chapters", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20101029205750) do
     t.datetime "updated_at"
     t.integer  "users_count",             :default => 0
     t.integer  "geographic_territory_id"
+    t.string   "type"
   end
 
   add_index "chapters", ["name"], :name => "index_chapters_on_region"

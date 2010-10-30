@@ -24,14 +24,14 @@ class GeographicTerritory < ActiveRecord::Base
   end
   
   def children_with_chapters
-    children.joins(:chapters)
+    children.reject {|child| !child.has_chapter?}
   end
 
   def children_without_chapters
-    children.reject {|geo| Chapter.find_by_geographic_territory_id(geo.id)}
+    children.reject {|child| child.has_chapter?}
   end
 
   def self.find_countries_with_chapters
-    countries.joins(:chapters)
+    countries.reject {|country| !country.has_chapter?}
   end
 end
