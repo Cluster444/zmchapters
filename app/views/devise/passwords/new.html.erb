@@ -1,12 +1,15 @@
-<h2>Forgot your password?</h2>
+<div class="password-new grid_12 push_6">
+  <h2>Forgot your password?</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+    <%= devise_error_messages! %>
 
-  <p><%= f.label :email %><br />
-  <%= f.text_field :email %></p>
+    <div class="field"><%= f.label :email %>
+    <%= f.text_field :email %></div>
 
-  <p><%= f.submit "Send me reset password instructions" %></p>
-<% end %>
-
-<%= render :partial => "devise/shared/links" %>
+    <div class="actions"><%= f.submit "Send me reset password instructions" %>
+      
+    </div>
+    <%= render :partial => "devise/shared/links" %>
+  <% end %>
+</div>

@@ -57,7 +57,7 @@
 .pagination a:hover {background: #EEE;border-bottom: 2px solid #000;color:#000;}
 
 /* Breadcrumbs.. Mmmm... */
-.breadcrumb {background: #FAFAFA;border:1px solid #CCC;padding: 5px 0;border-radius: 5px; -moz-border-radiux: 5px;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
+.breadcrumb {background: #FAFAFA;border:1px solid #CCC;padding: 5px 0;border-radius: 5px;-moz-border-radiux: 5px;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
 .breadcrumb a {color: #333;padding:5px;text-shadow: 0 1px #FFF;}
 .breadcrumb a:hover {color: #000;}
 /* Flashes/Errors */
@@ -65,13 +65,19 @@ div .flash {border:1px solid #AAA;padding: 10px;}
 div .alert {background: #FFFFCC;}
 .error span {background: #FFEEEE;border:1px solid #AAA;border-top:0;display:block;padding:10px;}
 
+/* Admin/Moderator Chapter controls */
+.chapter-editor{height:30px;overflow:hidden;position:relative;margin-left:5px;margin-bottom:-5px;}
+.chapter-editor div{overflow:hidden;position:absolute;bottom:0;}
+.chapter-editor a{background: #DDD;border:1px solid #CCC;border-bottom:0;color:#333;float:left;padding:5px;text-decoration:none;text-shadow: 0 1px #EEE;-moz-box-shadow: 0 1px #F0F0F0 inset;-webkit-box-shadow: 0 1px #F0F0F0 inset;}
+.chapter-editor a:hover{background: #CCC;color: #222;-moz-box-shadow: 0 1px #FAFAFA inset;-webkit-box-shadow: 0 1px #FAFAFA inset;}
+.chapter-editor a:active{color:#000;}
 /* Sign Up/In Style */
 form#user_new {width: 100%;}
 #error_explanation {margin-top:5px;}
 #error_explanation  h2{background: #FFEEEE;border: 1px solid #AAA;font-size: 1em;padding:5px;}
 #error_explanation  ul li{border: 1px solid #AAA;border-top:0;display:block;padding:5px;}
-.registration-new a, .log-in a {color: #333;}
-.registration-new a:hover {color: #000;}
+.registration-new a,.password-new a,.confirmation-new a, .log-in a {color: #333;}
+.registration-new a:hover,.password-new a:hover,.confirmation-new a:hover {color: #000;}
 .field, .actions  {margin-top: 10px;position:relative;}
 .actions input {margin:0;padding: 8px;}
 .actions div{padding: 5px 0;}
