@@ -1,19 +1,19 @@
 <% title 'Member Profile' %>
 <% css 'users/show' %>
 
-<div class="user-show">
+<div class="user-show grid_24">
   
   <% if current_user == @user and (@user.alias.blank? or @user.name.blank?) %>
     <%= form_for current_user, :url => registration_path(current_user), :html => {:method => :put} do |f| %>
       <% if @user.name.blank? %>
         <div class="field">
-          <%= f.label 'Set your name.' %><br />
+          <%= f.label 'Name' %>
           <%= f.text_field :name %>
         </div>
       <% end %>
       <% if @user.alias.blank? %>
         <div class="field">
-          <%= f.label 'Set your alias.' %><br />
+          <%= f.label 'Alias' %>
           <%= f.text_field :alias %>
         </div>
       <% end %>
@@ -23,7 +23,7 @@
     <% end %>
   <% end %>
 
-  <div class="user">
+  <div class="user grid_10 alpha">
     <h2><%= @user.name %></h2>
     <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
     <span class="info">
@@ -31,18 +31,16 @@
     </span>
   </div>
   
-  <div class="chapter">
+  <div class="chapter grid_10 omega">
     <% unless @user.chapter.nil? %>
       <h2><%= @chapter.name %></h2>
       <span class="info">
-        <%= @country.name %><br />
-        <%= pluralize @chapter.users_count, 'User' %><br />
+        <%= @country.name %>
+        <%= pluralize @chapter.users_count, 'User' %>
       </span>
       <p><%= @chapter.description %></p>
     <% else %>
       Join a chapter!
     <% end %>
   </div>
-  <div style="clear:both"></div>
-
 </div>
