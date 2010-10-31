@@ -6,7 +6,7 @@
   <h2><%= @continent.name %></h2>
   <h4>Countries with chapters</h4>
   <% @continent.children_with_chapters.each do |country| %>
-    <div class="country">
+    <div class="country grid_24">
       <%= link_to country.name, geo_path(country) %>
     </div>
   <% end %>

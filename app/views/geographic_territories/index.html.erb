@@ -3,7 +3,7 @@
 
 <div class="geographic-territories-index">
   <% GeographicTerritory.continents.each do |continent| %>
-  <div class="continent">
+  <div class="continent grid_24">
     <h2><%= link_to continent.name, geo_path(continent) %></h2>
   </div>
   <% end %>

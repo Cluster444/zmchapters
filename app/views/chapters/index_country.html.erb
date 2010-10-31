@@ -3,16 +3,15 @@
 
 <div class="country-chapters-container">
   <% if @chapters.any? %>
-    <div class="country">
+    <div class="country grid_24">
       <h3><%= @country.name %></h3>
       <%= pluralize @chapters.count, 'Chapter' %><br />
       <%= pluralize @country.users_count, 'User' %>
     </div>
     <%= will_paginate @chapters %>
     <%= render :partial => 'chapter', :collection => @chapters %>
-    <div style="clear:both"></div>
     <%= will_paginate @chapters %>
   <% else %>
-    <span class="error">No chapters found!</span>
+    <div class="error grid_24"><span>No chapters found like <%= params[:search] %>!</span></div>
   <% end %>
 </div>

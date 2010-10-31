@@ -1,6 +1,6 @@
-.chapters-container {overflow:hidden;}
+.chapters-container {float: left;overflow:hidden;}
 .chapters-container .search {background:#f5f5f5;}
-.chapters-container .search {margin-top:10px;}
+.chapters-container .search {margin-top:5px;}
 .chapters-container .search {font-size:33px;}
 .chapters-container .search form {border: 1px solid #AAA;height: 44px;padding:5px;position:relative;}
 .chapters-container .search label {left: 5px;top:8px;position:absolute;text-shadow: 0 1px #FFF}

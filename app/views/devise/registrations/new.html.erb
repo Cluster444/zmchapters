@@ -2,11 +2,12 @@
 <% js 'dynamic_chapters' %>
 
 <div class="registration-new grid_12 push_6">
+  <h2>Sign up</h2>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
     <%= render :partial => '/shared/forms/new_user_form_fields', :locals => {:f => f, :submit => "Sign up"} %>
   <% end %>
-  <%= render :partial => "devise/shared/links" %>
+  
 </div>
 
 
