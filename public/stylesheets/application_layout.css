@@ -77,7 +77,7 @@ form#user_new {width: 100%;}
 .actions div{padding: 5px 0;}
 
 .field label {border: 1px solid #CCC;padding: 5px;left:0px;top:5px;position:absolute;}
-.field input {border: 1px solid #CCC;display:block;padding:8px;font-size:1.2em;}
+.field input,.field select {border: 1px solid #CCC;display:block;padding:8px;font-size:1.2em;}
 .field input#user_name {padding-left: 65px;width:395px}
 .field input#user_alias {padding-left: 55px;width:405px}
 .field input#user_email {padding-left: 64px;width:396px}
@@ -86,7 +86,7 @@ form#user_new {width: 100%;}
 .rm {overflow:hidden;height: 35px;}
 .rm label {top:0;padding-left:25px;}
 .field input#user_remember_me {border:0;top: 6px;left:2px;position:relative;}
-*.field input#user_remember_me {top: 1px;left:0px;position:relative;}
+.field select#user_roles {padding-left: 60px;width:470px}
 .field select#user_country_id {padding-left: 75px;width:470px}
 .field select#user_chapter_id {padding-left: 75px;width:470px}
 .field select {background: #FEFEFE;border: 1px solid #CCC;font-size:1.1em;padding:8px;width:458px;}

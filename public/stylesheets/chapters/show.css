@@ -1,13 +1,14 @@
 .chapter-container {background:#eee;}
-.chapter-container .top {background:#ddd;}
+.chapter-container .top {background:#ddd;border:1px solid #CCC;padding:10px;position:relative;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
 
 .chapter-container {margin-top:10px;}
-.chapter-container h3 {text-align:center}
+.chapter-container h2 {position:absolute;top:5px; left:10px;text-shadow: 0 1px #FFF;}
 
 .chapter-container .top {overflow:hidden;}
-.chapter-container .top .left {width:50%; float:left;}
-.chapter-container .top .left h1 { margin:0; padding:0; font-size:44px;}
-.chapter-container .top .left span {font-size:14px;}
-.chapter-container .top .right {width:50%; float:right;}
-
-.chapter-container .middle {padding:10px;}
+.chapter-container .top .left {height: 80px;}
+.chapter-container .top .left h1 { margin:0; padding:0;}
+.chapter-container .top .left span {font-size:.9em;position:absolute;bottom:10px;left:10px;text-shadow: 0 1px #FFF;}
+.chapter-container .top .right {position:absolute;right:0;top:10px;}
+.chapter-container .top .right ul {background: #EEE;border: 1px solid #CCC;border-right:0;overflow:hidden;}
+.chapter-container .top .right ul li a{background: #EEE;color: #333;float:left;padding:5px;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
+.chapter-container .middle {border:1px solid #CCC; border-top:0;padding:10px;-moz-box-shadow: 0 -1px #777 inset;-webkit-box-shadow: 0 -1px #FFF inset;}
