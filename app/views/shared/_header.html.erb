@@ -3,6 +3,9 @@
     <li><%= link_to 'Home', root_path %></li>
     <li><%= link_to 'Chapters', chapters_path %></li>
     <li><%= link_to 'Geography', geo_index_path %></li>
+    <% if can? :read, User %>
+      <li><%= link_to 'Members', users_path %></li>
+    <% end %>
   </ul>
   <ul class="auth">
     <% if user_signed_in? %>

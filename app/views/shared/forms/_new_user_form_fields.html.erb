@@ -22,6 +22,11 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation %>
     </div>
+
+    <div class="field">
+      <%= f.label :roles %>
+      <%= f.select :roles, User.valid_roles, :prompt => true %>
+    </div>
     
     <div class="actions">
       <%= f.submit submit %>

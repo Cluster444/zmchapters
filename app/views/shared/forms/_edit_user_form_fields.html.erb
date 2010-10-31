@@ -22,22 +22,12 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation %>
     </div>
-    
+
     <div class="field">
-      <%= f.label :country %><br />
-      <%= collection_select(:chapter, :country_id, Country.all, :id, :name, {:selected => user.chapter.country.first.id}) %>
+      <%= f.label :role %><br />
+      <%= f.select :roles, User.valid_roles, :prompt => true, :selected => user.roles.first.to_s %>
     </div>
 
-    <div id="chapter_field" class="field">
-      <%= f.label :chapter %><br />
-      <%= f.collection_select(:chapter_id, user.chapter.country.first.chapters, :id, :region, :prompt => true) %>
-    </div>
-
-    <div id="field">
-      <%= f.label :current_password %><br />
-      <%= f.password_field :current_password %>
-    </div>
-    
     <div class="actions">
       <%= f.submit submit %>
     </div>

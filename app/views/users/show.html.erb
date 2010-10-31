@@ -1,7 +1,7 @@
-<% title 'Your Profile' %>
+<% title 'Member Profile' %>
 <% css 'users/show' %>
 
-<div class="user-container">
+<div class="user-show">
   
   <% if current_user == @user and (@user.alias.blank? or @user.name.blank?) %>
     <%= form_for current_user, :url => registration_path(current_user), :html => {:method => :put} do |f| %>
@@ -25,21 +25,23 @@
 
   <div class="user">
     <h2><%= @user.name %></h2>
+    <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
     <span class="info">
       <%= @user.alias %><br />
-      <%= @country.name %>
     </span>
-    <%= button_to 'Edit Profile', edit_user_registration_path, :method => :get %>
   </div>
-
+  
   <div class="chapter">
-    <h2><%= @chapter.region %></h2>
-    <span class="info">
-      <%= @country.name %><br />
-      <%= pluralize @chapter.users_count, 'User' %><br />
-      Languages: <%= @country.languages %><br />
-    </span>
-    <p><%= @chapter.description %></p>
+    <% unless @user.chapter.nil? %>
+      <h2><%= @chapter.name %></h2>
+      <span class="info">
+        <%= @country.name %><br />
+        <%= pluralize @chapter.users_count, 'User' %><br />
+      </span>
+      <p><%= @chapter.description %></p>
+    <% else %>
+      Join a chapter!
+    <% end %>
   </div>
   <div style="clear:both"></div>
 

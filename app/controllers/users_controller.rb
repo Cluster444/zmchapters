@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   load_and_authorize_resource :user
+  
+  def index
+  end
 
   def show
-    @chapter = @user.chapter
-    @country = @chapter.country.first
   end
 
   def new
@@ -23,7 +24,13 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes
+    if params[:user][:password].blank?
+      [:password, :password_confirmation].collect{|p| params[:user].delete(p)}
+    else
+      @user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
+    end
+
+    if @user.errors[:base].empty? and @user.update_attributes params[:user]
       flash[:notice] = "User profile udpated"
       redirect_to @user
     else
