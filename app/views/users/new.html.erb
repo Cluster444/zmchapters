@@ -1,9 +1,25 @@
 <% title 'Create User' %>
-<% js 'dynamic_chapters' %>
+<% css 'users/new' %>
 
 <div class="user-new aaa">
   <%= form_for @user do |f| %>
     <%= render :partial => '/shared/error_messages', :locals => {:object => @user} %>
     <%= render :partial => '/shared/forms/new_user_form_fields', :locals => {:f => f, :submit => "Create User"} %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </div>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :roles %>
+      <%= f.select :roles, User.valid_roles, :prompt => true %>
+    </div>
   <% end %>
 </div>
