@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(:version => 20101101044647) do
     t.datetime "updated_at"
   end
 
+  create_table "geographic_territories", :force => true do |t|
+    t.string   "name"
+    t.integer  "geoname_id"
+    t.string   "fcode"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "username"

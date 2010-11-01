@@ -85,7 +85,7 @@ form#user_new {width: 100%;}
 .field label {border: 1px solid #CCC;padding: 5px;left:0px;top:5px;position:absolute;}
 .field input,.field select {border: 1px solid #CCC;display:block;padding:8px;font-size:1.2em;}
 .field input#user_name {padding-left: 65px;width:395px}
-.field input#user_username {padding-left: 65px;width:395px}
+.field input#user_username {padding-left: 95px;width:365px}
 .field input#user_alias {padding-left: 55px;width:405px}
 .field input#user_email {padding-left: 64px;width:396px}
 .field input#user_password {padding-left: 94px;width:366px}
