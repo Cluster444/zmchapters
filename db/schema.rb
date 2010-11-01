@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101101042803) do
+ActiveRecord::Schema.define(:version => 20101101044647) do
 
   create_table "chapters", :force => true do |t|
     t.string   "name"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(:version => 20101101042803) do
     t.text     "language"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "users_count",             :default => 0
-    t.integer  "geographic_territory_id"
+    t.integer  "users_count",            :default => 0
+    t.integer  "geographic_location_id"
     t.string   "type"
   end
 
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20101101042803) do
     t.datetime "updated_at"
   end
 
-  create_table "geographic_territories", :force => true do |t|
+  create_table "geographic_locations", :force => true do |t|
     t.string   "name"
     t.integer  "geoname_id"
     t.string   "fcode"
@@ -63,12 +63,13 @@ ActiveRecord::Schema.define(:version => 20101101042803) do
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "roles_mask",           :default => 0
+    t.integer  "roles_mask",             :default => 0
+    t.integer  "geographic_location_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_members_on_confirmation_token", :unique => true

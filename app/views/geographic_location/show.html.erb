@@ -1,7 +1,7 @@
 <% title 'Geo:Territory:'+@territory.name %>
-<% css 'geographic_territories/show' %>
+<% css 'geographic_locations/show' %>
 
-<div class="geographic_territories-show">
+<div class="geographic-locations-show">
   <%= render :partial => 'breadcrumb', :locals => {:node => @territory} %>
   <h2><%= @territory.name %></h2>
   <% if can? :create, Chapter %>
