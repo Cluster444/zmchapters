@@ -25,7 +25,7 @@ def ws_fetch_children(geoname_id)
 end
 
 def make_territory(territory)
-  GeographicTerritory.create! :name => territory[:name],
+  GeographicLocation.create! :name => territory[:name],
                               :geoname_id => territory[:geonameId],
                               :fcode => territory[:fcode]
 end
@@ -42,9 +42,9 @@ namespace :db do
     desc 'Pull in country info from web service'
     
     task :countries => :environment do
-      unless GeographicTerritory.all.any?
+      unless GeographicLocation.all.any?
         puts "Fetching geographic territories from geonames"
-        earth = GeographicTerritory.create! EARTH
+        earth = GeographicLocation.create! EARTH
         ws_continents = ws_fetch_children(earth.geoname_id)
 
         ws_continents[:geonames].each do |ws_continent|
@@ -72,7 +72,7 @@ namespace :db do
     task :chapters => :countries do
       unless Chapter.all.any?
         puts "Generating chapters"
-        GeographicTerritory.countries.each do |country|
+        GeographicLocation.countries.each do |country|
           Chapter.create! :region => country.name, :geographic_territory_id => country.id
           country.children.each do |territory|
             Chapter.create! :region => territory.name, :geographic_territory_id => territory.id
@@ -93,7 +93,7 @@ namespace :db do
           country_chapter.leaves.each do |sub_chapter|
             (1..(Random.rand(10)+1)).each do |n|
               user = sub_chapter.users.new :name => Faker::Name.name,
-                                       :alias => Faker::Internet.user_name,
+                                       :username => Faker::Internet.user_name,
                                        :email => Faker::Internet.email,
                                        :password => 'foobarbaz',
                                        :password_confirmation => 'foobarbaz',
@@ -135,14 +135,5 @@ namespace :db do
   task :populate => :environment do
     Rake::Task['db:reset'].invoke
     Rake::Task['db:populate:all'].invoke
-    states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-              'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-              'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-              'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-              'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-              'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-              'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-    
-    
   end
 end
