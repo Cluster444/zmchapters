@@ -20,7 +20,7 @@ class GeographicLocation < ActiveRecord::Base
   end
 
   def has_chapter?
-    !Chapter.find_by_geographi_location_id(id).nil?
+    !Chapter.find_by_geographic_location_id(id).nil?
   end
   
   def children_with_chapters

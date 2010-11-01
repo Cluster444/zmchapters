@@ -9,7 +9,7 @@ class Ability
       can :manage, :all
     else
       can :read, Chapter
-      can :read, GeographicTerritory
+      can :read, GeographicLocation
     end
   end
 end

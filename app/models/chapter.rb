@@ -1,7 +1,7 @@
 class Chapter < ActiveRecord::Base
-  attr_accessible :name, :description, :geographic_territory_id
+  attr_accessible :name, :description, :geographic_location_id
   
-  belongs_to :geographic_territory
+  belongs_to :geographic_location
   has_many :users
   has_many :external_urls
 
