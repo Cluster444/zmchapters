@@ -5,9 +5,13 @@
 //jQuery Animations
 //Animate .flash'
 $(document).ready(function() {
-  $('.flash').delay(2000).animate({ 
+  $('.flash').parent().delay(2000).animate({ 
     opacity: 0
-  }, 2000, "linear", function() {
-      $(this).slideUp();
+  }, 1500, "linear", function() {
+      $(this).slideUp(300);
+      $('.chapter-editor').css('opacity','0');
+      $('.chapter-editor').animate({ 
+        opacity: 1
+      }, 500, "linear", function() {});
   });
 });
