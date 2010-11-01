@@ -6,7 +6,7 @@
   <%= link_to "Create Member", new_user_path %>
   <% @users.each do |user| %>
     <div class="user">
-      <%=raw "#{user.name} | #{user.alias} | #{link_to :View, user_path(user)} | #{link_to :Edit, edit_user_path(user)}" %>
+      <%=raw "#{user.name} | #{user.username} | #{link_to :View, user_path(user)} | #{link_to :Edit, edit_user_path(user)}" %>
     </div>
   <% end %>
 </div>

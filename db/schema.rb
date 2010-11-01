@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101030210832) do
+ActiveRecord::Schema.define(:version => 20101101042803) do
 
   create_table "chapters", :force => true do |t|
     t.string   "name"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20101030210832) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "alias"
+    t.string   "username"
     t.string   "email"
     t.string   "encrypted_password"
     t.string   "password_salt"
