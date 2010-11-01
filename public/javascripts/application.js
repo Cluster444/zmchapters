@@ -5,7 +5,7 @@
 //jQuery Animations
 //Animate .flash'
 $(document).ready(function() {
-  $('.flash').animate({ 
+  $('.flash').delay(2000).animate({ 
     opacity: 0
   }, 3000, "linear", function() {
       $(this).remove();
