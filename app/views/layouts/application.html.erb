@@ -13,7 +13,7 @@
     <%= render :partial => '/shared/header' %>
     <div id="body" class="container_24">
       <% flash.each do |name, message| %>
-        <div class="grid_24" style="position:relative; top:0px;"><%= content_tag :div, message, :class => "flash #{name}" %></div>
+        <div class="flashparent"><%= content_tag :div, message, :class => "flash #{name}" %></div>
       <% end %>
       <%= yield %>
     </div>

@@ -61,6 +61,7 @@
 .breadcrumb a {color: #333;padding:5px;text-shadow: 0 1px #FFF;}
 .breadcrumb a:hover {color: #000;}
 /* Flashes/Errors */
+div.flashparent {position:relative;top:0px; margin:0 5px;}
 div .flash {border:1px solid #AAA;padding: 10px;}
 div .alert {background: #FFFFCC;}
 .error span {background: #FFEEEE;border:1px solid #AAA;border-top:0;display:block;padding:10px;}
