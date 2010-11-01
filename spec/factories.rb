@@ -6,7 +6,7 @@ end
 
 Factory.define :user do |f|
   f.name 'test test'
-  f.alias 'test'
+  f.username 'test'
   f.email 'test@test.com'
   f.password 'foobarbaz'
   f.password_confirmation 'foobarbaz'

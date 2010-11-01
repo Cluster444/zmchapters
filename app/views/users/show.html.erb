@@ -3,7 +3,7 @@
 
 <div class="user-show grid_24">
   
-  <% if current_user == @user and (@user.alias.blank? or @user.name.blank?) %>
+  <% if current_user == @user and (@user.username.blank? or @user.name.blank?) %>
     <%= form_for current_user, :url => registration_path(current_user), :html => {:method => :put} do |f| %>
       <% if @user.name.blank? %>
         <div class="field">
@@ -11,10 +11,10 @@
           <%= f.text_field :name %>
         </div>
       <% end %>
-      <% if @user.alias.blank? %>
+      <% if @user.username.blank? %>
         <div class="field">
           <%= f.label 'Alias' %>
-          <%= f.text_field :alias %>
+          <%= f.text_field :username %>
         </div>
       <% end %>
       <div class="actions">
@@ -27,7 +27,7 @@
     <h2><%= @user.name %></h2>
     <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
     <span class="info">
-      <%= @user.alias %><br />
+      <%= @user.username %><br />
     </span>
   </div>
   

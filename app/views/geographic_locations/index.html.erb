@@ -1,8 +1,8 @@
 <%= title 'Geo:Continents' %>
-<%= css 'geographic_territories/index' %>
+<%= css 'geographic_locations/index' %>
 
-<div class="geographic-territories-index">
-  <% GeographicTerritory.continents.each do |continent| %>
+<div class="geographic-locations-index">
+  <% GeographicLocation.continents.each do |continent| %>
   <div class="continent grid_24">
     <h2><%= link_to continent.name, geo_path(continent) %></h2>
   </div>

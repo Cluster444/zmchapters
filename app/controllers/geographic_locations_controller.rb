@@ -1,9 +1,9 @@
-class GeographicTerritoriesController < ApplicationController
+class GeographicLocationsController < ApplicationController
   def index
   end
 
   def show
-    location = GeographicTerritory.find params[:id]
+    location = GeographicLocation.find params[:id]
     if location.is_continent?
       @continent = location
       render :show_continent

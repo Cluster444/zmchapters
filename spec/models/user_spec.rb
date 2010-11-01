@@ -6,7 +6,7 @@ describe User do
     @chapter = Factory :chapter
     @attr = {
       :name => 'Test Meister',
-      :alias => 'testmeister',
+      :username => 'testmeister',
       :email => 'test@meister.net',
       :password => 'foobarbaz',
       :password_confirmation => 'foobarbaz',

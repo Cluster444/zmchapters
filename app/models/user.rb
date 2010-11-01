@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessor :password
   #FIXME - Probably shouldn't expose chapter_id like this...
-  attr_accessible :name, :alias, :email, :password, :password_confirmation, :chapter_id, :roles_mask, :country_id, :roles
+  attr_accessible :name, :username, :email, :password, :password_confirmation, :chapter_id, :roles_mask, :country_id, :roles
 
   include RoleModel
 

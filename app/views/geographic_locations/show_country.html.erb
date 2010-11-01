@@ -1,14 +1,14 @@
 <% title 'Geo:Country:'+@country.name %>
-<% css 'geographic_territories/show_country' %>
+<% css 'geographic_locations/show_country' %>
 
-<div class="geographic-territories-show-country">
+<div class="geographic-locations-show-country">
   <%= render :partial => 'breadcrumb', :locals => {:node => @country} %>
   <h2><%= @country.name %></h2>
   <% unless @country.has_chapter? %>
     <% if can? :create, Chapter %>
       <%= form_for Chapter.new do |f| %>
         <%= f.hidden_field :name, :value => @country.name %>
-        <%= f.hidden_field :geographic_territory_id, :value => @country.id %>
+        <%= f.hidden_field :geographic_location_id, :value => @country.id %>
         <%= f.hidden_field :type, :value => 'country' %>
         <%= f.submit "Create Chapter" %>
       <% end %>
