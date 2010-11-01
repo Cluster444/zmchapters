@@ -2,9 +2,10 @@
 <% css 'users/new' %>
 
 <div class="user-new aaa">
+  <h2>Create a new member</h2>
+
   <%= form_for @user do |f| %>
     <%= render :partial => '/shared/error_messages', :locals => {:object => @user} %>
-    <%= render :partial => '/shared/forms/new_user_form_fields', :locals => {:f => f, :submit => "Create User"} %>
     <div class="field">
       <%= f.label :name %>
       <%= f.text_field :name %>
