@@ -5,7 +5,32 @@
   <h2>Sign up</h2>
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
-    <%= render :partial => '/shared/forms/new_user_form_fields', :locals => {:f => f, :submit => "Sign up"} %>
+    <div class="field">
+      <%= f.label :name%>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :username %>
+      <%= f.text_field :username %>
+    </div>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <div class="field">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Sign Up" %>
+      <div>
+        <%= render :partial => "devise/shared/links" %>
+      </div>
+    </div>
   <% end %>
   
 </div>
