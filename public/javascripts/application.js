@@ -7,7 +7,7 @@
 $(document).ready(function() {
   $('.flash').delay(2000).animate({ 
     opacity: 0
-  }, 3000, "linear", function() {
-      $(this).remove();
+  }, 2000, "linear", function() {
+      $(this).slideUp();
   });
 });
