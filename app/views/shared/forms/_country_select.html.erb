@@ -1,0 +1,10 @@
+<% js 'geo_location' %>
+
+    <div class="field">
+      <%= f.label :country %>
+      <%= grouped_collection_select :geo, :country_id, GeographicLocation.continents, :children, :name, :id, :name, :prompt => true %>
+    </div>
+    <div class="field">
+      <%= f.label :territory %>
+      <%= select_tag "user[geographic_location_id]" %>
+    </div>

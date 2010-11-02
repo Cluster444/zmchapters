@@ -1,26 +1,37 @@
 <% title 'Create User' %>
 <% css 'users/new' %>
+<% js 'geo_location' %>
 
 <div class="user-new aaa">
   <h2>Create a new member</h2>
 
   <%= form_for @user do |f| %>
     <%= render :partial => '/shared/error_messages', :locals => {:object => @user} %>
+
     <div class="field">
       <%= f.label :name %>
       <%= f.text_field :name %>
     </div>
+
     <div class="field">
       <%= f.label :username %>
       <%= f.text_field :username %>
     </div>
+
     <div class="field">
       <%= f.label :email %>
       <%= f.text_field :email %>
     </div>
+
+    <%= render :partial => '/shared/forms/country_select', :locals => {:f => f} %>
+
     <div class="field">
       <%= f.label :roles %>
       <%= f.select :roles, User.valid_roles, :prompt => true %>
+    </div>
+
+    <div class="field">
+      <%= f.submit "Create Member" %>
     </div>
   <% end %>
 </div>
