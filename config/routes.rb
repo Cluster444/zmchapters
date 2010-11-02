@@ -9,7 +9,11 @@ Tzm::Application.routes.draw do
   end
   
   get '/geo/1', :to => redirect("/geo")
-  resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show] 
+  resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show] do
+    member do
+      get :territory_options
+    end
+  end
 
   resources :users, :path => 'user'
 

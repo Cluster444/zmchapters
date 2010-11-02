@@ -18,9 +18,13 @@
       <%= f.label :email %>
       <%= f.text_field :email %>
     </div>
+    <%= render :partial => '/shared/forms/country_select', :locals => {:f => f} %>
     <div class="field">
       <%= f.label :roles %>
       <%= f.select :roles, User.valid_roles, :prompt => true %>
+    </div>
+    <div class="field">
+      <%= f.submit "Edit Profile" %>
     </div>
   <% end %>
 

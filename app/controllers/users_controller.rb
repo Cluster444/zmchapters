@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def create
     @user.skip_confirmation!
-    if @user.save
+    if @user.save(:validate => false)
       flash[:notice] = "User registered."
       redirect_to user_path @user
     else
