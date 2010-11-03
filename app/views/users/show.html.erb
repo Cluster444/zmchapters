@@ -7,13 +7,13 @@
     <%= form_for current_user, :url => registration_path(current_user), :html => {:method => :put} do |f| %>
       <% if @user.name.blank? %>
         <div class="field">
-          <%= f.label 'Name' %>
+          <%= f.label :name %>
           <%= f.text_field :name %>
         </div>
       <% end %>
       <% if @user.username.blank? %>
         <div class="field">
-          <%= f.label 'Alias' %>
+          <%= f.label :username %>
           <%= f.text_field :username %>
         </div>
       <% end %>
@@ -27,6 +27,7 @@
     <h2><%= @user.name %></h2>
     <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
     <span class="info">
+      <%= @user.geographic_location %><br />
       <%= @user.username %><br />
     </span>
   </div>

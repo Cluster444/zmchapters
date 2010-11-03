@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   #FIXME - Probably shouldn't expose chapter_id like this...
-  attr_accessible :name, :username, :email, :password, :password_confirmation, :chapter_id, :roles_mask, :country_id, :roles
+  attr_accessible :name, :username, :email, :password, :password_confirmation, :chapter_id, :roles_mask, :roles,
+                  :geographic_location_id
 
   include RoleModel
 
@@ -10,4 +11,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :chapter, :counter_cache => true
+  
+  def geographic_location
+    loc = GeographicLocation.find geographic_location_id
+    "#{loc.name}, #{loc.parent.name}"
+  end
 end
