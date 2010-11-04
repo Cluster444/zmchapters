@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Chapter do
 
   before :each do
-    @attr = {}
+    @attr = Factory.attributes_for :chapter
   end
 
   it 'should create a new record with valid attributes' do
@@ -22,15 +22,15 @@ describe Chapter do
 
   it 'should create a user associated with itself' do
     chapter = Chapter.create! @attr
-    user = chapter.users.create!
+    user = chapter.users.create! Factory.attributes_for :user
     assert user.chapter == chapter
     assert chapter.users.first == user
   end
 
   it 'should create a user associated with itself and it\'s geographic location' do
-    geo = GeographicLocation.create!
-    chapter = geo.chapters.create!
-    user = chapter.users.create!
+    geo = GeographicLocation.create! Factory.attributes_for :geo
+    chapter = geo.chapters.create! @attr
+    user = chapter.users.create! Factory.attributes_for :user
     assert user.geographic_location == geo
     assert geo.users.first == user
   end

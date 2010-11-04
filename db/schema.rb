@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104102450) do
+ActiveRecord::Schema.define(:version => 20101104123730) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(:version => 20101104102450) do
     t.datetime "updated_at"
     t.integer  "geographic_location_id"
     t.integer  "chapter_id"
+    t.string   "name"
+    t.string   "username"
+    t.string   "email"
   end
 
 end

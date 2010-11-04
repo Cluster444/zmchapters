@@ -1,28 +1,23 @@
-Factory.define :chapter do |f|
-  f.region 'test'
-  f.description 'test'
-  f.language 'test'
-end
-
 Factory.define :user do |f|
-  f.name 'test test'
-  f.username 'test'
-  f.email 'test@test.com'
-  f.password 'foobarbaz'
-  f.password_confirmation 'foobarbaz'
+  f.name 'Test User'
+  f.sequence(:username) {|n| "test#{n}" }
+  f.sequence(:email) {|n| "test#{n}@test.com"}
 end
 
-Factory.define :country do |f|
-  f.name 'Canada'
-  f.currency_code 'CAD'
-  f.fips_code 'CA'
-  f.country_code 'CA'
-  f.iso_numeric '22'
-  f.capital 'Ottawa'
-  f.area_in_sq_km '200'
-  f.languages 'en fr'
-  f.iso_alpha3 'CA'
-  f.continent 'NA'
-  f.geoname_id '1111111'
-  f.population '800'
+Factory.define :geo, :class => GeographicLocation do |f|
+end
+
+Factory.define :chapter do |f|
+end
+
+Factory.define :geo_with_chapters, :parent => :geo do |f|
+  f.after_build do |geo|
+    geo.chapters = [Factory.build(:chapter, :geographic_location => geo)]
+  end
+end
+
+Factory.define :chapter_with_users, :parent => :chapter do |f|
+  f.after_build do |chapter|
+    chapter.users = [Factory.build(:user, :chapter => chapter)]
+  end
 end
