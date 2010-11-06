@@ -18,27 +18,34 @@ class ChaptersController < ApplicationController
     render :status => :not_found if @chapter.nil?
   end
 
-  #def new
-  #end
+  def new
+    @chapter = Chapter.new
+  end
 
-  #def edit
-  #end
+  def edit
+    @chapter = Chapter.find params[:id]
+    render :status => :not_found if @chapter.nil?
+  end
   
-  #def create
-  #  if @chapter.save
-  #    flash[:notice] = "Chapter created"
-  #    redirect_to chapter_path @chapter
-  #  else
-  #    render :new
-  #  end
-  #end
+  def create
+    @chapter = Chapter.new params[:chapter]
+    @chapter.save!
+    flash[:notice] = "Chapter created successfully"
+    redirect_to chapters_url
+  rescue ActiveRecord::RecordInvalid
+    render :new
+  end
 
-  #def update
-  #  if @chapter.update_attributes params[:chapter]
-  #    flash[:notice] = "Chapter updated"
-  #    redirect_to chapter_path @chapter
-  #  else
-  #    render :edit
-  #  end
-  #end
+  def update
+    @chapter = Chapter.find params[:id]
+    @chapter.update_attributes! params[:chapter]
+    flash[:notice] = "Chapter updated successfully"
+    redirect_to chapter_url(@chapter)
+  rescue ActiveRecord::RecordInvalid
+    render :edit
+  end
+
+  def destroy
+  
+  end
 end

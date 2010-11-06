@@ -1,6 +1,6 @@
 class Chapter < ActiveRecord::Base
   STATUS = %w(pending active inactive)
-  CATEGORY = %w(country, state, province, territory, city, county, university)
+  CATEGORY = %w(country state province territory city county university)
 
   belongs_to :geographic_location
   has_many :users
