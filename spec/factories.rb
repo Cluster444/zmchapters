@@ -8,6 +8,11 @@ Factory.define :geo, :class => GeographicLocation do |f|
 end
 
 Factory.define :chapter do |f|
+  f.name "Test Chapter"
+  f.category Chapter::CATEGORY.first
+end
+
+Factory.define :coordinator do |f|
 end
 
 Factory.define :geo_with_chapters, :parent => :geo do |f|

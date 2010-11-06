@@ -10,12 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104123730) do
+ActiveRecord::Schema.define(:version => 20101106052520) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "geographic_location_id"
+    t.string   "name"
+    t.string   "category"
+    t.string   "status"
+  end
+
+  create_table "coordinators", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "chapter_id"
   end
 
   create_table "geographic_locations", :force => true do |t|
