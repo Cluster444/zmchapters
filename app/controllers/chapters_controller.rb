@@ -1,21 +1,15 @@
 class ChaptersController < ApplicationController
-  #load_and_authorize_resource :chapter
-  
-  def index
-    @chapters = Chapter.paginate :page => params[:page]
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:error] = "Chapter not found"
+    redirect_to chapters_url
   end
-  #def index
-  #  unless params[:search].blank?
-  #    @chapters = Chapter.search "%#{params[:search]}%", params[:page]
-  #  else
-  #    params[:like] = '%' if params[:like].blank?
-  #    @chapters = Chapter.search "#{params[:like]}%", params[:page]
-  #  end
-  #end
+
+  def index
+    @chapters = Chapter.all
+  end
 
   def show
     @chapter = Chapter.find params[:id]
-    render :status => :not_found if @chapter.nil?
   end
 
   def new
@@ -24,14 +18,13 @@ class ChaptersController < ApplicationController
 
   def edit
     @chapter = Chapter.find params[:id]
-    render :status => :not_found if @chapter.nil?
   end
   
   def create
     @chapter = Chapter.new params[:chapter]
     @chapter.save!
     flash[:notice] = "Chapter created successfully"
-    redirect_to chapters_url
+    redirect_to chapter_url(@chapter)
   rescue ActiveRecord::RecordInvalid
     render :new
   end
@@ -46,6 +39,9 @@ class ChaptersController < ApplicationController
   end
 
   def destroy
-  
+    @chapter = Chapter.find params[:id]
+    @chapter.destroy
+    flash[:notice] = "Chapter has been removed"
+    redirect_to chapters_url
   end
 end
