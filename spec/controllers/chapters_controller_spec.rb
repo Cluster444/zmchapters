@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-def do_create
-  post :create, :chapter => {:name => "value"}
-end
-
-def do_update
-  put :update, :id => 1, :chapter => {:name => "value"}
-end
-
 describe ChaptersController do
+
+  def do_create
+    post :create, :chapter => {:name => "value"}
+  end
+
+  def do_update
+    put :update, :id => 1, :chapter => {:name => "value"}
+  end
 
   def mock_chapter(stubs={})
     @mock_chapter ||= mock_model(Chapter, stubs)
@@ -90,10 +90,6 @@ describe ChaptersController do
       @mock_chapter.stub!(:save!)
     end
 
-    def do_create
-      post :create, :chapter => {:name => "value"}
-    end
-
     it 'should assign a new chapter to @chapter using the params' do
       Chapter.should_receive(:new).with("name"=>"value").once.and_return(@mock_chapter)
       do_create
@@ -129,10 +125,6 @@ describe ChaptersController do
       @mock_chapter.stub!(:update_attributes!).with("name"=>"value")
     end
     
-    def do_update
-      put :update, :id => 1, :chapter => {:name => "value"}
-    end
-
     describe "for an existing chapter" do
       it 'should assign a chapter from the given id to @chapter' do
         Chapter.should_receive(:find).with(1).once.and_return(@mock_chapter)

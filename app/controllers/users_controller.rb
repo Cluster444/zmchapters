@@ -1,43 +1,47 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource :user
-  
+  rescue_from ActiveRecord::RecordNotFound do
+    redirect_to users_url
+    flash[:error] = "User not found"
+  end
+
   def index
+    @users = User.all
   end
 
   def show
+    @user = User.find params[:id]
   end
 
   def new
+    @user = User.new
   end
 
   def edit
+    @user = User.find params[:id]
   end
 
   def create
-    @user.skip_confirmation!
-    if @user.save(:validate => false)
-      flash[:notice] = "User registered."
-      redirect_to user_path @user
-    else
-      render :new
-    end
+    @user = User.new params[:user]
+    @user.save!
+    flash[:success] = "User created successfully"
+    redirect_to user_url(@user)
+  rescue ActiveRecord::RecordInvalid
+    render :new
   end
 
   def update
-    if params[:user][:password].blank?
-      [:password, :password_confirmation].collect{|p| params[:user].delete(p)}
-    else
-      @user.errors[:base] << "The password you entered is incorrect" unless @user.valid_password?(params[:user][:current_password])
-    end
-
-    if @user.errors[:base].empty? and @user.update_attributes params[:user]
-      flash[:notice] = "User profile udpated"
-      redirect_to @user
-    else
-      render :edit
-    end
+    @user = User.find params[:id]
+    @user.update_attributes! params[:user]
+    flash[:success] = "User updated succesfully"
+    redirect_to user_url(@user)
+  rescue ActiveRecord::RecordInvalid
+    render :edit
   end
 
   def destroy
+    @user = User.find params[:id]
+    @user.destroy
+    flash[:success] = "User removed"
+    redirect_to users_url
   end
 end
