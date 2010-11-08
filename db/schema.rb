@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101106052520) do
+ActiveRecord::Schema.define(:version => 20101108111355) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20101106052520) do
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.string   "name"
   end
 
   create_table "users", :force => true do |t|

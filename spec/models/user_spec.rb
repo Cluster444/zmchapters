@@ -6,44 +6,44 @@ describe User do
   end
 
   it 'should create a new record with valid attributes' do
-    User.create! @attr
+    Factory.create(:user)
   end
 
-  it 'should have a geographic location' do
-    user = User.new
-    user.should respond_to :geographic_location
-  end
+  describe 'associations' do
+    it 'should have a geographic location' do
+      user = User.new
+      user.should respond_to :geographic_location
+    end
 
-  it 'should have a chapter' do
-    user = User.new
-    user.should respond_to :chapter
+    it 'should have a chapter' do
+      user = User.new
+      user.should respond_to :chapter
+    end
   end
+  
+  describe 'validations' do
+    it 'should require a name of max length 50' do
+      ['','a'*51].each do |bad_name|
+        bad_name_user = Factory.build(:user, :name => bad_name)
+        bad_name_user.should_not be_valid
+      end
+    end
 
-  it 'should require a name of max length 50' do
-    blank_name_user = Factory.build :user, :name => ''
-    long_name_user = Factory.build :user, :name => 'a'*51
-    blank_name_user.should_not be_valid
-    long_name_user.should_not be_valid
-  end
+    it 'should require a unique username of max length 30' do
+      #User.create @attr
+      Factory(:user, :username => 'dup_username')
+      ['','a'*31,'dup_username'].each do |bad_username|
+        bad_username_user = Factory.build(:user, :username => bad_username)
+        bad_username_user.should_not be_valid
+      end
+    end
 
-  it 'should require a unique username of max length 30' do
-    User.create @attr
-    blank_username_user = Factory.build :user, :username => ''
-    dup_username_user = User.new @attr
-    long_username_user = Factory.build :user, :username => 'a'*31
-    blank_username_user.should_not be_valid
-    dup_username_user.should_not be_valid
-    long_username_user.should_not be_valid
-  end
-
-  it 'should require an email' do
-    blank_email_user = Factory.build :user, :email => ''
-    blank_email_user.should_not be_valid
-  end
-
-  it 'should have a unique email' do
-    user = Factory :user
-    dup_email_user = Factory.build :user, :email => user.email
-    dup_email_user.should_not be_valid
+    it 'should require a unique email' do
+      Factory(:user, :email => 'dup@test.com')
+      ['','dup@test.com'].each do |bad_email|
+        bad_email_user = Factory.build(:user, :email => bad_email)
+        bad_email_user.should_not be_valid
+      end
+    end
   end
 end

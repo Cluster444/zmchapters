@@ -2,31 +2,34 @@ require 'spec_helper'
 
 describe Coordinator do
   before :each do
-    @attr = Factory.attributes_for :coordinator
+    @user = Factory(:user)
   end
 
   it 'should create a new record with valid attributes' do
-    Coordinator.create! @attr
+    Factory(:coordinator, :user => @user)
   end
+  
+  describe 'associations' do
+    it 'should belong to a user profile' do
+      coordinator = Coordinator.new
+      coordinator.should respond_to :user
+    end
 
-  it 'should belong to a user profile' do
-    coordinator = Coordinator.new
-    coordinator.should respond_to :user
+    it 'should belong to a chapter' do
+      coordinator = Coordinator.new
+      coordinator.should respond_to :chapter
+    end
   end
+  
+  describe 'validations' do
+    it 'should require a chapter' do
+      coordinator = Factory.build(:coordinator, :chapter => nil)
+      coordinator.should_not be_valid
+    end
 
-  it 'should belong to a chapter' do
-    coordinator = Coordinator.new
-    coordinator.should respond_to :chapter
-  end
-
-  it 'should allow user and chapter to be set' do
-    coordinator = Coordinator.create!
-    user = Factory :user
-    chapter = Factory :chapter
-    coordinator.user = user
-    coordinator.chapter = chapter
-    coordinator.save!
-    assert Coordinator.first.user == user
-    assert Coordinator.first.chapter == chapter
+    it 'should require a user' do
+      coordinator = Factory.build(:coordinator, :user => nil)
+      coordinator.should_not be_valid
+    end
   end
 end

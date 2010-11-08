@@ -1,6 +1,6 @@
 class Chapter < ActiveRecord::Base
-  STATUS = %w(pending active inactive)
-  CATEGORY = %w(country state province territory city county university)
+  STATES = %w(pending active inactive)
+  CATEGORIES = %w(country state province territory city county university)
 
   belongs_to :geographic_location
   has_many :users
@@ -12,11 +12,13 @@ class Chapter < ActiveRecord::Base
                    :length => {:maximum => 50}
 
   validates :category, :presence => true, 
-                       :inclusion => {:in => CATEGORY}
+                       :inclusion => {:in => CATEGORIES}
 
   validates :status, :presence => true, 
-                     :inclusion => {:in => STATUS}, 
+                     :inclusion => {:in => STATES}, 
                      :unless => :new_record?
+  
+  validates :geographic_location, :presence => true
   
   def pending!
     self.status = "pending"

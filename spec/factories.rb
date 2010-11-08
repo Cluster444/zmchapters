@@ -1,28 +1,19 @@
+Factory.define :geo, :class => GeographicLocation do |f|
+  f.name "Test Geo"
+end
+
+Factory.define :chapter do |f|
+  f.name "Test Chapter"
+  f.category Chapter::CATEGORIES.first
+  f.geographic_location Factory(:geo)
+end
+
 Factory.define :user do |f|
   f.name 'Test User'
   f.sequence(:username) {|n| "test#{n}" }
   f.sequence(:email) {|n| "test#{n}@test.com"}
 end
 
-Factory.define :geo, :class => GeographicLocation do |f|
-end
-
-Factory.define :chapter do |f|
-  f.name "Test Chapter"
-  f.category Chapter::CATEGORY.first
-end
-
 Factory.define :coordinator do |f|
-end
-
-Factory.define :geo_with_chapters, :parent => :geo do |f|
-  f.after_build do |geo|
-    geo.chapters = [Factory.build(:chapter, :geographic_location => geo)]
-  end
-end
-
-Factory.define :chapter_with_users, :parent => :chapter do |f|
-  f.after_build do |chapter|
-    chapter.users = [Factory.build(:user, :chapter => chapter)]
-  end
+  f.chapter Factory(:chapter)
 end
