@@ -12,6 +12,8 @@ Factory.define :user do |f|
   f.name 'Test User'
   f.sequence(:username) {|n| "test#{n}" }
   f.sequence(:email) {|n| "test#{n}@test.com"}
+  f.password 'testpassword'
+  f.password_confirmation 'testpassword'
 end
 
 Factory.define :coordinator do |f|

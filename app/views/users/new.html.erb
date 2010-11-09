@@ -1,4 +1,4 @@
-<% title 'Create User' %>
+<% title 'Sign Up' %>
 <% css 'users/new' %>
 <% js 'geo_location' %>
 
@@ -11,26 +11,27 @@
       <%= f.label :name %>
       <%= f.text_field :name %>
     </div>
-
     <div class="field">
       <%= f.label :username %>
       <%= f.text_field :username %>
     </div>
-
     <div class="field">
       <%= f.label :email %>
       <%= f.text_field :email %>
     </div>
-
-    <%= render :partial => '/shared/forms/country_select', :locals => {:f => f} %>
-
     <div class="field">
-      <%= f.label :roles %>
-      <%= f.select :roles, User.valid_roles, :prompt => true %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <div class="field">
+      <%= f.label :confirmation %>
+      <%= f.password_field :password_confirmation %>
     </div>
 
-    <div class="field">
-      <%= f.submit "Create Member" %>
+    <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f} %>
+
+    <div class="actions">
+      <%= f.submit "Sign Up" %>
     </div>
   <% end %>
 </div>

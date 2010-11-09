@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :rememberable, :recoverable, :trackable, :validatable
+
   belongs_to :geographic_location
   belongs_to :chapter
 

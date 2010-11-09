@@ -72,6 +72,39 @@ div .alert {background: #FFFFCC;}
 .chapter-editor a{background: #DDD;border:1px solid #CCC;border-bottom:0;color:#333;float:left;padding:5px;text-decoration:none;text-shadow: 0 1px #EEE;-moz-box-shadow: 0 1px #F0F0F0 inset;-webkit-box-shadow: 0 1px #F0F0F0 inset;}
 .chapter-editor a:hover{background: #CCC;color: #222;-moz-box-shadow: 0 1px #FAFAFA inset;-webkit-box-shadow: 0 1px #FAFAFA inset;}
 .chapter-editor a:active{color:#000;}
+
+.field {height:60px; position:relative;}
+
+.field label {
+  border:1px solid #555; 
+  position:absolute; top:7px;font-size:27px;
+  width:160px; height:46px;
+  text-align:center;
+  border-radius:10px 0 0 10px; -moz-border-radius:5px;
+}
+.field input, .field select {
+  margin-left:160px; margin-top:7px; font-size:36px;
+  border-radius: 0 10px 10px 0; -moz-border-radius:5px;
+}
+
+.field input:hover, .field select:hover {
+  -moz-box-shadow: 0 0 5px #3AF; -webkit-box-shadow: 0 0 5px #3AF;
+}
+
+.field input:focus, .field select:focus {
+  -moz-box-shadow: 0 0 5px #17C; -webkit-box-shadow: 0 0 5px #17C;
+}
+
+.actions input {
+  background: #000; color:#fff;
+  border:0;
+  font-size:33px;
+  width:160px; height:50px;
+  border-radius: 5px;
+}
+
+.actions input:hover {background:#999;}
+
 /* Sign Up/In Style */
 /*
 form#user_new {width: 100%;}
