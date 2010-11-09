@@ -142,8 +142,10 @@ DEPENDENCIES
   annotate-models (= 1.0.4)
   cancan
   capybara
+  celerity
   cucumber
   cucumber-rails
+  culerity
   database_cleaner
   devise
   factory_girl_rails (= 1.0)

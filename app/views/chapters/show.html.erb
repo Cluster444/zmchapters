@@ -1,21 +1,18 @@
 <% title 'Chapter:'+@chapter.name %>
 <% css 'chapters/show' %>
 
-<%= render :partial => 'chapter_editor', :locals => {:chapter => @chapter} %>
 <div class="chapter-container grid_24">
   <div class="top">
     <div class="left">
       <h2><%= @chapter.name %></h2>
       <span class="info">
         <%= @chapter.geographic_location.name %><br />
-        <%= pluralize @chapter.users_count, 'Member' %>
+        <%= pluralize @chapter.users.count, 'Member' %>
       </span>
     </div>
     <div class="right">
       <ul>
-        <% @chapter.hyperlinks.each do |link| %>
-          <li><%= link_to "#{link.title.humanize}", "#{link.url}" %></li>
-        <% end %>
+        <li>Hyperlinks</li>
       </ul>
     </div>
   </div>

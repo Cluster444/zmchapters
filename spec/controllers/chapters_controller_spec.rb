@@ -3,7 +3,8 @@ require 'spec_helper'
 describe ChaptersController do
 
   def do_create
-    post :create, :chapter => {:name => "value"}
+    geo = Factory(:geo)
+    post :create, :chapter => Factory.attributes_for(:chapter, :geographic_location_id => geo.id)
   end
 
   def do_update
@@ -14,37 +15,30 @@ describe ChaptersController do
     @mock_chapter ||= mock_model(Chapter, stubs)
   end
 
-  def make_chapters(count=10)
-    chapters = []
-    count.times do
-      chapters << Factory.build(:chapter)
-    end
-    chapters
+  before :each do
+    Chapter.delete_all
+    @chapters = (1..3).collect {Factory(:chapter)}
+    @chapter = @chapters.first
   end
 
   describe "GET index" do
     it 'assigns all chapters as @chapters' do
-      chapters = make_chapters
-      Chapter.stub(:all).and_return(chapters)
       get :index
-      assigns[:chapters].should == chapters
+      assigns[:chapters].should == @chapters
     end
   end
   
   describe "GET show" do
     describe "for a record that exists" do
       it 'should assign @chapter from the id' do
-        mock_chapter
-        Chapter.stub!(:find).with(1).and_return(@mock_chapter)
-        get :show, :id => 1
-        assigns[:chapter].should == @mock_chapter
+        get :show, :id => @chapter.id
+        assigns[:chapter].should == @chapter
       end
     end
 
     describe "for a record that doesn't exist" do
       it 'should redirect to the index with a flash error' do
-        Chapter.stub!(:find).and_raise(ActiveRecord::RecordNotFound)
-        get :show, :id => 1
+        get :show, :id => @chapters.last.id + 1
         response.should redirect_to chapters_url
         flash[:error].should_not be_nil
       end
@@ -53,30 +47,23 @@ describe ChaptersController do
 
   describe "GET new" do
     it 'should assign a new chapter to @chapter' do
-      chapter = Chapter.new
-      Chapter.stub(:new).and_return(chapter)
       get :new
-      assigns[:chapter].should == chapter
+      assigns[:chapter].should_not be_nil
+      assigns[:chapter].should be_new_record
     end
   end
 
   describe "GET edit" do
-    before :each do
-      mock_chapter
-    end
-
     describe "for a record that exists" do
       it 'should assign the chapter for the id to @chapter' do
-        Chapter.stub!(:find).with(1).and_return(@mock_chapter)
-        get :edit, :id => 1
-        assigns[:chapter].should == @mock_chapter
+        get :edit, :id => @chapter.id
+        assigns[:chapter].should == @chapter
       end
     end
 
     describe "for a record that does not exist" do
       it 'should redirect to the index with a flash error' do
-        Chapter.stub!(:find).and_raise(ActiveRecord::RecordNotFound)
-        get :edit, :id => 1
+        get :edit, :id => @chapters.last.id + 1
         response.should redirect_to chapters_url
         flash[:error].should_not be_nil
       end
@@ -84,35 +71,9 @@ describe ChaptersController do
   end
 
   describe "POST create" do
-    before :each do
-      mock_chapter
-      Chapter.stub!(:new).with("name"=>"value").and_return(@mock_chapter)
-      @mock_chapter.stub!(:save!)
-    end
-
-    it 'should assign a new chapter to @chapter using the params' do
-      Chapter.should_receive(:new).with("name"=>"value").once.and_return(@mock_chapter)
-      do_create
-      assigns[:chapter].should == @mock_chapter
-    end
-
-    it 'should save the chapter' do
-      @mock_chapter.should_receive(:save!)
-      do_create
-    end
-
-    describe "with valid params" do
-      it 'should redirect to show with a flash notice' do
-        do_create
-        response.should redirect_to chapter_url(@mock_chapter)
-        flash[:notice].should_not be_nil
-      end
-    end
-
     describe "with invalid params" do
       it 'should render the new template' do
-        @mock_chapter.stub!(:save!).and_raise(ActiveRecord::RecordInvalid.new(@mock_chapter))
-        do_create
+        post :create
         response.should render_template 'chapters/new'
       end
     end

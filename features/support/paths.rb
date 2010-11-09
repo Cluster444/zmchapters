@@ -12,6 +12,9 @@ module NavigationHelpers
       '/'
     when /the list of chapters/
       chapters_path
+    when /the (.+) chapter page/
+      chapter = Chapter.find_by_name($1)
+      chapter_path(chapter)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

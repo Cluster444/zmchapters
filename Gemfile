@@ -13,6 +13,8 @@ group :development, :test do
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'cucumber'
+  gem 'culerity'
+  gem 'celerity', :require => nil
   gem 'database_cleaner'
 end
 

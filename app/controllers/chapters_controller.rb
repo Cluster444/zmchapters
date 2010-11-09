@@ -22,6 +22,8 @@ class ChaptersController < ApplicationController
   
   def create
     @chapter = Chapter.new params[:chapter]
+    location = GeographicLocation.find params[:geo][:id]
+    @chapter.geographic_location = location
     @chapter.save!
     flash[:notice] = "Chapter created successfully"
     redirect_to chapter_url(@chapter)

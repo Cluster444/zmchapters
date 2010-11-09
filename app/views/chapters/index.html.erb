@@ -2,44 +2,6 @@
 <% css 'chapters/index' %>
 
 <div class="chapters-container">
-  <div class="search grid_24">
-    <%= form_tag '/chapters', :method => 'get' do %>
-      <%= label_tag 'Find a Chapter' %>
-      <%= text_field_tag :search %>
-    <% end %>
-  </div>
-  <% if @chapters.any? %>
-    <div id="body-header" class="grid_24">
-      <div class="global-stats">
-        <h3>TZM Global</h3>
-        <span class="info">
-          <%= pluralize GeographicLocation.countries_with_chapters.count, 'Country' %><br />
-          <%= pluralize Chapter.all.count, 'Chapter' %><br />
-          <%= pluralize User.all.count, 'Member' %>
-        </span>
-      </div>
-      
-      <div class="index">
-        <ul>
-          <% ('A'..'Z').each do |n| %>
-            <li<%=raw ' class="current"' if n == params[:like] %>>
-            <% if Chapter.where("name LIKE ?", "#{n}%").any? %>
-              <%= link_to n, :controller => 'chapters', :like => n %>
-            <% else %>
-              <%=raw '<span>'+n+'</span>' %>
-            <% end %>
-            </li>
-          <% end %>
-          <li<%=raw ' class="current"' if params[:like] == '%' %>>
-            <%= link_to 'All', chapters_path %>
-          </li>
-        </ul>
-      </div>
-    </div>
-      
-    <%= render :partial => 'chapter', :collection => @chapters %>
-
-  <% else %>
-    <div class="error grid_24"><span>No chapters found<%= " like "+params[:search] if params[:search] %>!</span></div>
-  <% end %>
+  <%= link_to "New Chapter", new_chapter_path %>
+  <%= render @chapters %>
 </div>
