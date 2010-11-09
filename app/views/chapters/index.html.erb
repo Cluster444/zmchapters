@@ -13,7 +13,7 @@
       <div class="global-stats">
         <h3>TZM Global</h3>
         <span class="info">
-          <%= pluralize GeographicLocation.find_countries_with_chapters.count, 'Country' %><br />
+          <%= pluralize GeographicLocation.countries_with_chapters.count, 'Country' %><br />
           <%= pluralize Chapter.all.count, 'Chapter' %><br />
           <%= pluralize User.all.count, 'Member' %>
         </span>
@@ -37,9 +37,7 @@
       </div>
     </div>
       
-    <%= will_paginate @chapters %>
     <%= render :partial => 'chapter', :collection => @chapters %>
-    <%= will_paginate @chapters %>
 
   <% else %>
     <div class="error grid_24"><span>No chapters found<%= " like "+params[:search] if params[:search] %>!</span></div>

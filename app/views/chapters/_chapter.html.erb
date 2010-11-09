@@ -3,8 +3,8 @@
   <% name = truncate chapter.name, :length => 18 %>
   <h3><%= link_to name, chapter_path(chapter) %></h3>
   <span class="info">
-    <%= truncate chapter.geographic_location.parent.name, :length => 35 %><br />
-    <%= pluralize chapter.users_count, 'Member' %>
+    <%= truncate "chapter.geographic_location.parent.name", :length => 35 %><br />
+    <%= pluralize chapter.users.count, 'Member' %>
   </span>
   </div>
 </div>

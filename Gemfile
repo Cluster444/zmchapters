@@ -10,7 +10,7 @@ gem 'nested_set'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'
-  gem 'webrat'
+  gem 'capybara'
   gem 'cucumber-rails'
   gem 'cucumber'
   gem 'database_cleaner'

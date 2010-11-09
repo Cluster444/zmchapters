@@ -2,20 +2,8 @@
   <ul>
     <li><%= link_to 'Home', root_path %></li>
     <li><%= link_to 'Chapters', chapters_path %></li>
-    <li><%= link_to 'Geography', geo_index_path %></li>
-    <% if can? :read, User %>
-      <li><%= link_to 'Members', users_path %></li>
-    <% end %>
+    <li><%= link_to 'Members', users_path %></li>
   </ul>
   <ul class="auth">
-    <% if user_signed_in? %>
-      <li>Signed in as <%= current_user.email %>.</li>
-      <li><%= link_to 'Profile', user_path(current_user) %></li>
-      <li><%= link_to 'Sign_Out', destroy_user_session_path %></li>
-    <% else %>
-      <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-      <li><%= link_to 'Sign In', new_user_session_path %></li>
-    <% end %>
   </ul>
-  
 </div>
