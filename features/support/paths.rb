@@ -15,6 +15,10 @@ module NavigationHelpers
     when /the (.+) chapter page/
       chapter = Chapter.find_by_name($1)
       chapter_path(chapter)
+    when /the continent list/
+      geo_index_path
+    when /login/
+      new_user_session_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

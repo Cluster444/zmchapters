@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user.chapter = @chapter unless @chapter.nil?
     @user.geographic_location = @location unless @location.nil?
     @user.save!
-    flash[:success] = "User created successfully"
+    flash[:success] = "Account created successfully"
     redirect_to user_url(@user)
   rescue ActiveRecord::RecordInvalid
     render :new

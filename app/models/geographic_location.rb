@@ -14,6 +14,14 @@ class GeographicLocation < ActiveRecord::Base
     countries.reject {|country| not country.chapters.any?}
   end
 
+  def children_with_chapters
+    children.reject {|child| not child.chapters.any?}
+  end
+
+  def children_without_chapters
+    children.reject {|child| child.chapters.any?}
+  end
+
   def is_continent?
     depth == 1
   end

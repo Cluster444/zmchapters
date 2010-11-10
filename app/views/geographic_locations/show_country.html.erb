@@ -4,18 +4,6 @@
 <div class="geographic-locations-show-country">
   <%= render :partial => 'breadcrumb', :locals => {:node => @country} %>
   <h2><%= @country.name %></h2>
-  <% unless @country.has_chapter? %>
-    <% if can? :create, Chapter %>
-      <%= form_for Chapter.new do |f| %>
-        <%= f.hidden_field :name, :value => @country.name %>
-        <%= f.hidden_field :geographic_location_id, :value => @country.id %>
-        <%= f.hidden_field :type, :value => 'country' %>
-        <%= f.submit "Create Chapter" %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= link_to 'Chapter Page', chapter_path(@country.chapters.first) %>
-  <% end %>
   <h4>Territories with chapters</h4>
   <% @country.children_with_chapters.each do |territory| %>
     <div class="territory">

@@ -6,7 +6,7 @@
     </div>
     <div class="field">
       <%= f.label :category %>
-      <%= f.select :category, Chapter::CATEGORIES.collect(&:humanize) %>
+      <%= f.select :category, Chapter::CATEGORIES.map {|c| [c.humanize,c]}  %>
     </div>
     <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f} %>
     <div class="actions">

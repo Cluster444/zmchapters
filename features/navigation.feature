@@ -19,7 +19,19 @@ Feature: Site Navigation
     When I follow "Members"
     Then I should see "Members Index"
 
+  Scenario: HomePage to Geography
+    Given I am on the home page
+    Then I should see "Geography"
+    When I follow "Geography"
+    Then I should see "Continents"
+
   Scenario: Sign in
     Given I am on the home page
     When I follow "Sign In"
     Then I should see "Sign In"
+
+  Scenario: Sign up
+    Given I am on the home page
+    When I follow "Sign Up"
+    Then I should see "Sign Up"
+
