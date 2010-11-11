@@ -8,14 +8,12 @@ Given /^I have no chapters$/ do
   Chapter.delete_all
 end
 
-Given /^I have geography$/ do
-  root = Factory(:geo, :name => "Root")
-  continent = Factory(:geo, :name => "Continent")
-  country = Factory(:geo, :name => "Country")
-  territory = Factory(:geo, :name => "Territory")
-  continent.move_to_child_of root
-  country.move_to_child_of continent
-  territory.move_to_child_of country
+# Given I have a <type> chapter named "<chapter>" in "<geo>"
+Given /^I have a ([a-zA-Z]+) chapter named "([^"]+)" in "([^"]+)"$/ do |category, name, geo_name|
+  Given %{I have a location "#{geo_name}"}
+  territory_name = geo_name.split(", ").first
+  geo = GeographicLocation.find_by_name(territory_name)
+  Factory(:chapter, :name => name, :category => category, :geographic_location => geo
 end
 
 Then /^I should have (\d+) chapters?$/ do |count|
