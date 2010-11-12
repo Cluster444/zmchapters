@@ -6,3 +6,4 @@ config/database.yml
 script/
 .*.swp
 webrat.log
+features/tmp

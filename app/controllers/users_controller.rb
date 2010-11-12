@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     flash[:error] = "User not found"
   end
 
-  before_filter :load_chapter_or_location, :only => [:create,:show]
+  before_filter :load_chapter_or_location, :only => [:create,:update]
 
   def index
     @users = User.all
@@ -12,6 +12,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
+    @chapter = @user.chapter unless @user.chapter.nil?
+    @country = @user.geographic_location.parent
   end
 
   def new

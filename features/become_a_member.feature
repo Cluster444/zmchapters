@@ -1,8 +1,7 @@
 Feature: Become a member
   In order to join the zeitgeist movement
   As a volunteer
-  I want to be able to register and join a local
-  chapter in my area.
+  I want to be able to register
 
   Scenario: Create a user profile
     Given I am not logged in
@@ -21,4 +20,4 @@ Feature: Become a member
     And I should see "Tester"
     And I should see "Find a chapter in your area"
     When I follow "Find a chapter in your area"
-    Then I should see "Chapters Index"
+    Then I should be on the chapters page

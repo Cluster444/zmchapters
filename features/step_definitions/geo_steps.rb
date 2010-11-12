@@ -1,18 +1,28 @@
-Given /^I have a location "(?:(?:([a-zA-Z ]+), )?(?:([a-zA-Z ]+), ))?([a-zA-Z ]+)"$ do |territory, country, continent|
-  root = GeographicLocation.root || Factory(:geo, :name => "Earth")
+# Given a location exists for "Alberta, Canada, North America"
+Given(/^a location exists for "(?:(?:([a-zA-Z ]+), )?(?:([a-zA-Z ]+), ))?([a-zA-Z ]+)"$/) do |territory, country, continent|
+  earth = GeographicLocation.find_by_name("Earth") || Factory(:geo, :name => "Earth")
   if territory
-    Given %{I have a location "#{country}, #{continent}"}
-    geo_country = GeographicLocation.find_by_name(country)
-    Factory(:geo, territory).move_to_child_of geo_country
+    Given %{a location exists for "#{country}, #{continent}"}
+    And %{a location exists with name: "#{territory}"}
+    And %{"#{territory}" is a location within "#{country}"}
   elsif country
-    Given %{I have a location "#{continent}"}
-    geo_continent = GeographicLocation.find_by_name(continent)
-    Factory(:geo, :name => country).move_to_child_of geo_continent
+    Given %{a location exists for "#{continent}"}
+    And %{a location exists with name: "#{country}"}
+    And %{"#{country}" is a location within "#{continent}"}
   else
-    Factory(:geo, :name => continent).move_to_child_of root
+    Given %{a location exists with name: "#{continent}"}
+    And %{"#{continent}" is a location within "Earth"}
   end
 end
 
-Given /^I have basic geography$/ do
-  Given %{I have a location "Territory, Country, Continent"}
+Given(/^a location exists with (.+)$/) do |fields|
+  Given %{a geographic location exists with #{fields}}
+end
+
+Given(/^"([^"]+)" is a location within "([^"]+)"$/) do |child, parent|
+  GeographicLocation.find_by_name(child).move_to_child_of(GeographicLocation.find_by_name(parent));
+end
+
+Given(/^basic geography exists$/) do
+  Given %{a location exists for "Territory, Country, Continent"}
 end

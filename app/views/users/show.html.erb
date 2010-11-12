@@ -1,28 +1,8 @@
-<% title 'Member Profile' %>
+<% title 'My Profile' %>
 <% css 'users/show' %>
 
 <div class="user-show grid_24">
   
-  <% if current_user == @user and (@user.username.blank? or @user.name.blank?) %>
-    <%= form_for current_user, :url => registration_path(current_user), :html => {:method => :put} do |f| %>
-      <% if @user.name.blank? %>
-        <div class="field">
-          <%= f.label :name %>
-          <%= f.text_field :name %>
-        </div>
-      <% end %>
-      <% if @user.username.blank? %>
-        <div class="field">
-          <%= f.label :username %>
-          <%= f.text_field :username %>
-        </div>
-      <% end %>
-      <div class="actions">
-        <%= f.submit "Update Info" %>
-      </div>
-    <% end %>
-  <% end %>
-
   <div class="user grid_10 alpha">
     <h2><%= @user.name %></h2>
     <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
@@ -37,11 +17,10 @@
       <h2><%= @chapter.name %></h2>
       <span class="info">
         <%= @country.name %>
-        <%= pluralize @chapter.users_count, 'User' %>
+        <%= pluralize @chapter.users.count, 'User' %>
       </span>
-      <p><%= @chapter.description %></p>
     <% else %>
-      Join a chapter!
+      <h2><%= link_to "Find a chapter in your area", chapters_path %></h2>
     <% end %>
   </div>
 </div>

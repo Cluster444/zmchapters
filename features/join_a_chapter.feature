@@ -3,12 +3,16 @@ Feature: Join a chapter
   As a volunteer
   I need to be able to join a chapter
 
+  Background:
+    Given a user exists
+    And is logged in
+    And a location exists for "Alberta, Canada, North America"
+    And a city chapter exists for "Calgary" in "Alberta"
+
   Scenario: Join a chapter
-    Given I am a new, authenticated member
-    And I have a city chapter named "Calgary" in "Alberta, Canada, North America"
-    And I am on the chapters page
+    Given I am on the chapters page
     When I follow "Chapters"
     And I follow "Calgary"
     And I press "Join this chapter"
     Then I should see "My Profile"
-    And I should see "You have joined the Calgary chapter"
+    And I should see "Calgary"

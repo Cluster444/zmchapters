@@ -2,6 +2,10 @@
 <% css 'chapters/show' %>
 
 <div class="chapter-container grid_24">
+  <%= form_for current_user, :method => :put do |f| %>
+    <%= hidden_field :chapter, :id %>
+    <%= f.submit "Join this chapter" %>
+  <% end %>
   <div class="top">
     <div class="left">
       <h2><%= @chapter.name %></h2>
