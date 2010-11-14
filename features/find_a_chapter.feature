@@ -4,29 +4,33 @@ Feature: Find a chapter
   I want to be able to find a chapter in my area
   
   Background:
-    Given I am a new, authenticated member
-    And I have a city chapter named "Calgary" in "Alberta, Canada, North America"
+    Given a user exists
+    And is logged in
+    And a location exists for "Alberta, Canada, North America"
+    And a city chapter exists for "Calgary" in "Alberta"
 
   Scenario: Find a chapter by browsing
     Given I am on the home page
     When I follow "Chapters"
     And I follow "Calgary"
-    Then I should see "Join this chapter"
-
-  Scenario: Find a chapter by searching
+    And I press "Join this chapter"
+    Then I should see "My Profile"
+    And I should see "Calgary"
+  
+  Scenario: Find a chapter by searching with exact match
     Given I am on the chapters page
-    Then I should see "Search"
-    When I fill in "Calgary" for "chapter_search"
+    When I fill in "Calgary" for "search_name"
     And I press "Search"
-    Then I shuold "Calgary"
-    And I should see "Join this chapter"
+    And I press "Join this chapter"
+    Then I should see "My Profile"
+    And I should see "Calgary"
 
   Scenario: Find a chapter by geography
     Given I am on the geo page
     When I follow "North America"
     And I follow "Canada"
     And I follow "Alberta"
-    Then I should see "Calgary"
-    When I follow "Calgary"
-    Then I should see "Calgary"
-    And I should see "Join this chapter"
+    And I follow "Calgary"
+    And I press "Join this chapter"
+    Then I should see "My Profile"
+    And I should see "Calgary"

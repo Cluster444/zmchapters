@@ -13,6 +13,9 @@ module NavigationHelpers
 
     when /the login page/
       new_user_session_path
+
+    when /the geo page/
+      geo_index_path
     
     # the following are examples using path_to_pickle
 

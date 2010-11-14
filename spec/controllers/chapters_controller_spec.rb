@@ -45,6 +45,40 @@ describe ChaptersController do
     end
   end
 
+  describe "GET search" do
+    describe "for a single result" do
+      before :each do
+        @chapter = Factory(:chapter, :name => 'Calgary')
+      end
+
+      it 'should assign a @chapter' do
+        get 'search', :search_name => @chapter.name
+        assigns[:chapter].should == @chapter
+      end
+
+      it 'should render show' do
+        get 'search', :search_name => @chapter.name
+        response.should render_template 'chapters/show'
+      end
+    end
+
+    describe "for multiple results" do
+      before :each do
+        @chapters = ['Calgary','California'].collect {|n| Factory(:chapter, :name => n)}
+      end
+
+      it 'should assign @chapters' do
+        get 'search', :search_name => 'Cal'
+        assigns[:chapters].should == @chapters
+      end
+        
+      it 'should render index' do
+        get 'search', :search_name => 'Cal'
+        response.should render_template 'chapters/index'
+      end
+    end
+  end
+
   describe "GET new" do
     it 'should assign a new chapter to @chapter' do
       get :new

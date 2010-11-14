@@ -8,7 +8,7 @@
     <%= form_for Chapter.new do |f| %>
       <%= f.hidden_field :geographic_location_id, :value => @territory.id %>
       <%= f.text_field :name %>
-      <%= f.select :type, Chapter::TYPES, :prompt => true %>
+      <%= f.select :category, Chapter::CATEGORIES, :prompt => true %>
       <%= f.submit "Create Chapter" %>
     <% end %>
   <% end %>

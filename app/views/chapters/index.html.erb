@@ -2,6 +2,16 @@
 <% css 'chapters/index' %>
 
 <div class="chapters-container">
-  <%= link_to "New Chapter", new_chapter_path %>
-  <%= render @chapters %>
+  <div>
+    <%= link_to "New Chapter", new_chapter_path %>
+    <%= form_tag search_chapters_path, :method => :get do %>
+      <div>
+        <%= text_field_tag :search_name  %>
+        <%= submit_tag "Search" %>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <%= render @chapters %>
+  </div>
 </div>

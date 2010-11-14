@@ -23,4 +23,13 @@ class Chapter < ActiveRecord::Base
   def pending!
     self.status = "pending"
   end
+
+  def self.search_name(search)
+    result = where('name = ?', search)
+    if result.any?
+      result.first
+    else
+      where('name LIKE ?', "%#{search}%")
+    end
+  end
 end

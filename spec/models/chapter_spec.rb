@@ -63,4 +63,26 @@ describe Chapter do
       chapter.status.should == "pending"
     end
   end
+  
+  describe "search" do
+    it 'should return all results that are partial matches' do
+      @chapters = ['abb','bba'].collect {|n| Factory.create(:chapter, :name => n)}
+      result = Chapter.search_name('bb')
+      result.should == @chapters
+    end
+
+    it 'should return only those results that are partial matches' do
+      @chapters = ['abb','bba'].collect {|n| Factory.create(:chapter, :name => n)}
+      ['bab','b b'].each {|n| Factory.create(:chapter, :name => n)}
+      result = Chapter.search_name('bb')
+      result.should == @chapters
+    end
+
+    it 'should return a single result if a full match is made, even with partials' do
+      @chapters = ['abb','bba'].collect {|n| Factory.create(:chapter, :name => n)}
+      @chapter = Factory.create(:chapter, :name => 'bb')
+      result = Chapter.search_name('bb')
+      result.should == @chapter
+    end
+  end
 end

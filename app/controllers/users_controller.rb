@@ -12,8 +12,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
-    @chapter = @user.chapter unless @user.chapter.nil?
-    @country = @user.geographic_location.parent
+    unless @user.chapter.nil?
+      @chapter = @user.chapter
+      @country = @user.geographic_location.parent
+    end
   end
 
   def new

@@ -12,6 +12,17 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.find params[:id]
   end
 
+  def search
+    result = Chapter.search_name params[:search_name]
+    if result.class == Chapter
+      @chapter = result
+      render :show
+    else
+      @chapters = result
+      render :index
+    end
+  end
+
   def new
     @chapter = Chapter.new
   end
