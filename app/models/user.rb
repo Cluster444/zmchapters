@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessible :name, :username, :email, :password
   devise :database_authenticatable, :rememberable, :recoverable, :trackable, :validatable
 
   belongs_to :geographic_location
@@ -12,5 +13,13 @@ class User < ActiveRecord::Base
 
   def associate_with_chapter_geographic_location
     self.geographic_location = chapter.geographic_location unless chapter.nil?
+  end
+
+  def is_admin!
+    update_attribute :admin, true
+  end
+
+  def is_not_admin!
+    update_attribute :admin, false
   end
 end

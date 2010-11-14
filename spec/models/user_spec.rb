@@ -9,6 +9,10 @@ describe User do
     Factory.create(:user)
   end
 
+  it 'should have a factory for admin creation' do
+    Factory.create(:admin).should be_admin
+  end
+
   describe 'associations' do
     it 'should have a geographic location' do
       user = User.new
@@ -44,6 +48,31 @@ describe User do
         bad_email_user = Factory.build(:user, :email => bad_email)
         bad_email_user.should_not be_valid
       end
+    end
+  end
+
+  describe 'roles' do
+    it 'should not be admin by default' do
+      Factory(:user).should_not be_admin
+    end
+    
+    it 'should not allow admin to be set directly' do
+      user = Factory(:user)
+      user.update_attributes :admin => true
+      user.should_not be_admin
+    end
+
+    it 'should allow admin to be set' do
+      user = Factory(:user)
+      user.is_admin!
+      user.should be_admin
+    end
+
+    it 'should allow admin to be unset' do
+      user = Factory(:user)
+      user.update_attribute :admin, true
+      user.is_not_admin!
+      user.should_not be_admin
     end
   end
 end

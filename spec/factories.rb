@@ -16,6 +16,10 @@ Factory.define :user do |f|
   f.password_confirmation 'testpassword'
 end
 
+Factory.define :admin, :parent => :user do |f|
+  f.after_create(&:is_admin!)
+end
+
 Factory.define :coordinator do |f|
   f.chapter Factory(:chapter)
 end

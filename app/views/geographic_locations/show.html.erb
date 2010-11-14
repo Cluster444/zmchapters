@@ -3,14 +3,12 @@
 
 <div class="geographic-locations-show">
   <%= render :partial => 'breadcrumb', :locals => {:node => @territory} %>
-  <h2><%= @territory.name %></h2>
-  <% if can? :create, Chapter %>
-    <%= form_for Chapter.new do |f| %>
-      <%= f.hidden_field :geographic_location_id, :value => @territory.id %>
-      <%= f.text_field :name %>
-      <%= f.select :category, Chapter::CATEGORIES, :prompt => true %>
-      <%= f.submit "Create Chapter" %>
-    <% end %>
+  <%= form_for Chapter.new do |f| %>
+    <%= hidden_field :geo, :id, :value => @territory.id %>
+    <%= f.text_field :name %>
+    <%= f.select :category, Chapter::CATEGORIES, :prompt => true %>
+    <%= f.submit "Create Chapter" %>
   <% end %>
+  <h2><%= @territory.name %></h2>
   <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>
 </div>
