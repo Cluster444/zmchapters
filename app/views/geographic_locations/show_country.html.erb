@@ -1,14 +1,20 @@
 <% title 'Geo:Country:'+@country.name %>
 <% css 'geographic_locations/show_country' %>
 
+<%= content_for :admin_control_panel do %>
+  <% if can? :create, Chapter and (not @country.chapters.any?) %>
+    <%= form_for Chapter.new do |f| %>
+      <%= f.hidden_field :name, :value => @country.name %>
+      <%= f.hidden_field :category, :value => 'country' %>
+      <%= hidden_field :geo, :id, :value => @country.id %>
+      <%= f.submit 'Create Chapter' %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <div class="geographic-locations-show-country">
   <%= render :partial => 'breadcrumb', :locals => {:node => @country} %>
-  <%= form_for Chapter.new do |f| %>
-    <%= f.hidden_field :name, :value => @country.name %>
-    <%= f.hidden_field :category, :value => 'country' %>
-    <%= hidden_field :geo, :id, :value => @country.id %>
-    <%= f.submit 'Create Chapter' %>
-  <% end %>
+  
   <h2><%= @country.name %></h2>
   <h4>Territories with chapters</h4>
   <% @country.children_with_chapters.each do |territory| %>

@@ -1,0 +1,11 @@
+<% if current_user and current_user.admin? %>
+  <% if current_user.admin? %>
+    <div class="admin-control-panel">
+      <%= yield(:admin_control_panel) %>
+    </div>
+  <% end %>
+  <div class="user-control-panel">
+    <%= link_to 'Profile', user_path(current_user) %>
+    <%= yield(:user_control_panel) %>
+  </div>
+<% end %>

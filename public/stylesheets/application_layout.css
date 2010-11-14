@@ -11,7 +11,7 @@
   font:1.2em Lucida Sans, Droid Sans, Helvetica Neue, Arial;
   border-bottom: 1px solid #000;
   height: 30px; 
-  margin-bottom: 5px;
+  margin-bottom: 0;
   text-shadow: 0 -1px #000;
   width:100%;
 }
@@ -48,6 +48,7 @@
 #page #footer {width:100%; font-size:14px;}
 #page #footer {text-align:center;margin-top:5px;}
 #body {min-height: 600px; height: auto !important; height: 600px;}
+#body {margin-top:5px;}
 #body-header {margin-bottom:5px;}
 
 .pagination {display:block;padding:5px 0;}

@@ -1,14 +1,19 @@
 <% title 'Geo:Territory:'+@territory.name %>
 <% css 'geographic_locations/show' %>
 
+<%= content_for :admin_control_panel do %>
+  <% if can? :create, Chapter %>
+    <%= form_for Chapter.new do |f| %>
+      <%= hidden_field :geo, :id, :value => @territory.id %>
+      <%= f.text_field :name %>
+      <%= f.select :category, Chapter::CATEGORIES.collect {|c| [c.humanize,c]}, :prompt => true %>
+      <%= f.submit "Create Chapter" %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <div class="geographic-locations-show">
   <%= render :partial => 'breadcrumb', :locals => {:node => @territory} %>
-  <%= form_for Chapter.new do |f| %>
-    <%= hidden_field :geo, :id, :value => @territory.id %>
-    <%= f.text_field :name %>
-    <%= f.select :category, Chapter::CATEGORIES, :prompt => true %>
-    <%= f.submit "Create Chapter" %>
-  <% end %>
   <h2><%= @territory.name %></h2>
   <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>
 </div>

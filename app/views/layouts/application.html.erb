@@ -11,6 +11,7 @@
 <body>
   <div id="page">
     <%= render :partial => '/shared/header' %>
+    <%= render :partial => '/shared/control_panel' %>
     <div id="body" class="container_24">
       <% flash.each do |name, message| %>
         <div class="flashparent"><%= content_tag :div, message, :class => "flash #{name}" %></div>
