@@ -1,11 +1,27 @@
-<% if current_user and current_user.admin? %>
-  <% if current_user.admin? %>
-    <div class="admin-control-panel">
-      <%= yield(:admin_control_panel) %>
+<% if current_user %>
+  <div id="control-panel">
+    <div class="tabs">
+      <div class="tab user first" id="user-tab" ref="#user-cpanel"></div>
+      <% if current_user.admin? %>
+        <div class="tab admin last" id="admin-tab" ref="#admin-cpanel"></div>
+      <% end %>
     </div>
-  <% end %>
-  <div class="user-control-panel">
-    <%= link_to 'Profile', user_path(current_user) %>
-    <%= yield(:user_control_panel) %>
+    <div class="cpanels">
+      <% if current_user.admin? and content_for? :admin_control_panel %>
+        <div class="cpanel admin" id="admin-cpanel">
+          <div class="content">
+            <%= yield(:admin_control_panel) %>
+          </div>
+          <div class="close">Close</div>
+        </div>
+      <% end %>
+      <div class="cpanel user" id="user-cpanel">
+        <div class="content">
+          <%= link_to 'Profile', user_path(current_user) %>
+          <%= yield(:user_control_panel) %>
+        </div>
+        <div class="close">Close</div>
+      </div>
+    </div>
   </div>
 <% end %>
