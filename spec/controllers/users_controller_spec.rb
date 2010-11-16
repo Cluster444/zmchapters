@@ -31,6 +31,7 @@ describe UsersController do
     describe "for a record that exists" do
       it 'should assign @user from the id' do
         User.should_receive(:find).with(1).once.and_return(@mock_user)
+        @mock_user.stub!(:chapter).and_return(nil)
         get :show, :id => 1
         assigns[:user].should == @mock_user
       end

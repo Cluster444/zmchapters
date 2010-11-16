@@ -1,0 +1,21 @@
+<h1>Listing coordinators</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @coordinators.each do |coordinator| %>
+  <tr>
+    <td><%= link_to 'Show', coordinator %></td>
+    <td><%= link_to 'Edit', edit_coordinator_path(coordinator) %></td>
+    <td><%= link_to 'Destroy', coordinator, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Coordinator', new_coordinator_path %>

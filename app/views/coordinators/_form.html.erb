@@ -1,0 +1,22 @@
+<%= form_for([:chapter, @coordinator])  do |f| %>
+  <% if @coordinator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@coordinator.errors.count, "error") %> prohibited this coordinator from being saved:</h2>
+
+      <ul>
+      <% @coordinator.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :members %>
+    <%= f.collection_select :user_id, User.all, :id, :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

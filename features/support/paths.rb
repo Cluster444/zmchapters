@@ -16,6 +16,9 @@ module NavigationHelpers
 
     when /the geo page/
       geo_index_path
+
+    when /the "([^"]+)" chapter page/
+      chapter_path(Chapter.find_by_name($1))
     
     # the following are examples using path_to_pickle
 

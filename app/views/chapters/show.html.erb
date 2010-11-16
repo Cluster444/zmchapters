@@ -1,10 +1,15 @@
 <% title 'Chapter:'+@chapter.name %>
 <% css 'chapters/show' %>
 
+<%= content_for :admin_control_panel do %>
+  <%= link_to "Add a Coordinator", new_chapter_coordinator_path(@chapter) %>
+<% end %>
 <div class="chapter-container grid_24">
-  <%= form_for current_user, :method => :put do |f| %>
-    <%= hidden_field :chapter, :id %>
-    <%= f.submit "Join this chapter" %>
+  <% unless current_user.nil? %>
+    <%= form_for current_user, :method => :put do |f| %>
+      <%= hidden_field :chapter, :id %>
+      <%= f.submit "Join this chapter" %>
+    <% end %>
   <% end %>
   <div class="top">
     <div class="left">
@@ -19,6 +24,14 @@
         <li>Hyperlinks</li>
       </ul>
     </div>
+  </div>
+  <div id="chapter_coordinators">
+    <h3>Coordinators</h3>
+    <ul>
+      <% @chapter.coordinators.each do |coordinator| %>
+        <li><%= "#{coordinator.user.name}(#{coordinator.user.username})" %></li>
+      <% end %>
+    </ul>
   </div>
   <div class="middle">
     <h5>News</h5>

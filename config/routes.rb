@@ -2,6 +2,7 @@ Tzm::Application.routes.draw do
   devise_for :users
 
   resources :chapters do
+    resources :coordinators, :only => [:index, :new, :create, :destroy]
     collection do
       get :search
     end
