@@ -1,0 +1,20 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<table class="pretty">
+  <tr>
+    <th><%= sortable "name" %></th>
+    <th><%= sortable "location" %></th>
+    <th><%= sortable "members" %></th>
+    <th><%= sortable "coordinators" %></th>
+  </tr>
+  <% for chapter in @chapters %>
+    <tr>
+      <td><%= link_to chapter.name, chapter_path(chapter) %></td>
+      <td><%= chapter.geographic_location.name %></td>
+      <td><%= chapter.users.count %></td>
+      <td><%= chapter.coordinators.count %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @chapters %>

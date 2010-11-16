@@ -15,8 +15,11 @@
     <%= render :partial => '/shared/control_panel' %>
     <div id="body" class="container_24">
       <% flash.each do |name, message| %>
-        <div class="flashparent"><%= content_tag :div, message, :class => "flash #{name}" %></div>
+        <%= content_tag :div, :class => "flash #{name}" do %>
+          <span><%= message %></span><span class="close">Close<span>
+        <% end %>
       <% end %>
+      <%= content_tag :h1, yield(:title) if show_title? %>
       <%= yield %>
     </div>
     <%= render :partial => '/shared/footer' %>

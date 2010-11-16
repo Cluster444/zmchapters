@@ -1,11 +1,13 @@
 class ChaptersController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
   rescue_from ActiveRecord::RecordNotFound do
     flash[:error] = "Chapter not found"
     redirect_to chapters_url
   end
 
   def index
-    @chapters = Chapter.all
+    @chapters = Chapter.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
   end
 
   def show
@@ -56,5 +58,15 @@ class ChaptersController < ApplicationController
     @chapter.destroy
     flash[:notice] = "Chapter has been removed"
     redirect_to chapters_url
+  end
+
+private
+  
+  def sort_column
+    Chapter.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

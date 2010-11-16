@@ -4,6 +4,7 @@
 
 //jQuery Animations
 //Animate .flash'
+/*
 $(document).ready(function() {
   $('.flash').parent().delay(2000).animate({ 
     opacity: 0
@@ -13,5 +14,14 @@ $(document).ready(function() {
       $('.chapter-editor').animate({ 
         opacity: 1
       }, 500, "linear", function() {});
+  });
+});
+*/
+
+$(document).ready(function() {
+  $('.flash .close').click(function() {
+    $(this).parent().animate({opacity:0}, 700, "linear", function() {
+      $(this).slideUp(300);
+    });
   });
 });

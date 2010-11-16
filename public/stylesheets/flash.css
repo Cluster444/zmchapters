@@ -1,0 +1,32 @@
+.flash {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+.flash.notice {
+  background-color: #CFC;
+  border:1px solid #6C6;
+}
+
+.flash.error {
+  background-color: #FCC;
+  border:1px solid #C66;
+}
+
+.flash .close {
+  float:right;
+}
+
+.flash .close:hover {
+  cursor: pointer;
+}
+
+.flash.notice .close:hover {
+  background-color: #6C6;
+  padding:5px;
+}
+
+.flash.error .close:hover {
+  background-color: #C66;
+  padding:5px;
+}

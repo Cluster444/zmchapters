@@ -15,6 +15,11 @@
   text-shadow: 0 -1px #000;
   width:100%;
 }
+
+#page #header ul li{
+  display:inline;
+}
+
 #page #header li a, #page #header li, #page #footer li,
 #page #footer li a{color: #FFF;padding:4px; text-decoration:none;}
 
@@ -61,11 +66,6 @@
 .breadcrumb {background: #FAFAFA;border:1px solid #CCC;padding: 5px 0;border-radius: 5px;-moz-border-radiux: 5px;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
 .breadcrumb a {color: #333;padding:5px;text-shadow: 0 1px #FFF;}
 .breadcrumb a:hover {color: #000;}
-/* Flashes/Errors */
-div.flashparent {position:relative;top:0px; margin:0 5px;}
-div .flash {border:1px solid #AAA;padding: 10px;}
-div .alert {background: #FFFFCC;}
-.error span {background: #FFEEEE;border:1px solid #AAA;border-top:0;display:block;padding:10px;}
 
 /* Admin/Moderator Chapter controls */
 .chapter-editor{height:30px;overflow:hidden;position:relative;margin-left:5px;margin-bottom:-5px;}

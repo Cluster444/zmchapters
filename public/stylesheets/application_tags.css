@@ -1,8 +1,8 @@
 body{font-family:Lucida Sans, Tahoma, Helvetica Nueu, Sans;}
 
-h1{font-size:500%;}
-h2{font-size:250%;}
-h3{font-size:180%;}
+h1{font-size:300%;}
+h2{font-size:210%;}
+h3{font-size:160%;}
 h4{font-size:130%;}
 h5{font-size:100%;} 
 
@@ -10,7 +10,7 @@ p{font-size:80%;line-height:140%;font-family:arial;}
 
 ul{margin:0;padding:0;}
 
-ul li{display:inline;}
+ul li{}
 
 td{vertical-align:top;}
 

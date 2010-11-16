@@ -1,3 +1,28 @@
+table.pretty {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.pretty td, .pretty th {
+  padding: 4px 10px;
+  border: 1px solid #AAA;
+}
+
+.pretty th .current {
+  padding-right:12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+.pretty th .desc {
+  background-image: url(/images/down_arrow.gif);
+}
+
+/*
 .chapters-container {overflow:hidden;}
 .chapters-container .search {background:#f5f5f5;}
 .chapters-container .search {margin-top:5px;}
@@ -30,3 +55,4 @@
 .chapters-container .countries {width:860px; margin:auto; margin-top:10px;}
 .chapters-container .countries ul {display:block; float:left; padding:10px 5px;}
 .chapters-container .countries li {display:block;}
+*/

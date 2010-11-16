@@ -27,13 +27,11 @@ end
 def make_territory(territory)
   GeographicLocation.create! :name => territory[:name],
                               :geoname_id => territory[:geonameId],
-                              #:fcode => territory[:fcode]
 end
 
 EARTH = {
   :name => "Earth",
   :geoname_id => 6295630,
-  #:fcode => "EARTH"
 }
 
 namespace :db do
