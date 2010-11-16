@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
   rescue_from ActiveRecord::RecordNotFound do
     redirect_to users_url
     flash[:error] = "User not found"
@@ -7,7 +9,7 @@ class UsersController < ApplicationController
   before_filter :load_chapter_or_location, :only => [:create,:update]
 
   def index
-    @users = User.all
+    @users = User.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
   end
 
   def show
@@ -63,5 +65,13 @@ private
     elsif params[:geo] and params[:geo][:id]
       @location = GeographicLocation.find params[:geo][:id]
     end
+  end
+
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

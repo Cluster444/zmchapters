@@ -1,12 +1,10 @@
-<% title 'Members Index' %>
+<% title 'Members' %>
 <% css 'users/index' %>
 
-<div class="users-index">
-  <h2>Members</h2>
-  <%= link_to "Create Member", new_user_path %>
-  <% @users.each do |user| %>
-    <div class="user">
-      <%=raw "#{user.name} | #{user.username} | #{link_to :View, user_path(user)} | #{link_to :Edit, edit_user_path(user)}" %>
-    </div>
-  <% end %>
-</div>
+<%= form_tag users_path, :method => :get, :id => "users_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  <div id="users"><%= render 'users' %></div>
+<% end %>

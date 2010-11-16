@@ -1,10 +1,10 @@
 <% title 'Chapters' %>
 <% css 'chapters/index' %>
 
-<%= form_tag search_chapters_path, :method => :get do %>
+<%= form_tag chapters_path, :method => :get, :id => "chapters_search" do %>
   <p>
-    <%= text_field_tag :search_name, params[:search_name]  %>
-    <%= submit_tag "Search" %>
+    <%= text_field_tag :search, params[:search]  %>
+    <%= submit_tag "Search", :name => nil %>
   </p>
   <div id="chapters"><%= render 'chapters' %></div>
 <% end %>

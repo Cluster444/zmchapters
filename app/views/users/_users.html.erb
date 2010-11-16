@@ -1,0 +1,26 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<table class="pretty">
+  <tr>
+    <th><%= sortable "name" %></th>
+    <th><%= sortable "username" %></th>
+    <th><%= sortable "chapter" %></th>
+    <th><%= sortable "location" %></th>
+    <% if admin? %>
+      <th>Edit</th>
+    <% end %>
+  </tr>
+  <% for user in @users %>
+    <tr>
+      <td><%= link_to user.name, user_path(user) %></td>
+      <td><%= user.username %></td>
+      <td><%= user.chapter.nil? ? "No Chapter" : user.chapter.name %></td>
+      <td><%= user.geographic_location.nil? ? "No Location" : user.geographic_location.name %></td>
+      <% if admin? %>
+        <td><%= link_to "Edit", edit_user_path(user) %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @users %>

@@ -43,6 +43,10 @@ module ApplicationHelper
     link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {:class => css_class}
   end
 
+  def admin?
+    current_user and current_user.admin?
+  end
+
   def error_messages_for(*objects)
     options = objects.extract_options!
     options[:header_message] ||= "Invalid Fields"

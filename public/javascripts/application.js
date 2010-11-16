@@ -25,3 +25,22 @@ $(document).ready(function() {
     });
   });
 });
+
+$(document).ready(function() {
+  $("#chapters th a, #chapters .pagination a").live('click', function() {
+    $.getScript(this.href);
+    return false;
+  });
+  $("#chapters_search input").keyup(function() {
+    $.get($("#chapters_search").attr("action"), $("#chapters_search").serialize(), null, "script");
+    return false;
+  });
+  $("#users th a, #users .pagination a").live('click', function() {
+    $.getScript(this.href);
+    return false;
+  });
+  $("#users_search input").keyup(function() {
+    $.get($("#users_search").attr("action"), $("#users_search").serialize(), null, "script");
+    return false;
+  });
+});
