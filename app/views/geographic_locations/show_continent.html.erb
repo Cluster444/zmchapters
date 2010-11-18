@@ -1,9 +1,9 @@
-<% title 'Geo:Continent:'+@continent.name %>
+<% title 'Geo:Continent:'+@continent.name, false %>
 <% css 'geographic_locations/show_continent' %>
 
 <div class="geographic-locations-show-continent">
   <%= render :partial => 'breadcrumb', :locals => {:node => @continent} %>
-  <h2><%= @continent.name %></h2>
+  <h2 class="center"><%= @continent.name %></h2>
   <h4>Countries with chapters</h4>
   <% @continent.children_with_chapters.each do |country| %>
     <div class="country grid_24">

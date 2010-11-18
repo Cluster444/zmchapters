@@ -9,7 +9,7 @@ class Chapter < ActiveRecord::Base
   before_create :pending!
 
   validates :name, :presence => true, 
-                   :length => {:maximum => 50}
+                   :length => {:maximum => 100}
 
   validates :category, :presence => true, 
                        :inclusion => {:in => CATEGORIES}

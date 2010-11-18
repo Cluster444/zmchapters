@@ -1,6 +1,8 @@
 table.pretty {
+  width:600px;
   border-collapse: collapse;
   margin-bottom: 10px;
+  margin:auto;
 }
 
 .pretty td, .pretty th {

@@ -1,7 +1,8 @@
 <%= hidden_field_tag :direction, params[:direction] %>
 <%= hidden_field_tag :sort, params[:sort] %>
 
-<table class="pretty">
+<center><%= will_paginate @users %></center>
+<table class="pretty grey-box-shadow">
   <tr>
     <th><%= sortable "name" %></th>
     <th><%= sortable "username" %></th>
@@ -23,4 +24,4 @@
     </tr>
   <% end %>
 </table>
-<%= will_paginate @users %>
+<center><%= will_paginate @users %></center>

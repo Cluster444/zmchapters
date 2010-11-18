@@ -7,6 +7,7 @@ gem 'devise'
 gem 'role_model'
 gem 'cancan'
 gem 'nested_set'
+gem 'activerecord-import', '>= 0.2.0'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'

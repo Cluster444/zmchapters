@@ -70,12 +70,14 @@ namespace :db do
     task :chapters => :countries do
       unless Chapter.all.any?
         puts "Generating chapters"
+        chapters = []
         GeographicLocation.countries.each do |country|
-          Chapter.create! :region => country.name, :geographic_territory_id => country.id
+          chapters << Chapter.new(:name => country.name, :geographic_location_id => country.id, :category => 'country')
           country.children.each do |territory|
-            Chapter.create! :region => territory.name, :geographic_territory_id => territory.id
+            chapters << Chapter.new(:name => territory.name, :geographic_location_id => territory.id, :category => 'territory')
           end
         end 
+        Chapter.import chapters, :validate => false
       end
     end
 

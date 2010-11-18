@@ -19,7 +19,7 @@
           <span><%= message %></span><span class="close">Close<span>
         <% end %>
       <% end %>
-      <%= content_tag :h1, yield(:title) if show_title? %>
+      <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
       <%= yield %>
     </div>
     <%= render :partial => '/shared/footer' %>

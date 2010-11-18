@@ -1,6 +1,24 @@
 <% title 'My Profile' %>
 <% css 'users/show' %>
 
+<ul class="profile-menu">
+  <li><%= link_to "Profile", user_path(@user) %></li>
+  <li><%= link_to "Edit", edit_user_path(@user) %></li>
+</ul>
+
+<div class="profile-box grey-box-shadow">
+  <h3><%= @user.name %> (<%= @user.username %>)</h3>
+</div>
+
+<div class="profile-box grey-box-shadow">
+  <% if @user.chapter.nil? %>
+    <h3>Find a chapter in your area</h3>
+  <% else %>
+    <h3><%= @user.chapter.name %></h3>
+    <h4><%= @user.geographic_location.name + ", " + @user.geographic_location.parent.name %>
+  <% end %>
+</div>
+<!--
 <div class="user-show grid_24">
   
   <div class="user grid_10 alpha">
@@ -24,3 +42,4 @@
     <% end %>
   </div>
 </div>
+-->

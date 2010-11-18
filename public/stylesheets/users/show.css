@@ -1,4 +1,22 @@
-/* Users#show */
+.profile-box {
+  background-color:#ddd;
+  width:900px;
+  margin:auto;
+  margin-top:15px;
+  padding:5px;
+  border:1px outset #b9b9b9;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+.profile-menu li {
+  display:inline;
+}
+
+.profile-menu {
+}
+
+
 .user-show {width:100%; height:100%;}
 
 .user-show form {background:#eee;}

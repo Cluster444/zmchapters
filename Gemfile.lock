@@ -24,6 +24,8 @@ GEM
       activesupport (= 3.0.0)
       arel (~> 1.0.0)
       tzinfo (~> 0.3.23)
+    activerecord-import (0.2.3)
+      activerecord (~> 3.0.0)
     activeresource (3.0.0)
       activemodel (= 3.0.0)
       activesupport (= 3.0.0)
@@ -145,6 +147,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import (>= 0.2.0)
   annotate-models (= 1.0.4)
   cancan
   capybara

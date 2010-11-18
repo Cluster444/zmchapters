@@ -29,7 +29,7 @@ describe Chapter do
 
   describe 'validations' do
     it 'should require a name of max length 50' do
-      ['','a'*51].each do |bad_name|
+      ['','a'*101].each do |bad_name|
         bad_name_chapter = Factory.build(:chapter, :name => bad_name)
         bad_name_chapter.should_not be_valid
       end
