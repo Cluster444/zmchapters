@@ -44,3 +44,14 @@ $(document).ready(function() {
     return false;
   });
 });
+/* Navigation Control Animations */
+$(document).ready( function() {
+  $("#control-nav .user").click(function(){
+    $('#control-nav .user').toggleClass('on');
+    $('#user-container').slideToggle('fast');
+  });
+  $("#control-nav .admin").click(function(){
+    $('#control-nav .admin').toggleClass('on');
+    $('#admin-container').slideToggle('fast');
+  });
+});

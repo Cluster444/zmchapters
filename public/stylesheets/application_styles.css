@@ -1,3 +1,138 @@
+#control-container {
+  background:#EEE;
+}
+#user-container,#admin-container {
+  border: 1px solid #CCC;
+  border-bottom:0;
+  border-top:5px solid #FFF;
+  box-shadow:0 20px 0 #F5F5F5 inset;
+  -webkit-box-shadow:0 20px 0 #F5F5F5 inset;
+  -moz-box-shadow:0 20px 0 #F5F5F5 inset;
+}
+
+#user-container {
+  border-top-color: #2F5;
+}
+#admin-container {
+  border-top-color: #F25;
+}
+#nav-container {
+  background:#EEE;
+  border-bottom:1px solid #BBB;
+  -webkit-box-shadow:0 5px 10px #EEE;
+}
+#nav {
+  background:#DDD;
+  border:1px solid #AAA;
+  border-top:0;
+  height: 37px;
+  overflow:visible;
+  position:relative;
+  z-index:998;
+  box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
+  -webkit-box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
+  -moz-box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
+}
+/* Separators */
+#nav li + li {
+  border-left:1px solid #AAA;
+}
+#nav li:last-child {
+  border-right:1px solid #AAA;
+}
+#nav li a {
+  border-left:1px solid #FFF;
+}
+#nav li a {
+  color:#333;
+  text-shadow:0 1px #FFF;
+}
+#nav li a.home {
+  background:url('../images/home_icon.png') no-repeat 9px center transparent;
+}
+#nav li a.home:hover {
+  background:url('../images/home_icon.png') no-repeat 9px center #CCC;
+  color:#000;
+}
+#nav li .submenu {
+  background:#EEE;
+  border:1px solid #CCC;
+  border-top:1px solid #AAA;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow:0 0 1px #FFF inset, 1px 0 #FFF inset;
+  -moz-box-shadow:0 0 1px #FFF inset, 1px 0 #FFF inset;
+  -webkit-box-shadow:0 0 1px #FFF inset, 1px 0 #FFF inset;
+}
+#nav li .submenu li  {
+  background:transparent;
+  border:none;
+  margin:0;
+  padding:0;
+}
+#nav li .submenu li:last-child {
+  border-bottom:1px solid #FFF;
+}
+#nav li .submenu li a {
+  background:transparent;
+  border:0;
+}
+#nav li:hover a {
+  color:#000;
+  background:#CCC;
+  box-shadow:0 1px 0 #FFF inset;
+  -moz-box-shadow:0 1px 0 #FFF inset;
+  -webkit-box-shadow:0 1px 0 #FFF inset;
+}
+#nav li .submenu li:hover a {
+  background:#DDD;
+  box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
+  -moz-box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
+  -webkit-box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
+}
+#control-nav a {
+  background:#FAFAFA;
+  border:1px solid #FFF;
+  color:#333;
+  text-decoration:none;
+  outline:none;
+}
+
+#control-nav a:hover {
+  background:#FFF;
+  color:#000;
+  text-decoration:none;
+}
+
+#control-nav a.on {
+  background:#EEE;
+  border-top:1px solid #EEE;
+  color:#111;
+  text-decoration:none;
+}
+#control-nav a.user.on {
+  box-shadow:0 -4px 0 #2F5 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+  -webkit-box-shadow:0 -4px 0 #2F5 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+  -moz-box-shadow:0 -4px 0 #2F5 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+}
+#control-nav a.admin.on {
+  box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+  -webkit-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+  -moz-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
+}
+.prettytable {
+}
+.prettytable tr{
+  background:#FAFAFA;
+  border-bottom:1px solid #FFF;
+}
+.prettytable tr:nth-child(odd){
+  background:#F5F5F5;
+}
 h2.center {
   margin:auto;
   text-align:center;
