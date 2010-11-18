@@ -12,7 +12,7 @@
   <% for chapter in @chapters %>
     <tr>
       <td><%= link_to chapter.name, chapter_path(chapter) %></td>
-      <td><%= chapter.geographic_location.name %>, <%= chapter.geographic_location.parent.name %></td>
+      <td><%= chapter.geographic_location.self_and_parent_name %></td>
       <td><%= chapter.users.count %></td>
       <td><%= chapter.coordinators.count %></td>
     </tr>

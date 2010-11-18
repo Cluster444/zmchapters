@@ -1,9 +1,10 @@
-<% title 'Chapter:'+@chapter.name %>
+<% title 'Chapter:'+@chapter.name, false %>
 <% css 'chapters/show' %>
 
 <%= content_for :admin_control_panel do %>
   <%= link_to "Add a Coordinator", new_chapter_coordinator_path(@chapter) %>
 <% end %>
+
 <div class="chapter-container grid_24">
   <% unless current_user.nil? %>
     <%= form_for current_user, :method => :put do |f| %>
@@ -15,7 +16,7 @@
     <div class="left">
       <h2><%= @chapter.name %></h2>
       <span class="info">
-        <%= @chapter.geographic_location.name %><br />
+        <%= @chapter.geographic_location.self_and_parent_name %><br />
         <%= pluralize @chapter.users.count, 'Member' %>
       </span>
     </div>

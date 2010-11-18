@@ -103,4 +103,40 @@ describe GeographicLocation do
       GeographicLocation.countries_with_chapters.should == [country]
     end
   end
+
+  describe "formatted output" do
+    before :each do
+      earth = Factory(:geo, :name => "Earth")
+      @continent = Factory(:geo, :name => "Continent")
+      @country = Factory(:geo, :name => "Country")
+      @state = Factory(:geo, :name => "State")
+      @continent.move_to_child_of earth
+      @country.move_to_child_of @continent
+      @state.move_to_child_of @country
+    end
+
+    it 'should provide a name with ancestors for state' do
+      @state.self_and_ancestors_name.should == "#{@state.name}, #{@country.name}, #{@continent.name}"
+    end
+
+    it 'should provide a name with ancestors for country' do
+      @country.self_and_ancestors_name.should == "#{@country.name}, #{@continent.name}"
+    end
+
+    it 'should provide a name with ancestors for continent' do
+      @continent.self_and_ancestors_name.should == "#{@continent.name}"
+    end
+
+    it 'should provide aname with parent for territory' do
+      @state.self_and_parent_name.should == "#{@state.name}, #{@country.name}"
+    end
+
+    it 'should provide a name with parent for country' do
+      @country.self_and_parent_name.should == "#{@country.name}, #{@continent.name}"
+    end
+
+    it 'should provide a name with parent for continent' do
+      @continent.self_and_parent_name.should == "#{@continent.name}"
+    end
+  end
 end

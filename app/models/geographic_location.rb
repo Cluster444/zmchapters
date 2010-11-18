@@ -33,4 +33,22 @@ class GeographicLocation < ActiveRecord::Base
   def is_territory?
     depth == 3
   end
+
+  def self_and_ancestors_name
+    if is_territory?
+      "#{name}, #{parent.name}, #{parent.parent.name}"
+    elsif is_country?
+      "#{name}, #{parent.name}"
+    else
+      "#{name}"
+    end
+  end
+
+  def self_and_parent_name
+    if is_territory? or is_country?
+      "#{name}, #{parent.name}"
+    else
+      "#{name}"
+    end
+  end
 end
