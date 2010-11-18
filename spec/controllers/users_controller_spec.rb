@@ -21,7 +21,6 @@ describe UsersController do
   describe "GET index" do
     it 'assigns all users as @users' do
       @users = (1..5).collect {Factory :user}
-      User.should_receive(:all).once.and_return(@users)
       get :index
       assigns[:users].should == @users
     end

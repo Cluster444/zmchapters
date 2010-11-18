@@ -12,10 +12,14 @@
 
 <div class="profile-box grey-box-shadow">
   <% if @user.chapter.nil? %>
-    <h3>Find a chapter in your area</h3>
+    <% unless @user.geographic_location.nil? %>
+      <%= link_to "Find a chapter in your area.", geo_path(@user.geographic_location.id) %>
+    <% else %>
+      <%= link_to "Join a chapter", chapters_path %>
+    <% end %>
   <% else %>
     <h3><%= @user.chapter.name %></h3>
-    <h4><%= @user.geographic_location.name + ", " + @user.geographic_location.parent.name %>
+    <%= @user.geographic_location.self_and_parent_name %>
   <% end %>
 </div>
 <!--
