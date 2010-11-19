@@ -1,4 +1,5 @@
 <% title(@page.title, true) %>
+<% css "pages/#{@page.uri}" %>
 
 <%= content_for :admin_control_panel do %>
   <%= button_to "Edit #{@page.title}", edit_protocols_path, :method => :get %>

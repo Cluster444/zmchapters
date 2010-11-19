@@ -1,0 +1,15 @@
+.protocols {
+  margin: 10px 15px;
+  padding-top: 30px;
+  height:600px;
+}
+
+.protocols h1 {
+  font-size:30px;
+  margin-left: 30px;
+}
+
+.protocols p {
+  font-size:18px;
+  margin-left: 40px;
+}

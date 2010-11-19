@@ -2,13 +2,14 @@
 
 <div class="<%= @page.uri %>">
   <%= form_for @page, :url => protocols_path do |f| %>
+    <%= f.error_messages %>
     <center>
     <div class="page-name">
       <%= f.label :title %>
       <%= f.text_field :title %>
     </div>
     <div class="page-content">
-      <%= f.text_area :content %>
+      <%= f.text_area :content, :class => 'wymeditor' %>
     </div>
     <div>
       <%= f.submit "Save", :class => "small button" %>
