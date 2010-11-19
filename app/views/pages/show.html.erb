@@ -1,0 +1,9 @@
+<% title(@page.title, true) %>
+
+<%= content_for :admin_control_panel do %>
+  <%= button_to "Edit #{@page.title}", edit_protocols_path, :method => :get %>
+<% end %>
+  
+<div class="<%= @page.uri %>">
+  <%=raw @page.content %>
+</div>

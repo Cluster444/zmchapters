@@ -3,7 +3,7 @@
   margin: 10px 0;
 }
 
-.flash.notice {
+.flash.notice, .flash.success {
   background-color: #CFC;
   border:1px solid #6C6;
 }

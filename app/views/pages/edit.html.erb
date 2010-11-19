@@ -1,0 +1,18 @@
+<% title "Edit #{@page.title}" %>
+
+<div class="<%= @page.uri %>">
+  <%= form_for @page, :url => protocols_path do |f| %>
+    <center>
+    <div class="page-name">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div class="page-content">
+      <%= f.text_area :content %>
+    </div>
+    <div>
+      <%= f.submit "Save", :class => "small button" %>
+    </div>
+    <center>
+  <% end %>
+</div>

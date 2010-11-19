@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116194116) do
+ActiveRecord::Schema.define(:version => 20101118233714) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -28,16 +28,6 @@ ActiveRecord::Schema.define(:version => 20101116194116) do
     t.integer  "chapter_id"
   end
 
-  create_table "external_urls", :force => true do |t|
-    t.string   "url"
-    t.string   "title"
-    t.string   "type"
-    t.integer  "sort_order", :default => 0
-    t.integer  "chapter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "geographic_locations", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -49,14 +39,10 @@ ActiveRecord::Schema.define(:version => 20101116194116) do
     t.integer  "geoname_id"
   end
 
-  create_table "geographic_territories", :force => true do |t|
-    t.string   "name"
-    t.integer  "geoname_id"
-    t.string   "fcode"
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
+  create_table "pages", :force => true do |t|
+    t.string   "uri"
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

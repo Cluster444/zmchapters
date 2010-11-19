@@ -23,3 +23,9 @@ end
 Factory.define :coordinator do |f|
   f.chapter Factory(:chapter)
 end
+
+Factory.define :page do |f|
+  f.uri "test_page"
+  f.title "Test Page"
+  f.content "Test Content"
+end
