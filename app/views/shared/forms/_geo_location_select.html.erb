@@ -1,10 +1,24 @@
 <% js 'geo_location' %>
 
-    <div class="field">
-      <%= f.label :country %>
-      <%= grouped_collection_select :geo, :country_id, GeographicLocation.continents, :children, :name, :id, :name, :prompt => true %>
-    </div>
-    <div class="field">
-      <%= f.label :territory %>
-      <%= select_tag "geo[id]" %>
-    </div>
+<div class="field">
+  <%= f.label :country %>
+  <% if geo.nil? %>
+    <%= grouped_collection_select :geo, :country_id, GeographicLocation.continents, :children, :name, :id, :name, :prompt => true %>
+  <% else %>
+    <%= grouped_collection_select :geo, :country_id,
+                                  GeographicLocation.continents, :children, :name,
+                                  :id, :name,
+                                  :prompt => true,
+                                  :selected => geo.parent.id %>
+  <% end %>
+</div>
+<div class="field">
+  <%= f.label :territory %>
+  <% if geo.nil? %>
+    <%= select_tag "geo[id]" %>
+  <% else %>
+    <%= collection_select :geo, :id, geo.self_and_siblings, :id, :name, :prompt => true, :selected => geo.id %>
+  <% end %>
+</div>
+
+<%= content_for :debug_model, debug(geo) %>

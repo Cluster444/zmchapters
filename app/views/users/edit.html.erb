@@ -16,9 +16,9 @@
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
-  <%= render :partial => '/shared/forms/country_select', :locals => {:f => f} %>
+  <% render :partial => '/shared/forms/geo_location_select', :locals => {:f => f, :geo => @user.geographic_location} %>
   <div class="field">
-    <%= f.submit "Save" %>
+    <%= f.submit "Save", :class => 'large button' %>
   </div>
 <% end %>
 
