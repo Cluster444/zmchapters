@@ -3,15 +3,14 @@
 <div id="control-container">
   <div id="user-container" class="container_24">
     <div >
-      <%= link_to 'Profile', user_path(current_user) %>
+      <%= link_to 'Profile', user_path(current_user), :class => 'small green button' %>
       <%= yield(:user_control_panel) %>
     </div>
   </div>
-  <% if current_user.admin? and content_for? :admin_control_panel %>
+  <% if current_user.admin? %>
     <div id="admin-container" class="container_24">
-      <div>
-        <%= yield(:admin_control_panel) %>
-      </div>
+      <%= link_to 'Create Member', new_user_path, :class => 'small red button' %>
+      <%= yield(:admin_control_panel) %>
     </div>
   <% end %>
 </div>

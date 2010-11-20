@@ -2,6 +2,13 @@ Feature: Create a new member
   In order to register a new user
   As an admin
   I need to be able to create new users
+  
+  Scenario: Admin control panel button
+    Given an admin exists
+    And is logged in
+    And I am on the home page
+    When I follow "Create Member"
+    Then I should be on the new user page
 
   Scenario: Admin creates a user
     Given an admin exists
@@ -25,7 +32,6 @@ Feature: Create a new member
     Then I should be on the home page
     And I should see "not authorized"
 
-  @wip
   Scenario: Guest user tries to create a user with registration open
     When I go to the new user page
     And I fill in the following:
@@ -52,6 +58,7 @@ Feature: Create a new member
     And I should see "created successfully"
     And I should see "awaiting approval"
   
+  @wip
   Scenario: Guest user tries to create a user with registration closed
     When I go to the new user page
     Then I should be on the login page
