@@ -10,6 +10,7 @@
   <% if current_user.admin? %>
     <div id="admin-container" class="container_24">
       <%= link_to 'Create Member', new_user_path, :class => 'small red button' %>
+      <%= link_to 'Create Coordinator', new_coordinator_path, :class => 'small red button' %>
       <%= yield(:admin_control_panel) %>
     </div>
   <% end %>

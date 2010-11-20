@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     self.geographic_location = chapter.geographic_location unless chapter.nil?
   end
 
+  def name_with_username
+    "#{name} (#{username})"
+  end
+
   def is_admin!
     update_attribute :admin, true
   end

@@ -1,15 +1,11 @@
 Tzm::Application.routes.draw do
   devise_for :users
+  resources :users, :path => 'user'
+  resources :coordinators, :only => [:new, :create]
 
   resources :chapters do
-    resources :coordinators, :only => [:index, :new, :create, :destroy]
-    collection do
-      get :search
-    end
   end
 
-  resources :users, :path => 'user'
-    
   resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show] do
     member do
       get :territory_options

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ChaptersController do
+  include Devise::TestHelpers
 
   def do_create
     geo = Factory(:geo)

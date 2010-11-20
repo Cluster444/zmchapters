@@ -13,6 +13,11 @@ describe User do
     Factory.create(:admin).should be_admin
   end
 
+  it 'should provide a name with username' do
+    user = Factory.create(:admin)
+    user.name_with_username.should == "#{user.name} (#{user.username})"
+  end
+
   describe 'associations' do
     it 'should have a geographic location' do
       user = User.new

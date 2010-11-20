@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe UsersController do
-  
+  include Devise::TestHelpers
+
   def do_create
     post :create, :user => {:name=>"value"}
   end

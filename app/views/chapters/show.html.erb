@@ -1,10 +1,6 @@
 <% title 'Chapter:'+@chapter.name, false %>
 <% css 'chapters/show' %>
 
-<%= content_for :admin_control_panel do %>
-  <%= link_to "Add a Coordinator", new_chapter_coordinator_path(@chapter) %>
-<% end %>
-
 <div class="chapter-container grid_24">
   <% unless current_user.nil? %>
     <%= form_for current_user, :method => :put do |f| %>
@@ -30,7 +26,7 @@
     <h3>Coordinators</h3>
     <ul>
       <% @chapter.coordinators.each do |coordinator| %>
-        <li><%= "#{coordinator.user.name}(#{coordinator.user.username})" %></li>
+        <li><%= coordinator.user.name_with_username %></li>
       <% end %>
     </ul>
   </div>
