@@ -28,6 +28,7 @@
   <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f} %>
 
   <div class="actions">
-    <%= f.submit "Sign Up", :class => 'light-blue-box-shadow' %>
+    <% text = (current_user.try(:admin?) ? 'Create' : 'Sign Up') %>
+    <%= f.submit text, :class => 'light-blue-box-shadow' %>
   </div>
 <% end %>

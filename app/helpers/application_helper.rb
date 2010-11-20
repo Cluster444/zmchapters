@@ -51,7 +51,8 @@ module ApplicationHelper
     current_user and current_user.admin?
   end
 
-  def login_as_admin_button
+  def registration_closed?
+    false
   end
 
   def error_messages_for(*objects)

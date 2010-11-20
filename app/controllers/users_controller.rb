@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource :user
+
   helper_method :sort_column, :sort_direction
 
   rescue_from ActiveRecord::RecordNotFound do
