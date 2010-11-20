@@ -235,7 +235,7 @@ html #body .rm {
 .field input:focus, .field select:focus {
   -moz-box-shadow: 0 0 5px #17C; -webkit-box-shadow: 0 0 5px #17C;
 }
-
+/*
 .actions input {
   border: 1px solid #8ec1da;
   background-color: #ddeef6; color:#3985a8;
@@ -245,7 +245,7 @@ html #body .rm {
 }
 
 .actions input:hover {background:#999;}
-
+*/
 /* Sign Up/In Style */
 /*
 form#user_new {width: 100%;}

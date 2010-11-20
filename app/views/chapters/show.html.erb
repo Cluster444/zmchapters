@@ -1,6 +1,13 @@
 <% title 'Chapter:'+@chapter.name, false %>
 <% css 'chapters/show' %>
 
+<%= content_for :user_control_panel do %>
+  <%= form_for current_user, :method => :put do |f| %>
+    <%= hidden_field :chapter, :id %>
+    <%= f.submit "Join this chapter" %>
+  <% end %>
+<% end %>
+
 <div class="chapter-container grid_24">
   <% unless current_user.nil? %>
     <%= form_for current_user, :method => :put do |f| %>
@@ -23,16 +30,15 @@
     </div>
   </div>
   <div id="chapter_coordinators">
-    <h3>Coordinators</h3>
-    <ul>
-      <% @chapter.coordinators.each do |coordinator| %>
-        <li><%= coordinator.user.name_with_username %></li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="middle">
-    <h5>News</h5>
-    <%= render :partial => '/debug/news_small' %>
-    <%= render :partial => '/debug/news_small' %>
+    <% if @chapter.coordinators.any? %>
+      <h3>Coordinators</h3>
+      <ul>
+        <% @chapter.coordinators.each do |coordinator| %>
+          <li><%= coordinator.user.name_with_username %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <h3>No Coordinators</h3>
+    <% end %>
   </div>
 </div>
