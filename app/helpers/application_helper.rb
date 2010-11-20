@@ -51,6 +51,9 @@ module ApplicationHelper
     current_user and current_user.admin?
   end
 
+  def login_as_admin_button
+  end
+
   def error_messages_for(*objects)
     options = objects.extract_options!
     options[:header_message] ||= "Invalid Fields"

@@ -1,0 +1,30 @@
+<% if Rails.env.development? %>
+  <% css 'debug' %>
+  <div id="debug">
+    <div class="header">
+      Debug Console
+    </div>
+    <div style="width:100%; overflow:hidden">
+      <div class="subheader">
+        Models
+      </div>
+      <div class="subheader">
+        Controllers
+      </div>
+      <div class="subheader">
+        Other
+      </div>
+    </div>
+    <div style="width:100%">
+      <div class="console left">
+        <%= yield(:debug_model) %>
+      </div>
+      <div class="console center">
+        <%= yield(:debug_controller) %>
+      </div>
+      <div class="console right">
+        <%= yield(:debug_other) %>
+      </div>
+    </div>
+  </div>
+<% end %>

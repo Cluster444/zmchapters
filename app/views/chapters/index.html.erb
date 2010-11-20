@@ -8,3 +8,7 @@
   </p>
   <div id="chapters"><%= render 'chapters' %></div>
 <% end %>
+
+<%= content_for :debug_model, debug(@chapters) %>
+<%= content_for :debug_controller, debug(controller) %>
+<%= content_for :debug_other, login_as_admin_button %>
