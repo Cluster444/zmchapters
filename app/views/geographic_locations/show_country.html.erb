@@ -1,5 +1,6 @@
-<% title 'Geo:Country:'+@country.name %>
+<% title 'Geo:Country:'+@country.name, false %>
 <% css 'geographic_locations/show_country' %>
+
 
 <%= content_for :admin_control_panel do %>
   <% if can? :create, Chapter and (not @country.chapters.any?) %>
@@ -7,7 +8,7 @@
       <%= f.hidden_field :name, :value => @country.name %>
       <%= f.hidden_field :category, :value => 'country' %>
       <%= hidden_field :geo, :id, :value => @country.id %>
-      <%= f.submit 'Create Chapter' %>
+      <%= f.submit 'Create Chapter', :class => 'medium button' %>
     <% end %>
   <% end %>
 <% end %>

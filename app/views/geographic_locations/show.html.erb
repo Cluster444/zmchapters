@@ -1,4 +1,4 @@
-<% title 'Geo:Territory:'+@territory.name %>
+<% title 'Geo:Territory:'+@territory.name, false %>
 <% css 'geographic_locations/show' %>
 
 <%= content_for :admin_control_panel do %>
@@ -7,7 +7,7 @@
       <%= hidden_field :geo, :id, :value => @territory.id %>
       <%= f.text_field :name %>
       <%= f.select :category, Chapter::CATEGORIES.collect {|c| [c.humanize,c]}, :prompt => true %>
-      <%= f.submit "Create Chapter" %>
+      <%= f.submit "Create Chapter", :class => 'large button' %>
     <% end %>
   <% end %>
 <% end %>

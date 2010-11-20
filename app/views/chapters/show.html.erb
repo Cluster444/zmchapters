@@ -1,15 +1,17 @@
 <% title 'Chapter:'+@chapter.name, false %>
 <% css 'chapters/show' %>
 
+<% if current_user and current_user.chapter.nil? %>
 <%= content_for :user_control_panel do %>
   <%= form_for current_user, :method => :put do |f| %>
     <%= hidden_field :chapter, :id %>
     <%= f.submit "Join this chapter" %>
   <% end %>
 <% end %>
+<% end %>
 
 <div class="chapter-container grid_24">
-  <% unless current_user.nil? %>
+  <% if current_user and current_user.chapter.nil? %>
     <%= form_for current_user, :method => :put do |f| %>
       <%= hidden_field :chapter, :id %>
       <%= f.submit "Join this chapter" %>
