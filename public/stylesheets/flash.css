@@ -8,7 +8,7 @@
   border:1px solid #6C6;
 }
 
-.flash.error {
+.flash.error, .flash.alert {
   background-color: #FCC;
   border:1px solid #C66;
 }

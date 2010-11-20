@@ -11,6 +11,7 @@ class Ability
       can :read, Chapter
       can :read, User
       can :manage, User, :id => user.id
+      can :read, Page
     end
   end
 end

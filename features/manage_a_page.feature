@@ -17,16 +17,16 @@ Feature: Manage a page
     And I should see "Protocols 1.1"
     And I should see "Content"
   
-  @wip
+  #@wip
   Scenario Outline: Restrict access to the edit page
     Given a user exists
     And is <status>
     And a page exists with uri: "protocols"
     When I go to the edit protocols page
     Then I should be on the <page>
-    And I should see "<flash>"
+    And I should see "not authorized"
 
     Examples:
-      | status |page | flash |
-      | not logged in | the login page | login to access |
-      | logged in     | the home page  | Access Denied   |
+      | status        | page           |
+      | not logged in | the login page |
+      | logged in     | the home page  |
