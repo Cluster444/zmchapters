@@ -11,6 +11,8 @@ Tzm::Application.routes.draw do
       get :territory_options
     end
   end
+
+  resources :site_options, :only => [:index,:edit,:update]
   
   pages = ['protocols']
 

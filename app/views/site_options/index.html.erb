@@ -1,0 +1,20 @@
+<% title 'Site Options' %>
+
+<center><%= will_paginate @site_options %></center>
+<table class="pretty grey-box-shadow">
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Value</th>
+    <th></th>
+  </tr>
+  <% @site_options.each do |option| %>
+    <tr id="<%= option.key %>">
+      <td><%= option.key %></td>
+      <td><%= option.type %></td>
+      <td><%= option.value %></td>
+      <td><%= link_to "Edit", edit_site_option_path(option), :title => "edit_#{option.key}" %></td>
+    </tr>
+  <% end %>
+</table>
+<center><%= will_paginate @site_options %></center>

@@ -25,7 +25,7 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f} %>
+  <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f, :geo => nil} %>
 
   <div class="actions">
     <% text = (current_user.try(:admin?) ? 'Create' : 'Sign Up') %>

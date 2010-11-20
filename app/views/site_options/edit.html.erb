@@ -1,0 +1,13 @@
+<% title "Edit #{@site_option.key.titleize}" %>
+
+<%= form_for @site_option do |f| %>
+  <%= f.error_messages %>
+
+  <div class="field">
+    <%= f.label :value %>
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Save", :class => "large button" %>
+  </div>
+<% end %>

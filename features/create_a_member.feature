@@ -33,6 +33,7 @@ Feature: Create a new member
     And I should see "not authorized"
 
   Scenario: Guest user tries to create a user with registration open
+    Given a site_option exists with key: "site_registration", value: "open"
     When I go to the new user page
     And I fill in the following:
       | Name                       | Test User         |
@@ -58,8 +59,8 @@ Feature: Create a new member
     And I should see "created successfully"
     And I should see "awaiting approval"
   
-  @wip
   Scenario: Guest user tries to create a user with registration closed
+    Given a site_option exists with key: "site_registration", value: "closed"
     When I go to the new user page
     Then I should be on the login page
     And I should see "not authorized"

@@ -29,3 +29,11 @@ Factory.define :page do |f|
   f.title "Test Page"
   f.content "Test Content"
 end
+
+Factory.define :site_option do |f|
+  alpha = ('a'..'z').to_a
+  f.sequence(:key) {|n| "test_key_#{alpha[n]}"}
+  f.type "string"
+  f.value "Test value"
+  f.mutable "true"
+end

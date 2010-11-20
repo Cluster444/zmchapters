@@ -1,16 +1,19 @@
 <% if current_user %>
 <div id="control-container">
   <div id="user-container" class="container_24">
-    <div >
+    <div>
       <%= link_to 'Profile', user_path(current_user), :class => 'medium green button' %>
       <%= yield(:user_control_panel) %>
     </div>
   </div>
   <% if current_user.admin? %>
     <div id="admin-container" class="container_24">
+    <div>
       <%= link_to 'Create Member', new_user_path, :class => 'medium red button' %>
       <%= link_to 'Create Coordinator', new_coordinator_path, :class => 'medium red button' %>
+      <%= link_to 'Site Options', site_options_path, :class => 'medium red button' %>
       <%= yield(:admin_control_panel) %>
+    </div>
     </div>
   <% end %>
 </div>
@@ -27,7 +30,9 @@
         <%= link_to "Sign Out", destroy_user_session_path %>
       <% else %>
         <%= link_to 'Sign In', new_user_session_path %>
-        <%= link_to 'Sign Up', new_user_path %>
+        <% if can? :create, User %>
+          <%= link_to 'Sign Up', new_user_path %>
+        <% end %>
       <% end %>
     </ul>
     <li><%= link_to 'Home', root_path, :class => 'home' %></li>
