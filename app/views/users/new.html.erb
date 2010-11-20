@@ -1,4 +1,4 @@
-<% title 'Sign Up' %>
+<% title (current_user.try(:admin?) ? 'Create new member' : 'Sign Up') %>
 <% css 'users/new' %>
 <% js 'geo_location' %>
 
@@ -29,6 +29,6 @@
 
   <div class="actions">
     <% text = (current_user.try(:admin?) ? 'Create' : 'Sign Up') %>
-    <%= f.submit text, :class => 'light-blue-box-shadow' %>
+    <%= f.submit text, :class => 'large button' %>
   </div>
 <% end %>
