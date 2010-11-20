@@ -20,7 +20,7 @@ Feature: Find a chapter
   Scenario: Find a chapter by searching with exact match
     Given I am on the chapters page
     When I fill in "Calgary" for "search"
-    And I press "Search"
+    And I press "search-button"
     And I follow "Calgary"
     And I press "Join this chapter"
     Then I should see "My Profile"
