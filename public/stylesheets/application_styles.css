@@ -19,10 +19,15 @@
 #nav-container {
   background:#EEE;
   border-bottom:1px solid #BBB;
-  -webkit-box-shadow:0 5px 10px #EEE;
+  box-shadow:0 5px 10px #EEE,0 19px 0 #F2F2F2 inset;
+  -moz-box-shadow:0 5px 10px #EEE,0 19px 0 #F2F2F2 inset;
+  -o-box-shadow:0 5px 10px #EEE,0 19px 0 #F2F2F2 inset;
+  -ie-box-shadow:0 5px 10px #EEE,0 19px 0 #F2F2F2 inset;
+  -webkit-box-shadow:0 5px 10px #EEE,0 19px 0 #F2F2F2 inset;
 }
 #nav {
-  background:#DDD;
+  background: #EAEAEA;
+  background: rgba(100, 100, 100, 0.05);
   border:1px solid #AAA;
   border-top:0;
   height: 37px;
@@ -31,6 +36,7 @@
   z-index:998;
   box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
   -webkit-box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
+  -o-box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
   -moz-box-shadow:0 1px 0 #FFF inset,0 -1px #CCC;
 }
 /* Separators */
@@ -52,6 +58,7 @@
 }
 #nav li a.home:hover {
   background:url('../images/home_icon.png') no-repeat 9px center #CCC;
+  background-color: rgba(1, 1, 1, 0.01);
   color:#000;
 }
 #nav li .submenu {
@@ -84,6 +91,7 @@
 #nav li:hover a {
   color:#000;
   background:#CCC;
+  background: rgba(1, 1, 1, 0.01);
   box-shadow:0 1px 0 #FFF inset;
   -moz-box-shadow:0 1px 0 #FFF inset;
   -webkit-box-shadow:0 1px 0 #FFF inset;
@@ -92,7 +100,7 @@
   background:#DDD;
   box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
   -moz-box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
-  -webkit-box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset;
+  -webkit-box-shadow:1px 0 0 #FFF inset,0 1px 0 #FFF inset, 0 20px 0 #E5E5E5 inset;
 }
 #control-nav a {
   background:#FAFAFA;
@@ -124,6 +132,67 @@
   -webkit-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
   -moz-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
 }
+#page {
+}
+
+#page #body {
+}
+
+#page #footer {
+  background:#555;
+  background:-moz-linear-gradient(100% 4% 270deg, #888, #333 100%);
+  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#333), to(#888));
+  -moz-box-shadow: 0 1px #CCC inset;
+  -webkit-box-shadow: 0 1px #CCC inset;
+}
+
+#page #header {
+  background:#EEE;
+  border: 1px solid #CCC;
+  text-shadow: 0 1px #FFF;
+  -webkit-box-shadow: 0 1px #FFF 
+}
+#page #header #search #search-box {
+  background:#FAFAFA;
+  border:1px solid #CCC;
+  border-left:0;
+  color:#333;
+  font-size:1.2em;
+  font-family:Lucida Sans, Helvetica Nueu, Tahoma, Arial,sans-serif;
+  box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
+  -webkit-box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
+  -o-box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
+  -moz-box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
+}
+#page #header #search #search-button {
+  background:transparent;
+  border:0;
+  color:#555;
+  display:inline;
+  font-size:2em;
+  font-family:Arial;
+  line-height:.4em;
+}
+.log-in, .sign-in {
+  background:#FAFAFA;
+}
+
+.field label {
+
+}
+.field input, .field select {
+  border: 1px solid #EEE;
+  font-size:1.2em;
+  padding:5px;
+}
+
+.field input:hover, .field select:hover {
+  -moz-box-shadow: 0 0 5px #3AF; -webkit-box-shadow: 0 0 5px #3AF;
+}
+
+.field input:focus, .field select:focus {
+  -moz-box-shadow: 0 0 5px #17C; -webkit-box-shadow: 0 0 5px #17C;
+}
 .prettytable {
 }
 .prettytable tr{
@@ -141,7 +210,7 @@ h2.center {
 h1.page_title {
   text-align: center;
 }
-
+/* Form Styles */
 /* Generic Styles */
 .grey-box-shadow {
   box-shadow:         8px 10px 10px rgba(0,0,0,0.5),inset 8px 10px 10px rgba(255,255,255,0.75);

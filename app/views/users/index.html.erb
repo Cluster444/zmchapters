@@ -2,9 +2,11 @@
 <% css 'users/index' %>
 
 <%= form_tag users_path, :method => :get, :id => "users_search" do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-  <div id="users"><%= render 'users' %></div>
+<div id="header">
+  <div id="search">
+    <%= text_field_tag :search, params[:search], :id => 'search-box' %>
+    <%= submit_tag ".", :name => nil, :id => 'search-button' %>
+  </div>
+</div>
+<div id="users"><%= render 'users' %></div>
 <% end %>

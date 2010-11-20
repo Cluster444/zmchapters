@@ -42,7 +42,3 @@ $(document).ready( function() {
   });
 });
 
-// Turn on wymeditor
-$(document).ready(function() {
-  $('.wymeditor').wymeditor();
-});
