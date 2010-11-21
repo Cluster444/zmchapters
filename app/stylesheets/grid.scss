@@ -291,3 +291,24 @@ $flash_green_border: $flash_green_bg - #727;
     &:hover { cursor: pointer; }
   }
 }
+
+.error_messages {
+  width:400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin: 0;
+    background-color: #C00;
+    color: #FFF;
+  }
+  p { margin: 8px 10px; }
+  ul { margin-left: 30px; }
+}
