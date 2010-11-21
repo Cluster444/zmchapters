@@ -162,6 +162,162 @@ body {
 }
 
 /* line 56, ../../../app/stylesheets/grid.scss */
+#control-nav {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+/* line 60, ../../../app/stylesheets/grid.scss */
+#control-nav a {
+  padding: 6px 10px;
+  background: #FAFAFA;
+  border: 1px solid #FFF;
+  color: #333;
+  text-decoration: none;
+  outline: none;
+}
+/* line 67, ../../../app/stylesheets/grid.scss */
+#control-nav a:hover {
+  background: #FFF;
+  color: #000;
+  text-decoration: none;
+}
+/* line 72, ../../../app/stylesheets/grid.scss */
+#control-nav a.on {
+  background: #EEE;
+  border-top: 1px solid #EEE;
+  color: #111;
+  text-decoration: none;
+}
+/* line 77, ../../../app/stylesheets/grid.scss */
+#control-nav a.on.user {
+  -moz-box-shadow: #22ff55 0 -4px 0 0 inset;
+  -webkit-box-shadow: #22ff55 0 -4px 0 0 inset;
+  -o-box-shadow: #22ff55 0 -4px 0 0 inset;
+  box-shadow: #22ff55 0 -4px 0 0 inset;
+}
+/* line 80, ../../../app/stylesheets/grid.scss */
+#control-nav a.on.admin {
+  -moz-box-shadow: #ff2255 0 -4px 0 0 inset;
+  -webkit-box-shadow: #ff2255 0 -4px 0 0 inset;
+  -o-box-shadow: #ff2255 0 -4px 0 0 inset;
+  box-shadow: #ff2255 0 -4px 0 0 inset;
+}
+
+/* line 87, ../../../app/stylesheets/grid.scss */
+#nav-container {
+  margin-bottom: 10px;
+  background: #EEE;
+  border-bottom: 1px solid #BBB;
+  -moz-box-shadow: #555555 0 5px 10px 0;
+  -webkit-box-shadow: #555555 0 5px 10px 0;
+  -o-box-shadow: #555555 0 5px 10px 0;
+  box-shadow: #555555 0 5px 10px 0;
+  -moz-box-shadow: #f2f2f2 0 19px 0 0 inset;
+  -webkit-box-shadow: #f2f2f2 0 19px 0 0 inset;
+  -o-box-shadow: #f2f2f2 0 19px 0 0 inset;
+  box-shadow: #f2f2f2 0 19px 0 0 inset;
+}
+/* line 93, ../../../app/stylesheets/grid.scss */
+#nav-container #nav {
+  margin-bottom: -1px;
+  overflow: hidden;
+  position: relative;
+  background: #EAEAEA;
+  background: rgba(100, 100, 100, 0.05);
+  border: 1px solid #AAA;
+  border-top: 0;
+  height: 37px;
+  overflow: visible;
+  z-index: #998;
+}
+/* line 104, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li {
+  float: left;
+  list-style: none;
+  margin: 0;
+}
+/* line 108, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li a {
+  display: table-cell;
+  height: 37px;
+  padding: 0px 15px;
+  margin-top: 2px;
+  text-decoration: none;
+  vertical-align: middle;
+  border-left: 1px solid #FFF;
+  color: #333;
+  text-shadow: 0 1px #FFF;
+}
+/* line 118, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li a.home {
+  text-indent: -999px;
+  padding: 0px 20px;
+  background: url(/images/home_icon.png) no-repeat 9px center transparent;
+}
+/* line 122, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li a.home:hover {
+  background: url(/images/home_icon.png) no-repeat 9px center #cccccc;
+  background-color: rgba(1, 1, 1, 0.01);
+  color: #000;
+}
+/* line 129, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li .submenu {
+  display: none;
+  list-style: none;
+  margin: 0px;
+  margin-left: -1px;
+  min-width: 150px;
+  opacity: 1;
+  padding: 5px 0px;
+  position: absolute;
+  top: 37px;
+  z-index: 999;
+  background: #EEE;
+  border: 1px solid #CCC;
+  border-top: 1px solid #AAA;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -o-border-bottom-left-radius: 5px;
+  -ms-border-bottom-left-radius: 5px;
+  -khtml-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -o-border-bottom-right-radius: 5px;
+  -ms-border-bottom-right-radius: 5px;
+  -khtml-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+/* line 144, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li .submenu li {
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  float: none;
+}
+/* line 150, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li .submenu li a {
+  border: 0;
+  min-width: 150px;
+}
+/* line 154, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li .submenu li:hover a {
+  background: #DDD;
+}
+/* line 160, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li:hover .submenu {
+  display: block;
+}
+/* line 163, ../../../app/stylesheets/grid.scss */
+#nav-container #nav li:hover a {
+  color: #000;
+  background: #CCC;
+  background: rgba(1, 1, 1, 0.01);
+}
+
+/* line 173, ../../../app/stylesheets/grid.scss */
 #footer {
   background: #555;
   -moz-box-shadow: #cccccc 0 1px 0 0 inset;
@@ -174,7 +330,7 @@ body {
   text-shadow: 0 -1px black;
   text-align: center;
 }
-/* line 65, ../../../app/stylesheets/grid.scss */
+/* line 182, ../../../app/stylesheets/grid.scss */
 #footer ul {
   margin: 0;
   padding: 0;
@@ -203,7 +359,7 @@ body {
 #footer ul li:last-child, #footer ul li.last {
   padding-right: 0;
 }
-/* line 70, ../../../app/stylesheets/grid.scss */
+/* line 187, ../../../app/stylesheets/grid.scss */
 #footer li,
 #footer li a {
   color: #FFF;
