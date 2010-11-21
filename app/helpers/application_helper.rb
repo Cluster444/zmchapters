@@ -17,10 +17,6 @@ module ApplicationHelper
     content_for(:head) { javascript_include_tag(*files) }
   end
 
-  def include_wymeditor
-    javascript_include_tag 'wymeditor/jquery.wymeditor.min.js'
-  end
-
   def edit_link(object, content = "Edit")
     link_to(content, [:edit, object]) if can? :update, object
   end

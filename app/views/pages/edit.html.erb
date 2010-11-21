@@ -1,4 +1,6 @@
 <% title "Edit #{@page.title}" %>
+<% js 'elrte.min' %>
+<% js 'editor' %>
 
 <div class="<%= @page.uri %>">
   <%= form_for @page, :url => protocols_path do |f| %>
@@ -9,7 +11,7 @@
       <%= f.text_field :title %>
     </div>
     <div class="page-content">
-      <%= f.text_area :content, :class => 'wymeditor' %>
+      <%= f.text_area :content, :class => 'editor' %>
     </div>
     <div>
       <%= f.submit "Save", :class => "small button" %>
