@@ -8,6 +8,8 @@ gem 'role_model'
 gem 'cancan'
 gem 'nested_set'
 gem 'activerecord-import', '>= 0.2.0'
+gem 'compass', '>= 0.10.6'
+gem 'compass-960-plugin', '>= 0.10.0'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.0.0.beta.22'
