@@ -8,3 +8,4 @@ script/
 .*.swp
 webrat.log
 features/tmp
+public/stylesheets/compiled
