@@ -267,3 +267,27 @@ body {
     }
   }
 }
+
+$flash_red_bg: #FCC;
+$flash_red_border: $flash_red_bg - #277;
+$flash_green_bg: #CFC;
+$flash_green_border: $flash_green_bg - #727;
+
+.flash {
+  padding: 5px 8px;
+  margin: 10px 0;
+  &.notice, &.success {
+    background-color: $flash_green_bg;
+    border: 1px solid $flash_green_border;
+    .close:hover { background-color: $flash_green_border; }
+  }
+  &.error, &.alert {
+    background-color: $flash_red_bg;
+    border: 1px solid $flash_red_border;
+    .close:hover { background-color: $flash_red_border; }
+  }
+  .close {
+    float:right;
+    &:hover { cursor: pointer; }
+  }
+}

@@ -464,3 +464,35 @@ body {
   -o-box-shadow: #1177cc 0 0 5px 0;
   box-shadow: #1177cc 0 0 5px 0;
 }
+
+/* line 275, ../../../app/stylesheets/grid.scss */
+.flash {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+/* line 278, ../../../app/stylesheets/grid.scss */
+.flash.notice, .flash.success {
+  background-color: #ccffcc;
+  border: 1px solid #55dd55;
+}
+/* line 281, ../../../app/stylesheets/grid.scss */
+.flash.notice .close:hover, .flash.success .close:hover {
+  background-color: #55dd55;
+}
+/* line 283, ../../../app/stylesheets/grid.scss */
+.flash.error, .flash.alert {
+  background-color: #ffcccc;
+  border: 1px solid #dd5555;
+}
+/* line 286, ../../../app/stylesheets/grid.scss */
+.flash.error .close:hover, .flash.alert .close:hover {
+  background-color: #dd5555;
+}
+/* line 288, ../../../app/stylesheets/grid.scss */
+.flash .close {
+  float: right;
+}
+/* line 290, ../../../app/stylesheets/grid.scss */
+.flash .close:hover {
+  cursor: pointer;
+}
