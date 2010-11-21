@@ -69,12 +69,17 @@ body {
 }
 
 /* line 17, ../../../app/stylesheets/grid.scss */
+#page {
+  background: url(/images/bg.jpg) top center no-repeat;
+}
+
+/* line 21, ../../../app/stylesheets/grid.scss */
 #page.one-column {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
 }
-/* line 19, ../../../app/stylesheets/grid.scss */
+/* line 23, ../../../app/stylesheets/grid.scss */
 #page.one-column #content {
   display: inline;
   float: left;
@@ -83,13 +88,13 @@ body {
   width: 940px;
 }
 
-/* line 25, ../../../app/stylesheets/grid.scss */
+/* line 29, ../../../app/stylesheets/grid.scss */
 #page.two-column {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
 }
-/* line 28, ../../../app/stylesheets/grid.scss */
+/* line 32, ../../../app/stylesheets/grid.scss */
 #page.two-column #sidebar,
 #page.two-column #content {
   display: inline;
@@ -97,22 +102,22 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
-/* line 29, ../../../app/stylesheets/grid.scss */
+/* line 33, ../../../app/stylesheets/grid.scss */
 #page.two-column #sidebar {
   width: 300px;
 }
-/* line 30, ../../../app/stylesheets/grid.scss */
+/* line 34, ../../../app/stylesheets/grid.scss */
 #page.two-column #content {
   width: 620px;
 }
 
-/* line 33, ../../../app/stylesheets/grid.scss */
+/* line 37, ../../../app/stylesheets/grid.scss */
 #page.three-column {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
 }
-/* line 37, ../../../app/stylesheets/grid.scss */
+/* line 41, ../../../app/stylesheets/grid.scss */
 #page.three-column #left-sidebar,
 #page.three-column #right-sidebar,
 #page.three-column #content {
@@ -121,23 +126,23 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
-/* line 39, ../../../app/stylesheets/grid.scss */
+/* line 43, ../../../app/stylesheets/grid.scss */
 #page.three-column #left-sidebar,
 #page.three-column #right-sidebar {
   width: 220px;
 }
-/* line 40, ../../../app/stylesheets/grid.scss */
+/* line 44, ../../../app/stylesheets/grid.scss */
 #page.three-column #content {
   width: 460px;
 }
 
-/* line 43, ../../../app/stylesheets/grid.scss */
+/* line 47, ../../../app/stylesheets/grid.scss */
 #control-container {
   overflow: hidden;
   *zoom: 1;
   background: #EEE;
 }
-/* line 46, ../../../app/stylesheets/grid.scss */
+/* line 50, ../../../app/stylesheets/grid.scss */
 #control-container .panel {
   display: none;
   border: 1px solid #cccccc;
@@ -148,26 +153,26 @@ body {
   -o-box-shadow: #f5f5f5 0 20px 0 0 inset;
   box-shadow: #f5f5f5 0 20px 0 0 inset;
 }
-/* line 50, ../../../app/stylesheets/grid.scss */
+/* line 54, ../../../app/stylesheets/grid.scss */
 #control-container .panel.user {
   border-top-color: #2F5;
 }
-/* line 51, ../../../app/stylesheets/grid.scss */
+/* line 55, ../../../app/stylesheets/grid.scss */
 #control-container .panel.admin {
   border-top-color: #F25;
 }
-/* line 52, ../../../app/stylesheets/grid.scss */
+/* line 56, ../../../app/stylesheets/grid.scss */
 #control-container .panel div {
   padding: 10px;
 }
 
-/* line 56, ../../../app/stylesheets/grid.scss */
+/* line 60, ../../../app/stylesheets/grid.scss */
 #control-nav {
   position: absolute;
   right: 10px;
   top: 5px;
 }
-/* line 60, ../../../app/stylesheets/grid.scss */
+/* line 64, ../../../app/stylesheets/grid.scss */
 #control-nav a {
   padding: 6px 10px;
   background: #FAFAFA;
@@ -176,27 +181,27 @@ body {
   text-decoration: none;
   outline: none;
 }
-/* line 67, ../../../app/stylesheets/grid.scss */
+/* line 71, ../../../app/stylesheets/grid.scss */
 #control-nav a:hover {
   background: #FFF;
   color: #000;
   text-decoration: none;
 }
-/* line 72, ../../../app/stylesheets/grid.scss */
+/* line 76, ../../../app/stylesheets/grid.scss */
 #control-nav a.on {
   background: #EEE;
   border-top: 1px solid #EEE;
   color: #111;
   text-decoration: none;
 }
-/* line 77, ../../../app/stylesheets/grid.scss */
+/* line 81, ../../../app/stylesheets/grid.scss */
 #control-nav a.on.user {
   -moz-box-shadow: #22ff55 0 -4px 0 0 inset;
   -webkit-box-shadow: #22ff55 0 -4px 0 0 inset;
   -o-box-shadow: #22ff55 0 -4px 0 0 inset;
   box-shadow: #22ff55 0 -4px 0 0 inset;
 }
-/* line 80, ../../../app/stylesheets/grid.scss */
+/* line 84, ../../../app/stylesheets/grid.scss */
 #control-nav a.on.admin {
   -moz-box-shadow: #ff2255 0 -4px 0 0 inset;
   -webkit-box-shadow: #ff2255 0 -4px 0 0 inset;
@@ -204,7 +209,7 @@ body {
   box-shadow: #ff2255 0 -4px 0 0 inset;
 }
 
-/* line 87, ../../../app/stylesheets/grid.scss */
+/* line 91, ../../../app/stylesheets/grid.scss */
 #nav-container {
   margin-bottom: 10px;
   background: #EEE;
@@ -218,7 +223,7 @@ body {
   -o-box-shadow: #f2f2f2 0 19px 0 0 inset;
   box-shadow: #f2f2f2 0 19px 0 0 inset;
 }
-/* line 93, ../../../app/stylesheets/grid.scss */
+/* line 97, ../../../app/stylesheets/grid.scss */
 #nav-container #nav {
   margin-bottom: -1px;
   overflow: hidden;
@@ -231,13 +236,13 @@ body {
   overflow: visible;
   z-index: #998;
 }
-/* line 104, ../../../app/stylesheets/grid.scss */
+/* line 108, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li {
   float: left;
   list-style: none;
   margin: 0;
 }
-/* line 108, ../../../app/stylesheets/grid.scss */
+/* line 112, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li a {
   display: table-cell;
   height: 37px;
@@ -249,19 +254,19 @@ body {
   color: #333;
   text-shadow: 0 1px #FFF;
 }
-/* line 118, ../../../app/stylesheets/grid.scss */
+/* line 122, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li a.home {
   text-indent: -999px;
   padding: 0px 20px;
   background: url(/images/home_icon.png) no-repeat 9px center transparent;
 }
-/* line 122, ../../../app/stylesheets/grid.scss */
+/* line 126, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li a.home:hover {
   background: url(/images/home_icon.png) no-repeat 9px center #cccccc;
   background-color: rgba(1, 1, 1, 0.01);
   color: #000;
 }
-/* line 129, ../../../app/stylesheets/grid.scss */
+/* line 133, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li .submenu {
   display: none;
   list-style: none;
@@ -289,7 +294,7 @@ body {
   -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-/* line 144, ../../../app/stylesheets/grid.scss */
+/* line 148, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li .submenu li {
   background: transparent;
   border: none;
@@ -297,27 +302,40 @@ body {
   padding: 0;
   float: none;
 }
-/* line 150, ../../../app/stylesheets/grid.scss */
+/* line 154, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li .submenu li a {
   border: 0;
   min-width: 150px;
 }
-/* line 154, ../../../app/stylesheets/grid.scss */
+/* line 158, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li .submenu li:hover a {
   background: #DDD;
 }
-/* line 160, ../../../app/stylesheets/grid.scss */
+/* line 164, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li:hover .submenu {
   display: block;
 }
-/* line 163, ../../../app/stylesheets/grid.scss */
+/* line 167, ../../../app/stylesheets/grid.scss */
 #nav-container #nav li:hover a {
   color: #000;
   background: #CCC;
   background: rgba(1, 1, 1, 0.01);
 }
 
-/* line 173, ../../../app/stylesheets/grid.scss */
+/* line 177, ../../../app/stylesheets/grid.scss */
+#body {
+  overflow: hidden;
+  min-height: 600px;
+  height: auto !important;
+  background-color: rgba(250, 250, 250, 0.5);
+  border: 1px solid #AAA;
+}
+/* line 183, ../../../app/stylesheets/grid.scss */
+#body .container {
+  border: 1px solid #FFF;
+}
+
+/* line 188, ../../../app/stylesheets/grid.scss */
 #footer {
   background: #555;
   -moz-box-shadow: #cccccc 0 1px 0 0 inset;
@@ -330,7 +348,7 @@ body {
   text-shadow: 0 -1px black;
   text-align: center;
 }
-/* line 182, ../../../app/stylesheets/grid.scss */
+/* line 197, ../../../app/stylesheets/grid.scss */
 #footer ul {
   margin: 0;
   padding: 0;
@@ -359,10 +377,90 @@ body {
 #footer ul li:last-child, #footer ul li.last {
   padding-right: 0;
 }
-/* line 187, ../../../app/stylesheets/grid.scss */
+/* line 202, ../../../app/stylesheets/grid.scss */
 #footer li,
 #footer li a {
   color: #FFF;
   padding: 4px;
   text-decoration: none;
+}
+
+/* line 209, ../../../app/stylesheets/grid.scss */
+#search-container {
+  height: 100px;
+  margin: 10px auto;
+  position: relative;
+  background: #EEE;
+  border: 1px solid #CCC;
+  text-shadow: 0 1px #FFF;
+  -moz-box-shadow: white 0 1px 5px 0;
+  -webkit-box-shadow: white 0 1px 5px 0;
+  -o-box-shadow: white 0 1px 5px 0;
+  box-shadow: white 0 1px 5px 0;
+}
+/* line 217, ../../../app/stylesheets/grid.scss */
+#search-container div {
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+/* line 221, ../../../app/stylesheets/grid.scss */
+#search-container div input[type=text] {
+  padding: 8px;
+  padding-right: 20px;
+  width: 250px;
+  background: #FAFAFA;
+  border: 1px solid #CCC;
+  border-left: 0;
+  color: #333;
+  font-size: 1.2em;
+  font-family: Lucida Sans, Helvetica Nueu, Tahoma, Arial,sans-serif;
+}
+/* line 232, ../../../app/stylesheets/grid.scss */
+#search-container div input[type=submit] {
+  top: 2px;
+  position: relative;
+  left: -35px;
+  background: transparent;
+  border: 0;
+  color: #555;
+  display: inline;
+  font-size: 2em;
+  font-family: Arial;
+  line-height: .4em;
+}
+
+/* line 247, ../../../app/stylesheets/grid.scss */
+.field {
+  height: 70px;
+  position: relative;
+  overflow: visible;
+}
+/* line 251, ../../../app/stylesheets/grid.scss */
+.field label {
+  display: block;
+  font-size: 1em;
+  width: 100px;
+  padding-left: 2px;
+}
+/* line 257, ../../../app/stylesheets/grid.scss */
+.field input, .field select {
+  width: 450px;
+  border: 1px solid #EEE;
+  font-size: 1.2em;
+  padding: 5px;
+}
+/* line 262, ../../../app/stylesheets/grid.scss */
+.field input:hover, .field select:hover {
+  -moz-box-shadow: #33aaff 0 0 5px 0;
+  -webkit-box-shadow: #33aaff 0 0 5px 0;
+  -o-box-shadow: #33aaff 0 0 5px 0;
+  box-shadow: #33aaff 0 0 5px 0;
+}
+/* line 265, ../../../app/stylesheets/grid.scss */
+.field input:focus, .field select:focus {
+  -moz-box-shadow: #1177cc 0 0 5px 0;
+  -webkit-box-shadow: #1177cc 0 0 5px 0;
+  -o-box-shadow: #1177cc 0 0 5px 0;
+  box-shadow: #1177cc 0 0 5px 0;
 }

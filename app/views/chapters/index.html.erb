@@ -2,11 +2,11 @@
 <% css 'chapters/index' %>
 
 <%= form_tag chapters_path, :method => :get, :id => "chapters_search" do %>
-<div id="header">
-  <div id="search">
-    <%= text_field_tag :search, params[:search],:id => 'search-box' %>
-    <%= submit_tag "›", :name => nil,:id => 'search-button' %>
+  <div id="search-container">
+    <div>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag ">", :name => nil %>
+    </div>
   </div>
-</div>
-<div id="chapters"><%= render 'chapters' %></div>
+  <div id="chapters"><%= render 'chapters' %></div>
 <% end %>

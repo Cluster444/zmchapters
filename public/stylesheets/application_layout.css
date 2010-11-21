@@ -1,8 +1,4 @@
-#body {
-  overflow:hidden;
-  min-height: 600px; 
-  height: auto !important;
-}
+
 .prettytable {
   margin-right:-20px;
 }
@@ -18,52 +14,8 @@
   padding:2px;
 }
 
-#page #header {
-  height: 100px; 
-  margin: 10px auto;
-  position:relative;
-}
-#page #header #search {
-  position:absolute;
-  top:10px;
-  left:0;
-}
-#page #header #search #search-box {
-  padding:8px;
-  padding-right:20px;
-  width:250px;
-}
-#page #header #search #search-button {
-  top:2px;
-  position:relative;
-  left:-35px;
-}
-#page #header ul li{
-  display:inline;
-}
+/* ----------------------------------------------------------- */
 
-#page #header li a, 
-#page #header li {
-  color: #FFF;padding:4px; text-decoration:none;
-}
-
-#page #header li a:hover {
-  background:#888;
-  background:-moz-linear-gradient(100% 4% 270deg, #AAA, #555 100%);
-  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#555), to(#AAA));
-  -moz-box-shadow: 0 1px #CCC inset;
-  -webkit-box-shadow: 0 1px #CCC inset;
-}
-#page #header li a:active {
-  background:#AAA;
-  background:-moz-linear-gradient(100% 4% 270deg, #BBB, #666 100%);
-  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#666), to(#BBB));
-  -moz-box-shadow: 0 1px #CCC inset;
-  -webkit-box-shadow: 0 1px #CCC inset;
-}
-
-#page #header ul li {float:left}
-#page #header ul.auth {float:right}
 #body-header {margin-bottom:5px;}
 
 .pagination {
@@ -98,22 +50,10 @@
 .breadcrumb a {color: #333;padding:5px;text-shadow: 0 1px #FFF;}
 .breadcrumb a:hover {color: #000;}
 
-/* Admin/Moderator Chapter controls */
-.chapter-editor{height:30px;overflow:hidden;position:relative;margin-left:5px;margin-bottom:-5px;}
-.chapter-editor div{overflow:hidden;position:absolute;bottom:0;}
-.chapter-editor a{background: #DDD;border:1px solid #CCC;border-bottom:0;color:#333;float:left;padding:5px;text-decoration:none;text-shadow: 0 1px #EEE;-moz-box-shadow: 0 1px #F0F0F0 inset;-webkit-box-shadow: 0 1px #F0F0F0 inset;}
-.chapter-editor a:hover{background: #CCC;color: #222;-moz-box-shadow: 0 1px #FAFAFA inset;-webkit-box-shadow: 0 1px #FAFAFA inset;}
-.chapter-editor a:active{color:#000;}
-
 form, .log-in h2 {
   padding:10px;
 }
-.field label {
-  display:block;
-  font-size:1em;
-  width:100px; 
-  padding-left:2px;
-}
+
 html #body .rm {
   height:30px;
 }
@@ -122,22 +62,4 @@ html #body .rm {
 }
 .field.rm label {
   display:inline;
-
-}
-#body .field {
-  height:70px;
-  position:relative;
-  overflow:visible;
-}
-
-.field input, .field select {
-  width: 450px; 
-}
-
-.field input:hover, .field select:hover {
-  -moz-box-shadow: 0 0 5px #3AF; -webkit-box-shadow: 0 0 5px #3AF;
-}
-
-.field input:focus, .field select:focus {
-  -moz-box-shadow: 0 0 5px #17C; -webkit-box-shadow: 0 0 5px #17C;
 }
