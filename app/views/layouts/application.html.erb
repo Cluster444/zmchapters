@@ -4,9 +4,8 @@
   <title>TZM - <%= yield(:title) || 'The Zeitgeist Movement' %></title>
   <%= stylesheet_link_tag 'other/reset' %>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'ie' %>
   <%= csrf_meta_tag %>
+  <%= yield :css %>
   <%= yield :head %>
 </head>
 <body>
@@ -26,5 +25,7 @@
     <%= render :partial => '/shared/footer' %>
     <%= render :partial => '/shared/debug' %>
   </div>
+  <%= javascript_include_tag :defaults %>
+  <%= yield :js %>
 </body>
 </html>

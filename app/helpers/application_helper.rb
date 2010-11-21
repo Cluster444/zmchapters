@@ -10,11 +10,11 @@ module ApplicationHelper
   end
 
   def css(*files)
-    content_for(:head) { stylesheet_link_tag(*files) }
+    content_for(:css) { stylesheet_link_tag(*files) }
   end
 
   def js(*files)
-    content_for(:head) { javascript_include_tag(*files) }
+    content_for(:js) { javascript_include_tag(*files) }
   end
 
   def edit_link(object, content = "Edit")
