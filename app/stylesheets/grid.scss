@@ -312,3 +312,41 @@ $flash_green_border: $flash_green_bg - #727;
   p { margin: 8px 10px; }
   ul { margin-left: 30px; }
 }
+
+.breadcrumb {
+  background: #FAFAFA;
+  border:1px solid #CCC;
+  padding: 5px 0;
+  @include border-radius(5px);
+  @include box-shadow(#FFF, 0, 1px, inset);
+  a {
+    color: #333;
+    padding: 5px;
+    text-shadow: 0 1px #FFF;
+    &:hover { color: #000; }
+  }
+}
+
+.pagination {
+  padding: 10px 0;
+  a {
+    color: #555;
+    padding: 5px;
+    text-decoration: none;
+    &:hover {
+      background: #EEE;
+      border-bottom: 2px solid #000;
+      color: #000;
+    }
+  }
+  em {
+    @extend a;
+    cursor: default;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+  span {
+    color: #AAA;
+    cursor: default;
+  }
+}

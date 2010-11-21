@@ -18,38 +18,6 @@
 
 #body-header {margin-bottom:5px;}
 
-.pagination {
-  padding: 10px 0;
-}
-
-.pagination a, .pagination em {
-  color: #555;
-  padding:5px;
-  text-decoration:none;
-}
-
-.pagination em {
-  cursor:default;
-  font-weight:bold;
-  border-bottom:2px solid #000;
-}
-
-.pagination a:hover {
-  background: #eee;
-  border-bottom: 2px solid #000;
-  color: #000;
-}
-
-.pagination span {
-  color: #aaa;
-  cursor: default;
-}
-
-/* Breadcrumbs.. Mmmm... */
-.breadcrumb {background: #FAFAFA;border:1px solid #CCC;padding: 5px 0;border-radius: 5px;-moz-border-radiux: 5px;-moz-box-shadow: 0 1px #FFF inset;-webkit-box-shadow: 0 1px #FFF inset;}
-.breadcrumb a {color: #333;padding:5px;text-shadow: 0 1px #FFF;}
-.breadcrumb a:hover {color: #000;}
-
 form, .log-in h2 {
   padding:10px;
 }

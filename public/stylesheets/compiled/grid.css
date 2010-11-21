@@ -5,7 +5,9 @@
 /* line 14, ../../../../../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+a,
+.pagination em, .pagination
+em, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 dl, dt, dd, ol, ul, li,
@@ -58,7 +60,7 @@ q:before, q:after, blockquote:before, blockquote:after {
 }
 
 /* line 27, ../../../../../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-a img {
+a img, .pagination em img {
   border: none;
 }
 
@@ -173,7 +175,7 @@ body {
   top: 5px;
 }
 /* line 64, ../../../app/stylesheets/grid.scss */
-#control-nav a {
+#control-nav a, #control-nav .pagination em, .pagination #control-nav em {
   padding: 6px 10px;
   background: #FAFAFA;
   border: 1px solid #FFF;
@@ -182,27 +184,27 @@ body {
   outline: none;
 }
 /* line 71, ../../../app/stylesheets/grid.scss */
-#control-nav a:hover {
+#control-nav a:hover, #control-nav .pagination em:hover, .pagination #control-nav em:hover {
   background: #FFF;
   color: #000;
   text-decoration: none;
 }
 /* line 76, ../../../app/stylesheets/grid.scss */
-#control-nav a.on {
+#control-nav a.on, #control-nav .pagination em.on, .pagination #control-nav em.on {
   background: #EEE;
   border-top: 1px solid #EEE;
   color: #111;
   text-decoration: none;
 }
 /* line 81, ../../../app/stylesheets/grid.scss */
-#control-nav a.on.user {
+#control-nav a.on.user, #control-nav .pagination em.on.user, .pagination #control-nav em.on.user {
   -moz-box-shadow: #22ff55 0 -4px 0 0 inset;
   -webkit-box-shadow: #22ff55 0 -4px 0 0 inset;
   -o-box-shadow: #22ff55 0 -4px 0 0 inset;
   box-shadow: #22ff55 0 -4px 0 0 inset;
 }
 /* line 84, ../../../app/stylesheets/grid.scss */
-#control-nav a.on.admin {
+#control-nav a.on.admin, #control-nav .pagination em.on.admin, .pagination #control-nav em.on.admin {
   -moz-box-shadow: #ff2255 0 -4px 0 0 inset;
   -webkit-box-shadow: #ff2255 0 -4px 0 0 inset;
   -o-box-shadow: #ff2255 0 -4px 0 0 inset;
@@ -243,7 +245,7 @@ body {
   margin: 0;
 }
 /* line 112, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li a {
+#nav-container #nav li a, #nav-container #nav li .pagination em, .pagination #nav-container #nav li em {
   display: table-cell;
   height: 37px;
   padding: 0px 15px;
@@ -255,13 +257,13 @@ body {
   text-shadow: 0 1px #FFF;
 }
 /* line 122, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li a.home {
+#nav-container #nav li a.home, #nav-container #nav li .pagination em.home, .pagination #nav-container #nav li em.home {
   text-indent: -999px;
   padding: 0px 20px;
   background: url(/images/home_icon.png) no-repeat 9px center transparent;
 }
 /* line 126, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li a.home:hover {
+#nav-container #nav li a.home:hover, #nav-container #nav li .pagination em.home:hover, .pagination #nav-container #nav li em.home:hover {
   background: url(/images/home_icon.png) no-repeat 9px center #cccccc;
   background-color: rgba(1, 1, 1, 0.01);
   color: #000;
@@ -303,12 +305,12 @@ body {
   float: none;
 }
 /* line 154, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li .submenu li a {
+#nav-container #nav li .submenu li a, #nav-container #nav li .submenu li .pagination em, .pagination #nav-container #nav li .submenu li em {
   border: 0;
   min-width: 150px;
 }
 /* line 158, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li .submenu li:hover a {
+#nav-container #nav li .submenu li:hover a, #nav-container #nav li .submenu li:hover .pagination em, .pagination #nav-container #nav li .submenu li:hover em {
   background: #DDD;
 }
 /* line 164, ../../../app/stylesheets/grid.scss */
@@ -316,7 +318,7 @@ body {
   display: block;
 }
 /* line 167, ../../../app/stylesheets/grid.scss */
-#nav-container #nav li:hover a {
+#nav-container #nav li:hover a, #nav-container #nav li:hover .pagination em, .pagination #nav-container #nav li:hover em {
   color: #000;
   background: #CCC;
   background: rgba(1, 1, 1, 0.01);
@@ -379,7 +381,9 @@ body {
 }
 /* line 202, ../../../app/stylesheets/grid.scss */
 #footer li,
-#footer li a {
+#footer li a,
+#footer li .pagination em, .pagination
+#footer li em {
   color: #FFF;
   padding: 4px;
   text-decoration: none;
@@ -524,4 +528,59 @@ body {
 /* line 313, ../../../app/stylesheets/grid.scss */
 .error_messages ul {
   margin-left: 30px;
+}
+
+/* line 316, ../../../app/stylesheets/grid.scss */
+.breadcrumb {
+  background: #FAFAFA;
+  border: 1px solid #CCC;
+  padding: 5px 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: white 0 1px inset 0;
+  -webkit-box-shadow: white 0 1px inset 0;
+  -o-box-shadow: white 0 1px inset 0;
+  box-shadow: white 0 1px inset 0;
+}
+/* line 322, ../../../app/stylesheets/grid.scss */
+.breadcrumb a, .breadcrumb .pagination em, .pagination .breadcrumb em {
+  color: #333;
+  padding: 5px;
+  text-shadow: 0 1px #FFF;
+}
+/* line 326, ../../../app/stylesheets/grid.scss */
+.breadcrumb a:hover, .breadcrumb .pagination em:hover, .pagination .breadcrumb em:hover {
+  color: #000;
+}
+
+/* line 330, ../../../app/stylesheets/grid.scss */
+.pagination {
+  padding: 10px 0;
+}
+/* line 332, ../../../app/stylesheets/grid.scss */
+.pagination a, .pagination em {
+  color: #555;
+  padding: 5px;
+  text-decoration: none;
+}
+/* line 336, ../../../app/stylesheets/grid.scss */
+.pagination a:hover, .pagination em:hover {
+  background: #EEE;
+  border-bottom: 2px solid #000;
+  color: #000;
+}
+/* line 342, ../../../app/stylesheets/grid.scss */
+.pagination em {
+  cursor: default;
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+}
+/* line 348, ../../../app/stylesheets/grid.scss */
+.pagination span {
+  color: #AAA;
+  cursor: default;
 }
