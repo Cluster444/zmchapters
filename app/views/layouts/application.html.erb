@@ -2,30 +2,35 @@
 <html>
 <head>
   <title>TZM - <%= yield(:title) || 'The Zeitgeist Movement' %></title>
-  <%= stylesheet_link_tag 'other/reset' %>
   <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'compiled/grid.css', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/text.css', :media => 'screen, projection' %>
   <%= csrf_meta_tag %>
   <%= yield :css %>
   <%= yield :head %>
 </head>
 <body>
-  <div id="page">
+  <div class="one-column" id="page">
     <%= render :partial => '/shared/header' %>
     <div id="body" class="container_24">
-      <div class="container">
-      <% flash.each do |name, message| %>
-        <%= content_tag :div, :class => "flash #{name}" do %>
-          <span><%= message %></span><span class="close">Close<span>
+      <div class="container" id="content">
+        <% flash.each do |name, message| %>
+          <%= content_tag :div, :class => "flash #{name}" do %>
+            <span><%= message %></span><span class="close">Close<span>
+          <% end %>
         <% end %>
-      <% end %>
-      <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
-      <%= yield %>
+        <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
+        <%= yield %>
       </div>
     </div>
-    <%= render :partial => '/shared/footer' %>
+    <div id="footer">
+      <%= render :partial => '/shared/footer' %>
+    </div>
     <%= render :partial => '/shared/debug' %>
   </div>
+  <div style="display:none;">
   <%= javascript_include_tag :defaults %>
   <%= yield :js %>
+  </div>
 </body>
 </html>

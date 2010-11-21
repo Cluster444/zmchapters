@@ -132,6 +132,7 @@
   -webkit-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
   -moz-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
 }
+
 #page {
   background:url(../images/bg.jpg) top center no-repeat;
   background-color: #555;
@@ -147,13 +148,6 @@
   border:1px solid #FFF;
   
 }
-#page #footer {
-  background:#555;
-  background:-moz-linear-gradient(100% 4% 270deg, #888, #333 100%);
-  background:-webkit-gradient(linear, 11% 98%, 11% 0%, from(#333), to(#888));
-  -moz-box-shadow: 0 1px #CCC inset;
-  -webkit-box-shadow: 0 1px #CCC inset;
-}
 
 #page #header {
   background:#EEE;
@@ -161,6 +155,7 @@
   text-shadow: 0 1px #FFF;
   -webkit-box-shadow: 0 1px #FFF 
 }
+
 #page #header #search #search-box {
   background:#FAFAFA;
   border:1px solid #CCC;
@@ -173,6 +168,7 @@
   -o-box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
   -moz-box-shadow: 0 1px #FFF inset, 0 20px 0 #FDFDFD inset;
 }
+
 #page #header #search #search-button {
   background:transparent;
   border:0;

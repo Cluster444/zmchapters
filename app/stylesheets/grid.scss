@@ -1,0 +1,87 @@
+/* 960 Grid System ~ Core CSS.
+ * Learn more ~ http://960.gs/
+ * *
+ * Licensed under GPL and MIT. */
+
+@import "compass/reset";
+@import "960/grid";
+@import "compass/utilities/lists";
+@import "compass/css3";
+
+$ninesixty-columns: 24;
+
+body {
+  background-color: #999;
+}
+
+#page.one-column {
+  @include grid-container;
+  #content {
+    @include grid-unit-base;
+    @include grid-width(24);
+  }
+}
+
+#page.two-column {
+  @include grid-container;
+  #header,
+  #footer,
+  #sidebar,
+  #content {
+    @include grid-unit-base;
+  }
+  #header, #footer {
+    @include grid-width(24);
+  }
+  #sidebar {
+    @include grid-width(8);
+  }
+  #content {
+    @include grid-width(16);
+  } 
+}
+
+#page.three-column {
+  @include grid-container;
+  #header,
+  #footer,
+  #left-sidebar,
+  #right-sidebar,
+  #content {
+    @include grid-unit-base;
+  }
+  #header, #footer {
+    @include grid-width(24);
+  }
+  #left-sidebar,
+  #right-sidebar {
+    @include grid-width(6);
+  }
+  #content {
+    @include grid-width(12);
+  }
+}
+
+#footer {
+  background:#555;
+  @include box-shadow(#ccc, 0, 1px, 0, 0, inset);
+  border: {
+    top: 1px solid #000;
+    bottom: 1px solid #000;
+  }
+  font-size: 14px;
+  text: {
+    shadow: 0 -1px #000;
+    align: center;
+  }
+  ul {
+    @include horizontal-list;
+    margin:0px 319px 15px 319px;
+  }
+  li,
+  li a {
+    color: #FFF;
+    padding: 4px;
+    text-decoration: none;
+  }
+}
