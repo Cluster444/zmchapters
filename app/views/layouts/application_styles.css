@@ -19,11 +19,11 @@
 #nav-container {
   background:#EEE;
   border-bottom:1px solid #BBB;
-  box-shadow:0 5px 10px #555,0 19px 0 #F2F2F2 inset;
-  -moz-box-shadow:0 5px 10px #555,0 19px 0 #F2F2F2 inset;
-  -o-box-shadow:0 5px 10px #555,0 19px 0 #F2F2F2 inset;
-  -ie-box-shadow:0 5px 10px #555,0 19px 0 #F2F2F2 inset;
-  -webkit-box-shadow:0 5px 15px rgba(100,100,100,.5),0 19px 0 #F2F2F2 inset;
+  box-shadow:0 5px 10px #000,0 19px 0 #F2F2F2 inset;
+  -moz-box-shadow:0 5px 10px #000,0 19px 0 #F2F2F2 inset;
+  -o-box-shadow:0 5px 10px #000,0 19px 0 #F2F2F2 inset;
+  -ie-box-shadow:0 5px 10px #000,0 19px 0 #F2F2F2 inset;
+  -webkit-box-shadow:0 5px 10px #000,0 19px 0 #F2F2F2 inset;
 }
 #nav {
   background: #EAEAEA;
@@ -133,14 +133,14 @@
   -moz-box-shadow:0 -4px 0 #F25 inset, 0 -1px 0 #EEE,-1px 0 0 #CCC, 1px 0 0 #CCC,0 1px #CCC;
 }
 #page {
-  background:url(../images/bg.jpg) top center no-repeat;
-  background-color: #555;
+  background-color: #333;
+  background:url(../images/bg_gradient.png) top center no-repeat;
 }
 
 #page #body {
   background-color: #BBB;
-  background-color: rgba(250,250,250,.5);
-  border:1px solid #AAA;
+  background-color: rgba(250,250,250,.2);
+  border:1px solid #000;
 }
 #page #body .container {
   background:;
@@ -217,9 +217,7 @@ h2.center {
 }
 
 h1.page_title {
-  color:#444;
   text-align: center;
-  text-shadow: 0 1px 0 #FFF, 0 -1px 0px #000;
 }
 /* Form Styles */
 /* Generic Styles */

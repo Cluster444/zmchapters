@@ -13,6 +13,7 @@
   <div id="page">
     <%= render :partial => '/shared/header' %>
     <div id="body" class="container_24">
+      <div class="container">
       <% flash.each do |name, message| %>
         <%= content_tag :div, :class => "flash #{name}" do %>
           <span><%= message %></span><span class="close">Close<span>
@@ -20,6 +21,7 @@
       <% end %>
       <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
       <%= yield %>
+      </div>
     </div>
     <%= render :partial => '/shared/footer' %>
     <%= render :partial => '/shared/debug' %>

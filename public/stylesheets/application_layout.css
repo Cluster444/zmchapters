@@ -85,15 +85,6 @@
   padding:2px;
 }
 
-#page {
-  background-color: #999;
-}
-
-#page #body {
-  background-color: #f0f0f0;
-}
-
-
 #page #footer {
   background:#555;
   background:-moz-linear-gradient(100% 4% 270deg, #888, #333 100%);
