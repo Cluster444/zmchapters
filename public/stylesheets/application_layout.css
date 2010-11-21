@@ -1,3 +1,4 @@
+/*
 #control-container {
   overflow:hidden;
 }
@@ -7,6 +8,8 @@
 #control-container #user-container div, #control-container #admin-container div {
   padding:10px;
 }
+*/
+
 /* Navigation Menu Layout */
 #nav-container {
   margin-bottom:10px;

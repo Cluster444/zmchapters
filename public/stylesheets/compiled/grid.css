@@ -89,9 +89,7 @@ body {
   margin-right: auto;
   width: 960px;
 }
-/* line 30, ../../../app/stylesheets/grid.scss */
-#page.two-column #header,
-#page.two-column #footer,
+/* line 28, ../../../app/stylesheets/grid.scss */
 #page.two-column #sidebar,
 #page.two-column #content {
   display: inline;
@@ -99,28 +97,22 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
-/* line 33, ../../../app/stylesheets/grid.scss */
-#page.two-column #header, #page.two-column #footer {
-  width: 940px;
-}
-/* line 36, ../../../app/stylesheets/grid.scss */
+/* line 29, ../../../app/stylesheets/grid.scss */
 #page.two-column #sidebar {
   width: 300px;
 }
-/* line 39, ../../../app/stylesheets/grid.scss */
+/* line 30, ../../../app/stylesheets/grid.scss */
 #page.two-column #content {
   width: 620px;
 }
 
-/* line 44, ../../../app/stylesheets/grid.scss */
+/* line 33, ../../../app/stylesheets/grid.scss */
 #page.three-column {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
 }
-/* line 50, ../../../app/stylesheets/grid.scss */
-#page.three-column #header,
-#page.three-column #footer,
+/* line 37, ../../../app/stylesheets/grid.scss */
 #page.three-column #left-sidebar,
 #page.three-column #right-sidebar,
 #page.three-column #content {
@@ -129,30 +121,60 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
-/* line 53, ../../../app/stylesheets/grid.scss */
-#page.three-column #header, #page.three-column #footer {
-  width: 940px;
-}
-/* line 57, ../../../app/stylesheets/grid.scss */
+/* line 39, ../../../app/stylesheets/grid.scss */
 #page.three-column #left-sidebar,
 #page.three-column #right-sidebar {
   width: 220px;
 }
-/* line 60, ../../../app/stylesheets/grid.scss */
+/* line 40, ../../../app/stylesheets/grid.scss */
 #page.three-column #content {
   width: 460px;
 }
 
-/* line 65, ../../../app/stylesheets/grid.scss */
+/* line 43, ../../../app/stylesheets/grid.scss */
+#control-container {
+  overflow: hidden;
+  *zoom: 1;
+  background: #EEE;
+}
+/* line 46, ../../../app/stylesheets/grid.scss */
+#control-container .panel {
+  display: none;
+  border: 1px solid #cccccc;
+  border-top: 5px solid #fff;
+  border-bottom: 0;
+  -moz-box-shadow: #f5f5f5 0 20px 0 0 inset;
+  -webkit-box-shadow: #f5f5f5 0 20px 0 0 inset;
+  -o-box-shadow: #f5f5f5 0 20px 0 0 inset;
+  box-shadow: #f5f5f5 0 20px 0 0 inset;
+}
+/* line 50, ../../../app/stylesheets/grid.scss */
+#control-container .panel.user {
+  border-top-color: #2F5;
+}
+/* line 51, ../../../app/stylesheets/grid.scss */
+#control-container .panel.admin {
+  border-top-color: #F25;
+}
+/* line 52, ../../../app/stylesheets/grid.scss */
+#control-container .panel div {
+  padding: 10px;
+}
+
+/* line 56, ../../../app/stylesheets/grid.scss */
 #footer {
   background: #555;
+  -moz-box-shadow: #cccccc 0 1px 0 0 inset;
+  -webkit-box-shadow: #cccccc 0 1px 0 0 inset;
+  -o-box-shadow: #cccccc 0 1px 0 0 inset;
+  box-shadow: #cccccc 0 1px 0 0 inset;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   font-size: 14px;
   text-shadow: 0 -1px black;
   text-align: center;
 }
-/* line 76, ../../../app/stylesheets/grid.scss */
+/* line 65, ../../../app/stylesheets/grid.scss */
 #footer ul {
   margin: 0;
   padding: 0;
@@ -181,7 +203,7 @@ body {
 #footer ul li:last-child, #footer ul li.last {
   padding-right: 0;
 }
-/* line 81, ../../../app/stylesheets/grid.scss */
+/* line 70, ../../../app/stylesheets/grid.scss */
 #footer li,
 #footer li a {
   color: #FFF;

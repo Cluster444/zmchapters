@@ -1,3 +1,4 @@
+/*
 #control-container {
   background:#EEE;
 }
@@ -9,13 +10,16 @@
   -webkit-box-shadow:0 20px 0 #F5F5F5 inset;
   -moz-box-shadow:0 20px 0 #F5F5F5 inset;
 }
-
+*/
+/*
 #user-container {
   border-top-color: #2F5;
 }
 #admin-container {
   border-top-color: #F25;
 }
+*/
+
 #nav-container {
   background:#EEE;
   border-bottom:1px solid #BBB;
