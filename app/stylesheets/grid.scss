@@ -350,3 +350,23 @@ $flash_green_border: $flash_green_bg - #727;
     cursor: default;
   }
 }
+
+table.collection {
+  width: 600px;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  margin: auto;
+  th {
+    .asc  { background-image: url(/images/up_arrow.gif); }
+    .desc { background-image: url(/images/down_arrow.gif); }
+    .current {
+      padding-right: 12px;
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+  }
+  td, th {
+    padding: 4px 10px;
+    border: 1px solid #AAA;
+  }
+}
