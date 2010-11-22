@@ -10,31 +10,34 @@
   <%= yield :head %>
 </head>
 <body>
-  <% if content_for? :page_class %>
-  <div class="<%= yield(:page_class) %>" id="page">
-  <% else %>
-  <div class="one-column" id="page">
-  <% end %>
+  <% page_class = content_for?(:page_class) ? yield(:page_class) : "one-column" %>
+  <div class="<%= page_class %>" id="page">
+
     <%= render :partial => '/shared/header' %>
+
     <div id="body">
+      <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
+      <% if content_for? :sidebar %>
+        <div id="sidebar"><%= yield(:sidebar) %></div>
+      <% end %>
+
       <div class="container" id="content">
         <% flash.each do |name, message| %>
           <%= content_tag :div, :class => "flash #{name}" do %>
             <span><%= message %></span><span class="close">Close<span>
           <% end %>
         <% end %>
-        <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
         <%= yield %>
       </div>
     </div>
+
     <div id="footer">
       <%= render :partial => '/shared/footer' %>
     </div>
-    <%= render :partial => '/shared/debug' %>
   </div>
   <div style="display:none;">
-  <%= javascript_include_tag :defaults %>
-  <%= yield :js %>
+    <%= javascript_include_tag :defaults %>
+    <%= yield :js %>
   </div>
 </body>
 </html>

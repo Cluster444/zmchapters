@@ -1,46 +1,40 @@
-<% title 'Chapter:'+@chapter.name, false %>
-<% css 'chapters/show' %>
+<% title @chapter.name %>
+<% page_class 'two-column' %>
 
-<% if current_user and current_user.chapter.nil? %>
-<%= content_for :user_control_panel do %>
-  <%= form_for current_user, :method => :put do |f| %>
-    <%= hidden_field :chapter, :id %>
-    <%= f.submit "Join this chapter" %>
-  <% end %>
-<% end %>
-<% end %>
-
-<div class="chapter-container grid_24">
-  <% if current_user and current_user.chapter.nil? %>
-    <%= form_for current_user, :method => :put do |f| %>
-      <%= hidden_field :chapter, :id %>
-      <%= f.submit "Join this chapter" %>
+<% if current_user %>
+  <% if current_user.chapter.nil? %>
+    <%= content_for :user_control_panel do %>
+      <%= form_for current_user, :method => :put do |f| %>
+        <%= hidden_field :chapter, :id %>
+        <%= f.submit "Join this chapter" %>
+      <% end %>
     <% end %>
   <% end %>
-  <div class="top">
-    <div class="left">
-      <h2><%= @chapter.name %></h2>
-      <span class="info">
-        <%= @chapter.geographic_location.self_and_parent_name %><br />
-        <%= pluralize @chapter.users.count, 'Member' %>
-      </span>
+<% end %>
+
+<%= content_for :sidebar do %>
+  <section id="chapter_coordinators" class="first">
+    <h1>Coordinators</h1>
+    <div class="content">
+      <% if @chapter.coordinators.any? %>
+        <ul>
+          <% @chapter.coordinators.each do |coordinator| %>
+            <li><%= coordinator.user.name_with_username %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <span class="empty">No Coordinators</span>
+      <% end %>
     </div>
-    <div class="right">
+  </section>
+  <section id="chapter_links" class="last">
+    <h1>Links</h1>
+    <div class="content">
       <ul>
-        <li>Hyperlinks</li>
+        <li><a href="#">Website</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="#">Events</a></li>
       </ul>
     </div>
-  </div>
-  <div id="chapter_coordinators">
-    <% if @chapter.coordinators.any? %>
-      <h3>Coordinators</h3>
-      <ul>
-        <% @chapter.coordinators.each do |coordinator| %>
-          <li><%= coordinator.user.name_with_username %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <h3>No Coordinators</h3>
-    <% end %>
-  </div>
-</div>
+  </section>
+<% end %>

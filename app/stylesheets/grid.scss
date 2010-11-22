@@ -28,10 +28,6 @@ $ninesixty-columns: 24;
   &:active { background: #777; color:#000; }
 }
 
-#page {
-  background: #FFF;
-}
-
 #page.form {
   @include grid-container;
   #content {
@@ -87,11 +83,16 @@ $ninesixty-columns: 24;
 }
 
 #page.two-column {
-  @include grid-container;
-  #sidebar,
-  #content         { @include grid-unit-base; }
-  #sidebar         { @include grid-width(8); }
-  #content         { @include grid-width(16); }
+  #body {
+    @include grid-container;
+    #sidebar, #content { @include grid-unit-base; }
+    #sidebar {
+      @include grid-width(6);
+    }
+    #content {
+      @include grid-width(18);
+    }
+  }
 }
 
 #page.three-column {
@@ -240,6 +241,44 @@ $ninesixty-columns: 24;
   height: auto !important;
   background-color: rgba(250,250,250,.5);
   //border:1px solid #AAA;
+}
+
+a {
+  text-decoration: none;
+  color: #4183C4;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:visited {
+    color: #4183C4;
+  }
+}
+
+#sidebar {
+  section {
+    margin: 0 10px 20px;
+    h1 {
+      text-align: center;
+      background-color:#8A87F5;
+      border: 1px solid #4C4DD9 { bottom: 1px solid #D8D8D8; }
+      color: #EEE;
+      margin: 0;
+      border-radius: 8px 8px 0 0;
+    }
+    div.content {
+      display:block;
+      border: 1px solid #4C4DD9 { top: 0; }
+      background-color: #E7E8FA;
+      padding-top: 10px;
+      ul {
+        list-style: none;
+        font-weight: bold;
+      }
+      span.empty {
+        
+      }
+    }
+  }
 }
 
 #footer {
