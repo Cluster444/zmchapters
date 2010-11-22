@@ -1,7 +1,9 @@
 <% title 'Sign In' %>
 <% page_class 'form' %>
+<% page_head_class 'form' %>
 
-<div class="log-in">
+<%= content_for(:page_head, content_tag(:h1, "Sign In")) %>
+
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %>
@@ -26,5 +28,3 @@
     </div>
   </div>
 <% end %>
-
-</div>

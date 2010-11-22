@@ -3,8 +3,9 @@
 <head>
   <title>TZM - <%= yield(:title) || 'The Zeitgeist Movement' %></title>
   <%= stylesheet_link_tag :all %>
-  <%= stylesheet_link_tag 'compiled/grid.css', :media => 'screen, projection' %>
-  <%= stylesheet_link_tag 'compiled/text.css', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/grid.css',   :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/text.css',   :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/styles.css', :media => 'screen, projection' %>
   <%= csrf_meta_tag %>
   <%= yield :css %>
   <%= yield :head %>

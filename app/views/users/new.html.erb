@@ -1,6 +1,9 @@
 <% title (current_user.try(:admin?) ? 'Create new member' : 'Sign Up') %>
 <% js 'geo_location' %>
 <% page_class 'form' %>
+<% page_head_class 'form' %>
+
+<%= content_for(:page_head, content_tag(:h1, current_user.try(:admin?) ? "Create Member" : "Sign Up")) %>
 
 <%= form_for @user do |f| %>
   <%= f.error_messages %>

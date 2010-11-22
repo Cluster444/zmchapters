@@ -1,5 +1,9 @@
 <% title 'Edit Chapter' %>
+<% page_class 'form' %>
+<% page_head_class 'form' %>
 
-<div class="chapter-edit">
-  <%= render :partial => '/shared/forms/chapter', :locals => {:chapter => @chapter, :submit => "Update Chapter"} %>
-</div>
+<%= content_for :page_head do %>
+  <h1>Edit Chapter<em>(<%= @chapter.name %>)</em></h1>
+<% end %>
+
+<%= render 'form' %>

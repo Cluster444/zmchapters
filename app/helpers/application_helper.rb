@@ -25,6 +25,10 @@ module ApplicationHelper
     content_for(:page_head_class) { classes }
   end
 
+  def simple_page_head(content)
+    content_for(:page_head, content_tag(:h1, content))
+  end
+
   def edit_link(object, content = "Edit")
     link_to(content, [:edit, object]) if can? :update, object
   end
