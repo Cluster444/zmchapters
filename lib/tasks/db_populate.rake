@@ -29,6 +29,10 @@ def make_territory(territory)
                               :geoname_id => territory[:geonameId],
 end
 
+def new_location(name, geoname_id, parent_id)
+  GeographicLocation.new :name => name, :geoname_id => geoname_id, :parent_id => parent_id
+end
+
 EARTH = {
   :name => "Earth",
   :geoname_id => 6295630,
@@ -52,17 +56,18 @@ namespace :db do
           ws_countries = ws_fetch_children(continent.geoname_id)
           
           ws_countries[:geonames].each do |ws_country|
-            puts " - Generating #{ws_country[:name]}"
             country = make_territory(ws_country)
             country.move_to_child_of continent
-            ws_territories = ws_fetch_children(country.geoname_id)
-
-              ws_territories[:geonames].each do |ws_territory|
-                territory = make_territory(ws_territory)
-                territory.move_to_child_of country
-              end unless ws_territories[:geonames].nil?
+            ws_t = ws_fetch_children(country.geoname_id)
+              
+            unless ws_t[:geonames].nil?
+              territories = ws_t[:geonames].collect { |t| new_location(t[:name], t[:geonameId], country.id) }
+              GeographicLocation.import territories, :validate => false
+            end
           end
         end
+        puts "Building nested set links (this may take a minute)"
+        GeographicLocation.rebuild!
       end
     end
   
@@ -81,31 +86,6 @@ namespace :db do
       end
     end
 
-    desc 'Populate database with users'
-    task :users => :chapters do
-      unless User.all.any?
-        puts "Generating users"
-        i = 1
-        count = Chapter.all.count
-        Chapter.roots.each do |country_chapter|
-          puts "#{i}/#{count}"
-          i += 1
-          country_chapter.leaves.each do |sub_chapter|
-            (1..(Random.rand(10)+1)).each do |n|
-              user = sub_chapter.users.new :name => Faker::Name.name,
-                                       :username => Faker::Internet.user_name,
-                                       :email => Faker::Internet.email,
-                                       :password => 'foobarbaz',
-                                       :password_confirmation => 'foobarbaz',
-                                       :country_id => country_chapter.country.id
-              user.skip_confirmation!
-              user.save!
-            end
-          end
-        end
-      end
-    end
-    
     desc 'Populate database with links'
     task :links => :chapters do
       unless ExternalUrl.all.any?
@@ -125,9 +105,27 @@ namespace :db do
         end
       end
     end
-
+    
+    desc "Populate the database with required site options"
+    task :site_options => :environment do
+      SiteOption.create! :key => 'site_registration', :type => 'string', :value => 'closed', :mutable => false
+    end
+    
+    desc "Populate the database with default pages"
+    task :pages => :environment do
+      Page.create! :uri => 'protocols', :title => "Protocols", :content => "TODO"
+    end
+      
     desc 'Populate the database with all information'
-    task :all => [:users, :links] do
+    task :all => [:chapters, :site_options, :pages] do
+      if Rails.env.development?
+        u = User.create! :name => "Dev Admin",
+                         :username => 'admin',
+                         :email => 'admin@zmchapters.com',
+                         :password => 'adminpass',
+                         :password_confirmation => 'adminpass'
+        u.is_admin!
+      end
     end
   end
   
