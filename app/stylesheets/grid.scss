@@ -28,12 +28,8 @@ $ninesixty-columns: 24;
   &:active { background: #777; color:#000; }
 }
 
-body {
-  background-color: #999;
-}
-
 #page {
-  background:url(/images/bg.jpg) top center no-repeat;
+  background: #FFF;
 }
 
 #page.form {
@@ -81,10 +77,12 @@ body {
 }
 
 #page.one-column {
-  @include grid-container;
-  #content {
-    @include grid-unit-base;
-    @include grid-width(24); 
+  #body {
+    @include grid-container;
+    #content {
+      @include grid-unit-base;
+      @include grid-width(24); 
+    }
   }
 }
 
@@ -151,7 +149,7 @@ body {
 }
 
 #nav-container {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   background:#EEE;
   border-bottom: 1px solid #BBB;
   @include box-shadow(#555, 0, 5px, 10px);
@@ -241,10 +239,7 @@ body {
   min-height:600px;
   height: auto !important;
   background-color: rgba(250,250,250,.5);
-  border:1px solid #AAA;
-  .container {
-    border: 1px solid #FFF;
-  }
+  //border:1px solid #AAA;
 }
 
 #footer {
@@ -389,12 +384,16 @@ $flash_green_border: $flash_green_bg - #727;
   }
 }
 
-table.collection {
-  width: 600px;
-  border-collapse: collapse;
-  margin-bottom: 10px;
-  margin: auto;
+table {
+  border: 1px solid #D8D8D8 { bottom: 0; }
+  width: 100%;
   th {
+    background-color:#EAEAEA;
+    border-bottom: 1px solid #D8D8D8;
+    color: #999;
+    font-weight: normal;
+    padding: 5px 3px;
+    text-align:left;
     .asc  { background-image: url(/images/up_arrow.gif); }
     .desc { background-image: url(/images/down_arrow.gif); }
     .current {
@@ -403,8 +402,10 @@ table.collection {
       background-position: right center;
     }
   }
-  td, th {
-    padding: 4px 10px;
-    border: 1px solid #AAA;
+  td {
+    background-color: #F8F8F8;
+    border-bottom: 1px solid #E1E1E1;
+    color: #484848;
+    padding: 5px 3px;
   }
 }
