@@ -1,6 +1,6 @@
 <% title (current_user.try(:admin?) ? 'Create new member' : 'Sign Up') %>
-<% css 'users/new' %>
 <% js 'geo_location' %>
+<% page_class 'form' %>
 
 <%= form_for @user do |f| %>
   <%= f.error_messages %>
@@ -29,6 +29,6 @@
 
   <div class="actions">
     <% text = (current_user.try(:admin?) ? 'Create' : 'Sign Up') %>
-    <%= f.submit text, :class => 'large button' %>
+    <%= f.submit text %>
   </div>
 <% end %>

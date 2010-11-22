@@ -10,12 +10,74 @@
 
 $ninesixty-columns: 24;
 
+@mixin button($size) {
+  padding: 3px 8px;
+  background: #000;
+  color: #fff;
+  @include border-radius(3px);
+  text-decoration: none;
+  @if $size == large {
+    font-size: 15px;
+    padding: 5px 10px;
+  } @else if $size == small {
+    font-size: 11px;
+  } @else {
+    font-size: 13px;
+  }
+  &:hover  { background: #ccc; color:#000; }
+  &:active { background: #777; color:#000; }
+}
+
 body {
   background-color: #999;
 }
 
 #page {
   background:url(/images/bg.jpg) top center no-repeat;
+}
+
+#page.form {
+  @include grid-container;
+  #content {
+    @include grid-width(16);
+    margin-left: auto;
+    margin-right: auto;
+    @include border-bottom-radius(5px);
+    border: 1px solid #333 { top: 0; }
+    background-color: #FAFAFA;
+    form {
+      h2 { text-align: center; }
+      .field {
+        height: 70px;
+        position: relative;
+        overflow: visible;
+        label {
+          display: block;
+          font-size: 1em;
+          width: 100px;
+          padding-left: 2px;
+        }
+        input, select {
+          width: 450px;
+          border: 1px solid #BBB;
+          font-size: 1.2em;
+          padding: 5px;
+          &:hover {
+            @include box-shadow(#3AF, 0, 0, 5px);
+          }
+          &:focus {
+            @include box-shadow(#17C, 0, 0, 5px);
+          }
+        }
+      }
+      &.rm {
+        display: inline;
+      }
+      .actions {
+        input { @include button(large); }
+      }
+    }
+  }
 }
 
 #page.one-column {
@@ -240,30 +302,6 @@ body {
       font-size:2em;
       font-family:Arial;
       line-height:.4em;    
-    }
-  }
-}
-
-.field {
-  height: 70px;
-  position: relative;
-  overflow: visible;
-  label {
-    display: block;
-    font-size: 1em;
-    width: 100px;
-    padding-left: 2px;
-  }
-  input, select {
-    width: 450px;
-    border: 1px solid #EEE;
-    font-size: 1.2em;
-    padding: 5px;
-    &:hover {
-      @include box-shadow(#3AF, 0, 0, 5px);
-    }
-    &:focus {
-      @include box-shadow(#17C, 0, 0, 5px);
     }
   }
 }
