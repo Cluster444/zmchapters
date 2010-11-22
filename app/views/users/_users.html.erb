@@ -2,7 +2,7 @@
 <%= hidden_field_tag :sort, params[:sort] %>
 
 <center><%= will_paginate @users %></center>
-<table class="pretty grey-box-shadow">
+<table class="collection">
   <tr>
     <th><%= sortable "name" %></th>
     <th><%= sortable "username" %></th>
