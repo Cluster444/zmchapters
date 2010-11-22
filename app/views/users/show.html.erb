@@ -1,10 +1,21 @@
-<% title 'My Profile' %>
+<% title @user.username, false %>
 <% css 'users/show' %>
 
-<ul class="profile-menu">
-  <li><%= link_to "Profile", user_path(@user) %></li>
-  <li><%= link_to "Edit", edit_user_path(@user) %></li>
-</ul>
+<div class="pagehead userpage">
+  <h1>
+    <%= @user.username %>
+    <em>(<%= @user.name %>)</em>
+  </h1>
+  <ul class="actions">
+    <% if user_signed_in? and current_user == @user %>
+      <li class="text">This is you!</li>
+      <li>
+        <%= link_to content_tag(:span, "Edit Your Profile"), edit_user_path(current_user) %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="rule"></div>
+</div>
 
 <div class="profile-box grey-box-shadow">
   <h3><%= @user.name %> (<%= @user.username %>)</h3>

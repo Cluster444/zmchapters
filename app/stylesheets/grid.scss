@@ -235,6 +235,56 @@ $ninesixty-columns: 24;
   }
 }
 
+.rule {
+  border-bottom: 1px solid #DDD;
+  clear:both;
+  height: 0px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.pagehead {
+  h1 {
+    color: #495961;
+    font-size: 20px;
+    font-weight: normal;
+    height: 28px;
+    line-height: 28px;
+    margin: 0 0 10px;
+    em {
+      color: #99A7AF;
+      font-style: normal;
+      font-weight: normal;
+    }
+  }
+  ul.actions {
+    float:right;
+    position: relative;
+    top: -45px;
+    right: 0px;
+    list-style: none;
+    li {
+      color: #333;
+      display: inline;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 0 0 0 5px;
+      &.text {
+        padding: 0 5px;
+      }
+    }
+  }
+  &.userpage {
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+      height: 54px;
+      line-height: 54px;
+      margin: 0;
+    }
+  }
+}
+
 #body {
   overflow:hidden;
   min-height:600px;
