@@ -1,8 +1,0 @@
-<% if can? :update, @chapter %>
-  <div class="chapter-editor">
-    <div>
-      <%= link_to "Manage Chapter", edit_chapter_path(@chapter) %>
-      <%= link_to "Manage External URLs", chapter_external_urls_path(:chapter_id => @chapter.id) %>
-    </div>
-  </div>
-<% end %>

@@ -9,14 +9,18 @@
   <%= yield :css %>
   <%= yield :head %>
 </head>
+<% page_class = content_for?(:page_class) ? yield(:page_class) : "one-column" %>
+<% page_head_class = "pagehead " + yield(:page_head_class) %>
 <body>
-  <% page_class = content_for?(:page_class) ? yield(:page_class) : "one-column" %>
   <div class="<%= page_class %>" id="page">
 
     <%= render :partial => '/shared/header' %>
 
     <div id="body">
-      <%= content_tag :h1, yield(:title), :class => 'page_title' if show_title? %>
+      <div class="pagehead <%= yield(:page_head_class) %>">
+        <%= yield(:page_head) %>
+        <div class="rule"></div>
+      </div>
       <% if content_for? :sidebar %>
         <div id="sidebar"><%= yield(:sidebar) %></div>
       <% end %>

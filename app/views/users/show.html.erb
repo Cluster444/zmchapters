@@ -1,7 +1,8 @@
 <% title @user.username, false %>
 <% css 'users/show' %>
+<% page_head_class 'userpage' %>
 
-<div class="pagehead userpage">
+<%= content_for :page_head do %>
   <h1>
     <%= @user.username %>
     <em>(<%= @user.name %>)</em>
@@ -14,12 +15,7 @@
       </li>
     <% end %>
   </ul>
-  <div class="rule"></div>
-</div>
-
-<div class="profile-box grey-box-shadow">
-  <h3><%= @user.name %> (<%= @user.username %>)</h3>
-</div>
+<% end %>
 
 <div class="profile-box grey-box-shadow">
   <% if @user.chapter.nil? %>
@@ -33,28 +29,3 @@
     <%= @user.geographic_location.self_and_parent_name %>
   <% end %>
 </div>
-<!--
-<div class="user-show grid_24">
-  
-  <div class="user grid_10 alpha">
-    <h2><%= @user.name %></h2>
-    <h4><%= link_to :Edit, edit_user_path(@user) %></h4>
-    <span class="info">
-      <%= @user.geographic_location %><br />
-      <%= @user.username %><br />
-    </span>
-  </div>
-  
-  <div class="chapter grid_10 omega">
-    <% unless @user.chapter.nil? %>
-      <h2><%= @chapter.name %></h2>
-      <span class="info">
-        <%= @country.name %>
-        <%= pluralize @chapter.users.count, 'User' %>
-      </span>
-    <% else %>
-      <h2><%= link_to "Find a chapter in your area", chapters_path %></h2>
-    <% end %>
-  </div>
-</div>
--->
