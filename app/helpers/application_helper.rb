@@ -17,6 +17,10 @@ module ApplicationHelper
     content_for(:js) { javascript_include_tag(*files) }
   end
 
+  def page_class(classes)
+    content_for(:page_class) { classes.to_s }
+  end
+
   def edit_link(object, content = "Edit")
     link_to(content, [:edit, object]) if can? :update, object
   end

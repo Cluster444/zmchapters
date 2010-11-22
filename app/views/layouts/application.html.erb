@@ -10,9 +10,13 @@
   <%= yield :head %>
 </head>
 <body>
-  <div class="one-column" id="page">
+  <% if content_for? :page_class %>
+  <div class="<%= yield(:page_class) %>" id="page">
+  <% else %>
+   <div class="one-column" id="page">
+  <% end %>
     <%= render :partial => '/shared/header' %>
-    <div id="body" class="container_24">
+    <div id="body">
       <div class="container" id="content">
         <% flash.each do |name, message| %>
           <%= content_tag :div, :class => "flash #{name}" do %>
