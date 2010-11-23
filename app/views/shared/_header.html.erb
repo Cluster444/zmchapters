@@ -2,16 +2,20 @@
 <div id="control-container">
   <div class="panel user">
     <div>
-      <%= link_to 'Profile', user_path(current_user) %>
+      <ul class="button-bar">
+        <li><%= link_to 'Profile', user_path(current_user) %></li>
+      </ul>
       <%= yield(:user_control_panel) %>
     </div>
   </div>
   <% if current_user.admin? %>
     <div class="panel admin">
     <div>
-      <%= link_to 'Create Member', new_user_path %>
-      <%= link_to 'Create Coordinator', new_coordinator_path %>
-      <%= link_to 'Site Options', site_options_path %>
+      <ul class="button-bar">
+        <li><%= link_to 'Create Member', new_user_path %></li>
+        <li><%= link_to 'Create Coordinator', new_coordinator_path %></li>
+        <li><%= link_to 'Site Options', site_options_path %></li>
+      </ul>
       <%= yield(:admin_control_panel) %>
     </div>
     </div>
