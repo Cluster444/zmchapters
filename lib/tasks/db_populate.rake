@@ -29,8 +29,8 @@ def make_territory(territory)
                               :geoname_id => territory[:geonameId],
 end
 
-def new_location(name, geoname_id, parent_id)
-  GeographicLocation.new :name => name, :geoname_id => geoname_id, :parent_id => parent_id
+def new_location(name, geoname_id, parent_id, depth)
+  GeographicLocation.new :name => name, :geoname_id => geoname_id, :parent_id => parent_id, :depth => depth
 end
 
 EARTH = {
@@ -61,7 +61,7 @@ namespace :db do
             ws_t = ws_fetch_children(country.geoname_id)
               
             unless ws_t[:geonames].nil?
-              territories = ws_t[:geonames].collect { |t| new_location(t[:name], t[:geonameId], country.id) }
+              territories = ws_t[:geonames].collect { |t| new_location(t[:name], t[:geonameId], country.id, 3) }
               GeographicLocation.import territories, :validate => false
             end
           end

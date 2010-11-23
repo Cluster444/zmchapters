@@ -87,6 +87,37 @@ table {
   }
 }
 
+ul.button-bar {
+  background-color: #D8D8D8;
+  border: 1px solid #AAA;
+  height: 28px;
+  padding: 6px 10px;
+  @include border-radius(5px);
+  li {
+    display: inline;
+    list-style: none;
+    a {
+      color: #666;
+      float: left;
+      font-size: 15px;
+      height: 28px;
+      line-height: 28px;
+      margin-right: 10px;
+      padding: 0px 8px;
+      text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0;
+      @include border-radius(4px);
+      &.current {
+        background: white;
+        font-weight: bold;
+      }
+      &:hover {
+        background-color: #CCC;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 #body {
   overflow:hidden;
   min-height:600px;
@@ -284,16 +315,12 @@ table {
     margin: 0 10px 20px;
     h1 {
       text-align: center;
-      background-color:#8A87F5;
-      border: 1px solid #4C4DD9 { bottom: 1px solid #D8D8D8; }
-      color: #EEE;
+      border-bottom: 1px solid #DDD;
+      color: #666;
       margin: 0;
-      border-radius: 8px 8px 0 0;
     }
     div.content {
       display:block;
-      border: 1px solid #4C4DD9 { top: 0; }
-      background-color: #E7E8FA;
       padding-top: 10px;
       ul {
         list-style: none;

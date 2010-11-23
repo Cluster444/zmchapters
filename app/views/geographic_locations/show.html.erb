@@ -1,19 +1,50 @@
-<% title 'Geo:Territory:'+@territory.name, false %>
-<% css 'geographic_locations/show' %>
+<% title @location.name %>
+<% page_class 'two-column' %>
 
-<%= content_for :admin_control_panel do %>
-  <% if can? :create, Chapter %>
-    <%= form_for Chapter.new do |f| %>
-      <%= hidden_field :geo, :id, :value => @territory.id %>
-      <%= f.text_field :name %>
-      <%= f.select :category, Chapter::CATEGORIES.collect {|c| [c.humanize,c]}, :prompt => true %>
-      <%= f.submit "Create Chapter", :class => 'large button' %>
+<%
+sidebar_location_title = ''
+sidebar_location_elements = []
+sidebar_location_path = ''
+current_continent = nil
+if @location.is_continent?
+  sidebar_location_title = "Countries"
+  sidebar_location_elements = @location.children;
+  sidebar_location_path = "geo_path"
+  current_continent = @location
+elsif @location.is_country?
+  sidebar_location_title = "Territories"
+  sidebar_location_elements = @location.children;
+  sidebar_location_path = "geo_path"
+  current_continent = @location.parent
+elsif @location.is_territory?
+  sidebar_location_title = "Chapters"
+  sidebar_location_elements = @location.chapters;
+  sidebar_location_path = "chapter_path"
+  current_continent = @location.parent.parent
+end
+%>
+
+<%= content_for :page_head do %>
+  <h1>Geography</h1>
+  <ul class="button-bar">
+    <% GeographicLocation.continents.each do |continent| %>
+      <li>
+        <% a_class = (current_continent == continent) ? 'current' : '' %>
+        <%= link_to continent.name, geo_path(continent), :class => a_class %>
+      </li>
     <% end %>
-  <% end %>
+  </ul>
 <% end %>
 
-<div class="geographic-locations-show">
-  <%= render :partial => 'breadcrumb', :locals => {:node => @territory} %>
-  <h2><%= @territory.name %></h2>
-  <%= render :partial => '/chapters/chapter', :collection => @territory.chapters %>
-</div>
+<%= content_for :sidebar do %>
+  <section>
+    <h1><%= sidebar_location_title %></h1>
+    <div class="content">
+      <ul>
+        <% sidebar_location_elements.each do |location| %>
+          <li><%= link_to location.name, send(sidebar_location_path, location) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </section>
+<% end %>

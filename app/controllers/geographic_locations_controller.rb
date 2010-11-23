@@ -3,19 +3,7 @@ class GeographicLocationsController < ApplicationController
   end
 
   def show
-    location = GeographicLocation.find params[:id]
-    if location.is_continent?
-      @continent = location
-      render :show_continent
-    else
-      if location.is_country?
-        @country = location
-        render :show_country
-      else
-        @territory = location
-        render :show
-      end
-    end
+    @location = GeographicLocation.find params[:id]
   end
 
   def territory_options

@@ -1,10 +1,10 @@
-<% title 'Continents', false %>
-<% css 'geographic_locations/index' %>
+<% title 'Continents' %>
 
-<div class="geographic-locations-index">
-  <% GeographicLocation.continents.each do |continent| %>
-  <div class="continent grid_24">
-    <h2><%= link_to continent.name, geo_path(continent) %></h2>
-  </div>
-  <% end %>
-</div>
+<%= content_for :page_head do %>
+  <h1>Geography</h1>
+  <ul class="button-bar">
+    <% GeographicLocation.continents.each do |continent| %>
+      <li><%= link_to continent.name, geo_path(continent) %></li>
+    <% end %>
+  </ul>
+<% end %>
