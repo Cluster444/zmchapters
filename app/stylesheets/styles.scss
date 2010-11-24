@@ -21,6 +21,55 @@ $anchor_color: #4183C4;
   &:active { background: #777; color:#000; }
 }
 
+@mixin vert-list() {
+  display:block;
+  list-style: none;
+  font-weight: bold;
+  padding-top: 10px;
+  li {
+    &:hover {
+      a {
+        background-color: #DDD;
+        border: 1px solid #BBB;
+        @include border-radius(5px);
+        padding: 3px 5px;
+        margin-left: -5px;
+      }
+    }
+  }
+}
+
+@mixin button-bar {
+  background-color: #D8D8D8;
+  border: 1px solid #AAA;
+  height: 28px;
+  padding: 6px 10px;
+  @include border-radius(5px);
+  li {
+    display: inline;
+    list-style: none;
+    a {
+      color: #666;
+      float: left;
+      font-size: 15px;
+      height: 28px;
+      line-height: 28px;
+      margin-right: 10px;
+      padding: 0px 8px;
+      text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0;
+      @include border-radius(4px);
+      &.current {
+        background: white;
+        font-weight: bold;
+      }
+      &:hover {
+        background-color: #CCC;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 a {
   text-decoration: none;
   color: $anchor_color;
@@ -88,34 +137,7 @@ table {
 }
 
 ul.button-bar {
-  background-color: #D8D8D8;
-  border: 1px solid #AAA;
-  height: 28px;
-  padding: 6px 10px;
-  @include border-radius(5px);
-  li {
-    display: inline;
-    list-style: none;
-    a {
-      color: #666;
-      float: left;
-      font-size: 15px;
-      height: 28px;
-      line-height: 28px;
-      margin-right: 10px;
-      padding: 0px 8px;
-      text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0;
-      @include border-radius(4px);
-      &.current {
-        background: white;
-        font-weight: bold;
-      }
-      &:hover {
-        background-color: #CCC;
-        text-decoration: none;
-      }
-    }
-  }
+  @include button-bar;
 }
 
 #body {
@@ -319,16 +341,8 @@ ul.button-bar {
       color: #666;
       margin: 0;
     }
-    div.content {
-      display:block;
-      padding-top: 10px;
-      ul {
-        list-style: none;
-        font-weight: bold;
-      }
-      span.empty {
-        
-      }
+    ul {
+      @include vert-list;
     }
   }
 }

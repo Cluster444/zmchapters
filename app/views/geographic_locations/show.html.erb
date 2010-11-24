@@ -2,24 +2,11 @@
 <% page_class 'two-column' %>
 
 <%
-sidebar_location_title = ''
-sidebar_location_elements = []
-sidebar_location_path = ''
-current_continent = nil
 if @location.is_continent?
-  sidebar_location_title = "Countries"
-  sidebar_location_elements = @location.children;
-  sidebar_location_path = "geo_path"
   current_continent = @location
 elsif @location.is_country?
-  sidebar_location_title = "Territories"
-  sidebar_location_elements = @location.children;
-  sidebar_location_path = "geo_path"
   current_continent = @location.parent
 elsif @location.is_territory?
-  sidebar_location_title = "Chapters"
-  sidebar_location_elements = @location.chapters;
-  sidebar_location_path = "chapter_path"
   current_continent = @location.parent.parent
 end
 %>
@@ -37,14 +24,15 @@ end
 <% end %>
 
 <%= content_for :sidebar do %>
-  <section>
-    <h1><%= sidebar_location_title %></h1>
-    <div class="content">
-      <ul>
-        <% sidebar_location_elements.each do |location| %>
-          <li><%= link_to location.name, send(sidebar_location_path, location) %></li>
-        <% end %>
-      </ul>
-    </div>
-  </section>
+  <% if @location.is_continent? %>
+    <%= full_location_section('Countries', @location.children) %>
+  <% elsif @location.is_country? %>
+    <%= collapsed_location_section('Countries', @location.name, geo_path(@location.parent)) %>
+    <%= full_location_section('Territories', @location.children) %>
+  <% else %>
+    <%= collapsed_location_section('Countries', link_to(@location.parent.name, geo_path(@location.parent)), geo_path(@location.parent.parent)) %>
+    <%= collapsed_location_section('Territories', @location.name, geo_path(@location.parent)) %>
+  <% end %>
 <% end %>
+
+<div>In a galaxy far far away there is a website just like this one, only it has a map in place of this text... someday, we will be cool like them.</div>
