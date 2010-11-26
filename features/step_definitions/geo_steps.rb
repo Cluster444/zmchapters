@@ -1,6 +1,5 @@
 # Given a location exists for "Alberta, Canada, North America"
 Given(/^a location exists for "(?:(?:([a-zA-Z ]+), )?(?:([a-zA-Z ]+), ))?([a-zA-Z ]+)"$/) do |territory, country, continent|
-  earth = GeographicLocation.find_by_name("Earth") || Factory(:geo, :name => "Earth")
   if territory
     Given %{a location exists for "#{country}, #{continent}"}
     And %{a location exists with name: "#{territory}"}
@@ -11,7 +10,6 @@ Given(/^a location exists for "(?:(?:([a-zA-Z ]+), )?(?:([a-zA-Z ]+), ))?([a-zA-
     And %{"#{country}" is a location within "#{continent}"}
   else
     Given %{a location exists with name: "#{continent}"}
-    And %{"#{continent}" is a location within "Earth"}
   end
 end
 

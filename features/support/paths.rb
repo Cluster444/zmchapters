@@ -17,8 +17,14 @@ module NavigationHelpers
     when /the geo page/
       geo_index_path
 
+    when /^the (.*) geo page/
+      geo_path(GeographicLocation.find_by_name($1))
+
     when /the "([^"]+)" chapter page/
       chapter_path(Chapter.find_by_name($1))
+
+    when /^(.*)'s profile page$/
+      user_path(User.find_by_name($1))
     
     # the following are examples using path_to_pickle
 

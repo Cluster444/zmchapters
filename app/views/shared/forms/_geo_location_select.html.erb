@@ -1,24 +1,34 @@
 <% js 'geo_location' %>
-
+<%
+unless geo.nil?
+  country = geo.is_country? ? geo : geo.parent
+  territory = geo.is_territory? ? geo : nil
+end
+%>
 <div class="field">
   <%= f.label :country %>
   <% if geo.nil? %>
     <%= grouped_collection_select :geo, :country_id, GeographicLocation.continents, :children, :name, :id, :name, :prompt => true %>
   <% else %>
-    <%= grouped_collection_select :geo, :country_id,
-                                  GeographicLocation.continents, :children, :name,
-                                  :id, :name,
-                                  :prompt => true,
-                                  :selected => geo.parent.id %>
+    <% options = option_groups_from_collection_for_select(GeographicLocation.continents, :children, :name,
+                                                          :id, :name, country.id) %>
+    <%= select_tag "geo[country_id]", options %>
   <% end %>
 </div>
-<div class="field">
-  <%= f.label :territory %>
-  <% if geo.nil? %>
+<% if geo.nil? %>
+  <div class="field">
+    <%= f.label :territory %>
     <%= select_tag "geo[id]" %>
+  <div>
+<% else %>
+  <% unless territory.nil? %>
+    <div class="field">
+      <%= f.label :territory %>
+      <%= collection_select :geo, :id, geo.self_and_siblings, :id, :name, :prompt => true, :selected => geo.id %>
+    </div>
   <% else %>
-    <%= collection_select :geo, :id, geo.self_and_siblings, :id, :name, :prompt => true, :selected => geo.id %>
+    <%= hidden_field :geo, :id, :value => country.id %>
   <% end %>
-</div>
+<% end %>
 
 <%= content_for :debug_model, debug(geo) %>

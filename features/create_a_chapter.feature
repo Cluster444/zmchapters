@@ -9,47 +9,38 @@ Feature: Create a chapter
   Scenario: Create a country chapter
     Given an admin exists
     And is logged in
-    When I go to the geo page
-    And I follow "North America"
-    And I follow "Canada"
-    Then I should see a create chapter form
-    When I press "Create Chapter"
-    Then I should see "Canada"
-    #And I should be on the "Canada" chapter page
+    When I go to the Canada geo page
+    And I follow "Create Chapter"
+    Then the "Name" field should contain "Canada"
+    And "Canada" should be selected for "geo_country_id"
+    # And I should not see a territory field
+    And the "Category" field should contain "country"
+    When I press "Save"
+    Then I should be on the "Canada" chapter page
 
   Scenario: Create a subchapter
     Given an admin exists
     And is logged in
-    When I go to the geo page
-    And I follow "North America"
-    And I follow "Canada"
-    And I follow "Alberta"
-    Then I should see a create chapter form
-    When I fill in "Alberta" for "chapter_name"
-    And I select "Province" from "chapter_category"
-    And I press "Create Chapter"
-    Then I should see "Alberta"
-    #And I should be on the "Alberta" chapter page
+    When I go to the Alberta geo page
+    And I follow "Create Chapter"
+    Then "Canada" should be selected for "geo_country_id"
+    And "Alberta" should be selected for "geo_id"
+    When I fill in "Alberta" for "Name"
+    When I select "Province" from "Category"
+    And I press "Save"
+    Then I should be on the "Alberta" chapter page
 
   Scenario: Hide admin controls from non admin
     Given a user exists
     And is logged in
-    When I go to the geo page
-    And I follow "North America"
-    And I follow "Canada"
-    Then I should not see a create chapter form
-    When I follow "Alberta"
-    Then I should not see a create chapter form
+    When I go to the Canada geo page
+    Then I should not see "Create Chapter"
+    When I go to the Alberta geo page
+    Then I should not see "Create Chapter"
 
   Scenario: Hide controls from country after country chapter is created
     Given an admin exists
     And is logged in
-    When I go to the geo page
-    And I follow "North America"
-    And I follow "Canada"
-    And I press "Create Chapter"
-    Then a chapter should exist
-    When I go to the geo page
-    And I follow "North America"
-    And I follow "Canada"
-    Then I should not see a create chapter form
+    And a country chapter exists for "Canada" in "Canada"
+    When I go to the Canada geo page
+    Then I should not see "Create Chapter"

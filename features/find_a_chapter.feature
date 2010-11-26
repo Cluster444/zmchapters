@@ -4,7 +4,7 @@ Feature: Find a chapter
   I want to be able to find a chapter in my area
   
   Background:
-    Given a user exists
+    Given a user exists with name: "Test User"
     And is logged in
     And a location exists for "Alberta, Canada, North America"
     And a city chapter exists for "Calgary" in "Alberta"
@@ -14,7 +14,7 @@ Feature: Find a chapter
     When I follow "Chapters"
     And I follow "Calgary"
     And I press "Join this chapter"
-    Then I should see "My Profile"
+    Then I should be on Test User's profile page
     And I should see "Calgary"
   
   Scenario: Find a chapter by searching with exact match
@@ -23,15 +23,13 @@ Feature: Find a chapter
     And I press "search-button"
     And I follow "Calgary"
     And I press "Join this chapter"
-    Then I should see "My Profile"
+    Then I should be on Test User's profile page
     And I should see "Calgary"
 
   Scenario: Find a chapter by geography
     Given I am on the geo page
-    When I follow "North America"
-    And I follow "Canada"
-    And I follow "Alberta"
+    When I go to the Alberta geo page
     And I follow "Calgary"
     And I press "Join this chapter"
-    Then I should see "My Profile"
+    Then I should be on Test Uerr's profile page
     And I should see "Calgary"

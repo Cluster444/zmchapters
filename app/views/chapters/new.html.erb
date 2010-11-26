@@ -1,5 +1,6 @@
 <% title 'New Chapter' %>
+<% page_class 'form' %>
 
-<div class="chapter-new">
-  <%= render :partial => '/shared/forms/new_chapter', :locals => {:chapter => @chapter, :submit => "Create Chapter"} %>
-</div>
+<%= content_for :page_head, content_tag(:h1, "New Chapter") %>
+
+<%= render 'form' %>

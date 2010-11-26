@@ -28,6 +28,11 @@ class ChaptersController < ApplicationController
 
   def new
     @chapter = Chapter.new
+    @chapter.category = params[:category]
+    @chapter.name = params[:name]
+    if params[:location_id]
+      @chapter.geographic_location = GeographicLocation.find(params[:location_id])
+    end
   end
 
   def edit

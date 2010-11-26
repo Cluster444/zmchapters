@@ -4,6 +4,11 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+  <%= render :partial => '/shared/forms/geo_location_select', :locals => {:f => f, :geo => @chapter.geographic_location} %>
+  <div class="field">
+    <%= f.label :category %>
+    <%= f.select :category, Chapter::CATEGORIES.map{|c| [c.humanize,c]} %>
+  </div>
   <div class="actions">
     <%= f.submit "Save" %>
   </div>

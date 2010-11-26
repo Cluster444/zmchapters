@@ -13,3 +13,7 @@ end
 Then(/^I should not see a create chapter form$/) do
   page.should_not have_xpath("//form[@action='#{chapters_path}']")
 end
+
+Then(/^"([^"]+)" should be selected for "([^"]+)"$/) do |value, field|
+  page.should have_xpath("//option[@selected = 'selected' and contains(string(), #{value})]")
+end

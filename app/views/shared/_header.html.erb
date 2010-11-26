@@ -15,8 +15,8 @@
         <li><%= link_to 'Create Member', new_user_path %></li>
         <li><%= link_to 'Create Coordinator', new_coordinator_path %></li>
         <li><%= link_to 'Site Options', site_options_path %></li>
+        <%= yield(:admin_control_panel) %>
       </ul>
-      <%= yield(:admin_control_panel) %>
     </div>
     </div>
   <% end %>
