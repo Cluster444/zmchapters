@@ -1,7 +1,7 @@
-<% title 'Update User' %>
-<% css 'users/edit' %>
-<% js 'geo_location' %>
+<% title 'Update Profile' %>
+<% page_class 'form' %>
 
+<%= content_for :page_head, content_tag(:h1, "Update Profile") %>
 <%= form_for @user do |f| %>
   <%= f.error_messages %>
   <div class="field">
@@ -17,9 +17,7 @@
     <%= f.text_field :email %>
   </div>
   <% render :partial => '/shared/forms/geo_location_select', :locals => {:f => f, :geo => @user.geographic_location} %>
-  <div class="field">
-    <%= f.submit "Save", :class => 'large button' %>
+  <div class="actions">
+    <%= f.submit "Save" %>
   </div>
 <% end %>
-
-  <%= link_to :Back, :back %>

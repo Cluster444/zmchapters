@@ -13,21 +13,3 @@
   display:inline;
 }
 
-.profile-menu {
-}
-
-
-.user-show {width:100%; height:100%;}
-
-.user-show form {background:#eee;}
-.user-show form {padding:10px;}
-.user-show form .field {margin-bottom:10px;}
-
-.user-show .user {background:#ddd;float:left;}
-.user-show .user {}
-.user-show .user .info {}
-.user-show .user h4 a {font-size:1em;}
-
-.user-show .chapter {background:#ddd;}
-.user-show .chapter {}
-.user-show .chapter .info {}

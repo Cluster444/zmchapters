@@ -1,5 +1,7 @@
 <% title 'Chapters' %>
-<% css 'chapters/index' %>
+<% page_class 'one-column' %>
+
+<%= content_for :page_head, content_tag(:h1, "ZM Chapter Index") %>
 
 <%= form_tag chapters_path, :method => :get, :id => "chapters_search" do %>
   <div id="search-container">

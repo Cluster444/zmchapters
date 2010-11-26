@@ -1,5 +1,7 @@
 <% title 'Members' %>
-<% css 'users/index' %>
+<% page_class 'one-column' %>
+
+<%= content_for :page_head, content_tag(:h1, "ZM Members Index") %>
 
 <%= form_tag users_path, :method => :get, :id => "users_search" do %>
 <div id="search-container">

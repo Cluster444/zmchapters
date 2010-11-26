@@ -12,29 +12,33 @@
   <% end %>
 <% end %>
 
+<%= content_for :page_head, content_tag(:h1, @chapter.name) %>
+
 <%= content_for :sidebar do %>
   <section id="chapter_coordinators" class="first">
     <h1>Coordinators</h1>
-    <div class="content">
-      <% if @chapter.coordinators.any? %>
-        <ul>
-          <% @chapter.coordinators.each do |coordinator| %>
-            <li><%= coordinator.user.name_with_username %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <span class="empty">No Coordinators</span>
-      <% end %>
-    </div>
-  </section>
-  <section id="chapter_links" class="last">
-    <h1>Links</h1>
-    <div class="content">
+    <% if @chapter.coordinators.any? %>
       <ul>
-        <li><a href="#">Website</a></li>
-        <li><a href="#">Forum</a></li>
-        <li><a href="#">Events</a></li>
+        <% @chapter.coordinators.each do |coordinator| %>
+          <li><%= coordinator.user.name_with_username %></li>
+        <% end %>
       </ul>
-    </div>
+    <% else %>
+      <span class="empty">No Coordinators</span>
+    <% end %>
+  </section>
+  <section id="chapter_links">
+    <h1>Links</h1>
+    <ul>
+      <li><a href="#">Website</a></li>
+      <li><a href="#">Forum</a></li>
+      <li><a href="#">Events</a></li>
+    </ul>
+  </section>
+  <section id="chapter_stats">
+    <h1>Info</h1>
+    <ul>
+      <li><%= pluralize @chapter.users.count, 'Members' %></li>
+    </ul>
   </section>
 <% end %>

@@ -2,12 +2,15 @@
 <%= hidden_field_tag :sort, params[:sort] %>
 
 <center><%= will_paginate @chapters %></center>
-<table class="collection">
+<table>
   <tr>
     <th><%= sortable "name" %></th>
     <th>Location</th>
     <th>Members</th>
     <th>Coordinators</th>
+    <% if can? :update, Chapter %>
+      <th>Edit</th>
+    <% end %>
   </tr>
   <% for chapter in @chapters %>
     <tr>
@@ -15,6 +18,9 @@
       <td><%= chapter.geographic_location.self_and_parent_name %></td>
       <td><%= chapter.users.count %></td>
       <td><%= chapter.coordinators.count %></td>
+      <% if can? :update, chapter %>
+        <td><%= link_to "Edit", edit_chapter_path(chapter) %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
