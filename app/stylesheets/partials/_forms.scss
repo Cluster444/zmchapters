@@ -1,0 +1,55 @@
+@import "widgets";
+
+#page.form form {
+  h2 { text-align: center; }
+  .field {
+    height: 70px;
+    position: relative;
+    overflow: visible;
+    label {
+      display: block;
+      font-size: 1em;
+      width: 100px;
+      padding-left: 2px;
+    }
+    input, select {
+      width: 450px;
+      border: 1px solid #BBB;
+      font-size: 1.2em;
+      padding: 5px;
+      &:hover {
+        @include box-shadow(#3AF, 0, 0, 5px);
+      }
+      &:focus {
+        @include box-shadow(#17C, 0, 0, 5px);
+      }
+    }
+  }
+  .actions {
+    input { @include button(large); }
+  }
+  &.rm {
+    display: inline;
+  }
+}
+
+.error_messages {
+  width:400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin: 0;
+    background-color: #C00;
+    color: #FFF;
+  }
+  p { margin: 8px 10px; }
+  ul { margin-left: 30px; }
+}

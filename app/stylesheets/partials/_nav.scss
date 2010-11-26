@@ -1,0 +1,126 @@
+
+#control-container {
+  @include clearfix;
+  background: #EEE;
+  .panel {
+    display:none;
+    border: 1px solid #ccc { top: 5px solid #fff; bottom: 0; }
+    @include box-shadow(#F5F5F5, 0, 20px, 0, 0, inset);
+    div     { padding: 10px; }
+    &.user  { border-top-color: #2F5; }
+    &.admin { border-top-color: #F25; }
+  }
+}
+
+#control-nav {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  a {
+    padding: 6px 10px;
+    background:#FAFAFA;
+    border:1px solid #FFF;
+    color:#333;
+    text-decoration:none;
+    outline:none;
+    &:hover {
+      background: #FFF;
+      color: #000;
+      text-decoration: none;
+    }
+    &.on {
+      background: #EEE;
+      border-top: 1px solid #EEE;
+      color: #111;
+      text-decoration: none;
+      &.user { @include box-shadow(#2F5, 0, -4px, 0, 0, inset); }
+      &.admin { @include box-shadow(#F25, 0, -4px, 0, 0, inset); }
+    }
+  }
+}
+
+#nav-container {
+  margin-bottom: 0px;
+  background:#EEE;
+  border-bottom: 1px solid #BBB;
+  @include box-shadow(#555, 0, 5px, 10px);
+  @include box-shadow(#F2F2F2, 0, 19px, 0, 0 inset);
+  #nav {
+    margin-bottom: -1px;
+    overflow: hidden;
+    position: relative;
+    background: #EAEAEA;
+    background: rgba(100, 100, 100, 0.05);
+    border: 1px solid #AAA;
+    border-top: 0;
+    height: 37px;
+    overflow:visible;
+    z-index:#998;
+    li {
+      float: left;
+      list-style: none;
+      margin: 0;
+      a {
+        display: table-cell;
+        height: 37px;
+        padding: 0px 15px;
+        margin-top: 2px;
+        text-decoration: none;
+        vertical-align:middle;
+        border-left: 1px solid #FFF;
+        color: #333;
+        text-shadow: 0 1px #FFF;
+        &.home {
+          text-indent:-999px;
+          padding: 0px 20px;
+          background:url(/images/home_icon.png) no-repeat 9px center transparent;
+          &:hover {
+            background:url(/images/home_icon.png) no-repeat 9px center #CCC;
+            background-color: rgba(1, 1, 1, 0.01);
+            color: #000;
+          }
+        }
+      }
+      .submenu {
+        display: none;
+        list-style: none;
+        margin: 0px;
+        margin-left: -1px;
+        min-width: 150px;
+        opacity: 1;
+        padding: 5px 0px;
+        position: absolute;
+        top: 37px;
+        z-index: 999;
+        background:#EEE;
+        border:1px solid #CCC;
+        border-top:1px solid #AAA;
+        @include border-bottom-radius(5px);
+        li {
+          background:transparent;
+          border:none;
+          margin:0;
+          padding:0;
+          float: none;
+          a {
+            border: 0;
+            min-width: 150px;
+          }
+          &:hover a {
+            background: #DDD;
+          }
+        }
+      }
+      &:hover {
+        a {
+          color:#000;
+          background:#CCC;
+          background: rgba(1, 1, 1, 0.01);
+        }
+        .submenu {
+            display: block;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,167 @@
+
+@mixin button($size) {
+  padding: 3px 8px;
+  background: #000;
+  color: #fff;
+  @include border-radius(3px);
+  text-decoration: none;
+  @if $size == large {
+    font-size: 15px;
+    padding: 5px 10px;
+  } @else if $size == small {
+    font-size: 11px;
+  } @else {
+    font-size: 13px;
+  }
+  &:hover  { background: #ccc; color:#000; }
+  &:active { background: #777; color:#000; }
+}
+
+@mixin vert-list() {
+  display:block;
+  list-style: none;
+  font-weight: bold;
+  padding-top: 10px;
+  li {
+    &:hover {
+      a {
+        background-color: #DDD;
+        border: 1px solid #BBB;
+        @include border-radius(5px);
+        padding: 3px 5px;
+        margin-left: -5px;
+      }
+    }
+  }
+}
+
+@mixin button-bar {
+  background-color: #D8D8D8;
+  border: 1px solid #AAA;
+  height: 28px;
+  padding: 6px 10px;
+  @include border-radius(5px);
+  li {
+    display: inline;
+    list-style: none;
+    a {
+      color: #666;
+      float: left;
+      font-size: 15px;
+      height: 28px;
+      line-height: 28px;
+      margin-right: 10px;
+      padding: 0px 8px;
+      text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0;
+      @include border-radius(4px);
+      &.current {
+        background: white;
+        font-weight: bold;
+      }
+      &:hover {
+        background-color: #CCC;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+table {
+  border: 1px solid #D8D8D8 { bottom: 0; }
+  width: 100%;
+  th {
+    background-color:#EAEAEA;
+    border-bottom: 1px solid #D8D8D8;
+    color: #999;
+    font-weight: normal;
+    padding: 5px 3px;
+    text-align:left;
+    .asc  { background-image: url(/images/up_arrow.gif); }
+    .desc { background-image: url(/images/down_arrow.gif); }
+    .current {
+      padding-right: 12px;
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+  }
+  td {
+    background-color: #F8F8F8;
+    border-bottom: 1px solid #E1E1E1;
+    color: #484848;
+    padding: 5px 3px;
+  }
+}
+
+ul.button-bar {
+  @include button-bar;
+}
+
+#search-container {
+  height: 100px;
+  margin: 10px auto;
+  position: relative;
+  background: #EEE;
+  border: 1px solid #CCC;
+  text-shadow: 0 1px #FFF;
+  @include box-shadow(#FFF, 0, 1px);
+  div {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    input[type=text] {
+      padding:8px;
+      padding-right:20px;
+      width:250px;
+      background:#FAFAFA;
+      border:1px solid #CCC;
+      border-left:0;
+      color:#333;
+      font-size:1.2em;
+      font-family:Lucida Sans, Helvetica Nueu, Tahoma, Arial,sans-serif;
+    }
+    input[type=submit] {
+      top:2px;
+      position:relative;
+      left:-35px;
+      background:transparent;
+      border:0;
+      color:#555;
+      display:inline;
+      font-size:2em;
+      font-family:Arial;
+      line-height:.4em;    
+    }
+  }
+}
+
+.pagination {
+  padding: 10px 0;
+  a {
+    color: #555;
+    padding: 5px;
+    text-decoration: none;
+    &:hover {
+      background: #EEE;
+      border-bottom: 2px solid #000;
+      color: #000;
+    }
+  }
+  em {
+    @extend a;
+    cursor: default;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+  span {
+    color: #AAA;
+    cursor: default;
+  }
+}
+
+.rule {
+  border-bottom: 1px solid #DDD;
+  clear:both;
+  height: 0px;
+  margin: 15px 0;
+  overflow: hidden;
+}
