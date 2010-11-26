@@ -43,7 +43,7 @@ Feature: Create a new member
       | user_password_confirmation | testuser          |
     And I press "Sign Up"
     Then I should see "created successfully"
-    And I should see "Test User"
+    And I should be on the login page
   
   @wip
   Scenario: Guest user tries to create a user with registration approval required

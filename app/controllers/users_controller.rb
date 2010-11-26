@@ -36,7 +36,11 @@ class UsersController < ApplicationController
     @user.geographic_location = @location unless @location.nil?
     @user.save!
     flash[:success] = "Account created successfully"
-    redirect_to user_url(@user)
+    if current_user.try(:admin?)
+      redirect_to @user
+    else
+      redirect_to new_user_session_path
+    end
   rescue ActiveRecord::RecordInvalid
     render :new
   end
