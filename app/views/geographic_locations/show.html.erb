@@ -1,22 +1,13 @@
 <% title @location.name %>
-<% page_class 'two-column' %>
-
-<%
-if @location.is_continent?
-  current_continent = @location
-elsif @location.is_country?
-  current_continent = @location.parent
-elsif @location.is_territory?
-  current_continent = @location.parent.parent
-end
-%>
+<% page_class "two-column" %>
+<% page_class " admin" if can? :create, Chapter %>
 
 <%= content_for :page_head do %>
-  <h1>Geography</h1>
+  <h1><%= link_to "Geography", geo_index_path %> / <%=raw breadcrumbs_for_location(@location).join(" / ") %></h1>
   <ul class="button-bar">
     <% GeographicLocation.continents.each do |continent| %>
       <li>
-        <% a_class = (current_continent == continent) ? 'current' : '' %>
+        <% a_class = (@location.self_and_ancestors.first == continent) ? 'current' : '' %>
         <%= link_to continent.name, geo_path(continent), :class => a_class %>
       </li>
     <% end %>
@@ -33,6 +24,10 @@ end
     <%= collapsed_location_section('Countries', link_to(@location.parent.name, geo_path(@location.parent)), geo_path(@location.parent.parent)) %>
     <%= collapsed_location_section('Territories', @location.name, geo_path(@location.parent)) %>
   <% end %>
+<% end %>
+
+<% if can? :create, Chapter and (not @location.is_continent?) %>
+  <%= content_for :admin_control_panel, content_tag(:li, link_to_new_chapter(@location)) %>
 <% end %>
 
 <div>In a galaxy far far away there is a website just like this one, only it has a map in place of this text... someday, we will be cool like them.</div>

@@ -15,12 +15,8 @@ describe GeographicLocation do
   end
 
   def make_geo_set
-    earth = geo("Earth")
-    
     na = geo("North America")
     eu = geo("Europe")
-    na.move_to_child_of earth
-    eu.move_to_child_of earth
     
     canada = geo("Canada")
     usa = geo("USA")
@@ -35,8 +31,6 @@ describe GeographicLocation do
     [canada,usa,germany,finland].each do |country|
       ('A'..'C').each {|t| geo(t).move_to_child_of country}
     end
-
-    earth
   end
 
   it 'should create a new record with valid attributes' do
@@ -77,24 +71,19 @@ describe GeographicLocation do
     end
 
     it 'should provide a list of continents' do
-      #GeographicLocation.roots.each {|r| puts r.name}
-      GeographicLocation.roots.last.children.should == GeographicLocation.continents
+      GeographicLocation.roots.should == GeographicLocation.continents
     end
 
     it 'should provide a list of countries' do
-      countries = []
-      GeographicLocation.continents.each do |continent|
-        continent.children.each {|country| countries << country}
-      end
-      countries.should == GeographicLocation.countries
+      GeographicLocation.continents.collect do |continent|
+        continent.children
+      end.flatten.should == GeographicLocation.countries
     end
         
     it 'should provide a list of territories' do
-      territories = []
-      GeographicLocation.countries.each do |country|
-        country.children.each {|territory| territories << territory}
-      end
-      territories.should == GeographicLocation.territories
+      GeographicLocation.countries.collect do |country|
+        country.children
+      end.flatten.should == GeographicLocation.territories
     end
 
     it 'should find countries with chapters' do
@@ -106,11 +95,9 @@ describe GeographicLocation do
 
   describe "formatted output" do
     before :each do
-      earth = Factory(:geo, :name => "Earth")
       @continent = Factory(:geo, :name => "Continent")
       @country = Factory(:geo, :name => "Country")
       @state = Factory(:geo, :name => "State")
-      @continent.move_to_child_of earth
       @country.move_to_child_of @continent
       @state.move_to_child_of @country
     end

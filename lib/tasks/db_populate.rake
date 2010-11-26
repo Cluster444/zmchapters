@@ -24,19 +24,26 @@ def ws_fetch_children(geoname_id)
   JSON.parse(data, :symbolize_names => true)
 end
 
-def make_territory(territory)
-  GeographicLocation.create! :name => territory[:name],
-                              :geoname_id => territory[:geonameId],
-end
-
 def new_location(name, geoname_id, parent_id, depth)
   GeographicLocation.new :name => name, :geoname_id => geoname_id, :parent_id => parent_id, :depth => depth
 end
 
-EARTH = {
-  :name => "Earth",
-  :geoname_id => 6295630,
-}
+def collect_geonames(geo, parent_id, depth)
+  geo.collect { |g| new_location(g[:name], g[:geonameId], parent_id, depth) } unless geo.nil?
+end
+
+def collect_children(parents, depth)
+  parents.collect do |parent|
+    collect_geonames(ws_fetch_children(parent.geoname_id)[:geonames], parent.id, depth) || []
+  end.flatten
+end
+
+def build_children(parents, depth)
+  GeographicLocation.import collect_children(parents, depth), :validate => false
+  build_children(GeographicLocation.where("depth = ?", depth), depth+1) unless depth == 2
+end
+
+EARTH_GEONAME_ID = 6295630
 
 namespace :db do
   
@@ -46,26 +53,9 @@ namespace :db do
     task :countries => :environment do
       unless GeographicLocation.all.any?
         puts "Fetching geographic territories from geonames"
-        earth = GeographicLocation.create! EARTH
-        ws_continents = ws_fetch_children(earth.geoname_id)
-
-        ws_continents[:geonames].each do |ws_continent|
-          puts "Generating #{ws_continent[:name]}"
-          continent = make_territory(ws_continent)
-          continent.move_to_child_of earth
-          ws_countries = ws_fetch_children(continent.geoname_id)
-          
-          ws_countries[:geonames].each do |ws_country|
-            country = make_territory(ws_country)
-            country.move_to_child_of continent
-            ws_t = ws_fetch_children(country.geoname_id)
-              
-            unless ws_t[:geonames].nil?
-              territories = ws_t[:geonames].collect { |t| new_location(t[:name], t[:geonameId], country.id, 3) }
-              GeographicLocation.import territories, :validate => false
-            end
-          end
-        end
+        earth = GeographicLocation.new(:geoname_id => EARTH_GEONAME_ID)
+        build_children([earth], 0)
+        
         puts "Building nested set links (this may take a minute)"
         GeographicLocation.rebuild!
       end

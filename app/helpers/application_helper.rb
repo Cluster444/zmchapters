@@ -14,10 +14,6 @@ module ApplicationHelper
     link_to(content, object, :method => :delete, :confirm => "Are you sure?") if can? :destroy, object
   end
 
-  def breadcrumb_for_nested_set(node, sep = "/")
-    ((node.root? ? '' : breadcrumb_for_nested_set(node.parent) + sep) + link_to(node.name, geo_path(node))).html_safe
-  end
-
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
