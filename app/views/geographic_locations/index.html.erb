@@ -1,4 +1,20 @@
 <% title 'Continents' %>
+<% page_class 'one-column' %>
+
+<%= content_for :js do %>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript">
+    $(function() {
+      var latlng = new google.maps.LatLng(0,0);
+      var options = {
+        zoom: 2,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      var map = new google.maps.Map(document.getElementById("map"), options);
+    });
+  </script>
+<% end %>
 
 <%= content_for :page_head do %>
   <h1>Geography</h1>
@@ -8,3 +24,5 @@
     <% end %>
   </ul>
 <% end %>
+
+<div id="map"></div>

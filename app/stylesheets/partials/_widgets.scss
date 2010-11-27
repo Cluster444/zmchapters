@@ -96,6 +96,11 @@ ul.button-bar {
   @include button-bar;
 }
 
+#map {
+  height: 500px;
+  border: 1px solid black;
+}
+  
 #search-container {
   height: 100px;
   margin: 10px auto;
@@ -109,15 +114,15 @@ ul.button-bar {
     top: 10px;
     left: 0;
     input[type=text] {
-      padding:8px;
-      padding-right:20px;
-      width:250px;
-      background:#FAFAFA;
-      border:1px solid #CCC;
-      border-left:0;
-      color:#333;
-      font-size:1.2em;
-      font-family:Lucida Sans, Helvetica Nueu, Tahoma, Arial,sans-serif;
+      padding: 8px;
+      padding-right: 20px;
+      width: 250px;
+      background: #FAFAFA;
+      border: 1px solid #CCC;
+      border-left: 0;
+      color: #333;
+      font-size: 1.2em;
+      font-family: Lucida Sans, Helvetica Nueu, Tahoma, Arial,sans-serif;
     }
     input[type=submit] {
       top:2px;

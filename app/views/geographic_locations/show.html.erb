@@ -2,6 +2,25 @@
 <% page_class "two-column" %>
 <% page_class " admin" if can? :create, Chapter %>
 
+<% if can? :create, Chapter and (not @location.is_continent?) %>
+  <%= content_for :admin_control_panel, content_tag(:li, link_to_new_chapter(@location)) %>
+<% end %>
+
+<%= content_for :js do %>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript">
+    $(function() {
+      var latlng = new google.maps.LatLng(0,0);
+      var options = {
+        zoom: 2,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map"), options);
+    });
+  </script>
+<% end %>
+
 <%= content_for :page_head do %>
   <h1><%= link_to "Geography", geo_index_path %> / <%=raw breadcrumbs_for_location(@location).join(" / ") %></h1>
   <ul class="button-bar">
@@ -26,8 +45,4 @@
   <% end %>
 <% end %>
 
-<% if can? :create, Chapter and (not @location.is_continent?) %>
-  <%= content_for :admin_control_panel, content_tag(:li, link_to_new_chapter(@location)) %>
-<% end %>
-
-<div>In a galaxy far far away there is a website just like this one, only it has a map in place of this text... someday, we will be cool like them.</div>
+<div id="map"></div>
