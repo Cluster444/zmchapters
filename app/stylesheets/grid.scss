@@ -17,6 +17,13 @@ $ninesixty-columns: 24;
   }
 }
 
+#page.form_with_editor {
+  #content {
+    @include grid-unit-base;
+    @include grid-width(24);
+  }
+}
+
 #page.one-column {
   #content {
     @include grid-unit-base;

@@ -1,6 +1,5 @@
 <% title @location.name %>
 <% page_class "two-column" %>
-<% page_class " admin" if can? :create, Chapter %>
 
 <% if can? :create, Chapter and (not @location.is_continent?) %>
   <%= content_for :admin_control_panel, content_tag(:li, link_to_new_chapter(@location)) %>

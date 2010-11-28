@@ -1,21 +1,20 @@
 <% title "Edit #{@page.title}" %>
-<% js 'elrte.min' %>
-<% js 'editor' %>
+<% page_class 'form_with_editor' %>
+<% css 'elrte.full', 'elrte-inner' %>
+<% js 'elrte.min', 'editor' %>
 
 <div class="<%= @page.uri %>">
   <%= form_for @page, :url => protocols_path do |f| %>
     <%= f.error_messages %>
-    <center>
-    <div class="page-name">
+    <div class="field">
       <%= f.label :title %>
       <%= f.text_field :title %>
     </div>
-    <div class="page-content">
+    <div>
       <%= f.text_area :content, :class => 'editor' %>
     </div>
-    <div>
-      <%= f.submit "Save", :class => "small button" %>
+    <div class="actions">
+      <%= f.submit "Save" %>
     </div>
-    <center>
   <% end %>
 </div>

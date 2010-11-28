@@ -60,6 +60,9 @@
       float: left;
       list-style: none;
       margin: 0;
+      border-left: 1px solid #AAA;
+      &.first { border-left: 0 }
+      &.last { border-right: 1px solid #AAA; }
       a {
         display: table-cell;
         height: 37px;

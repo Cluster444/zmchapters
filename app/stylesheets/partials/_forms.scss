@@ -33,6 +33,10 @@
   }
 }
 
+#page.form_with_editor {
+  @extend #page.form;
+}
+
 .error_messages {
   width:400px;
   border: 2px solid #CF0000;

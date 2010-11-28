@@ -2,7 +2,7 @@
 <% css "pages/#{@page.uri}" %>
 
 <%= content_for :admin_control_panel do %>
-  <%= link_to "Edit #{@page.title}", send("edit_#{@page.uri}_path"), :class => 'medium button' %>
+  <li><%= link_to "Edit #{@page.title}", send("edit_#{@page.uri}_path") %></li>
 <% end %>
   
 <div class="<%= @page.uri %>">

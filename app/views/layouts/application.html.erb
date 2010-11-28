@@ -2,16 +2,14 @@
 <html>
 <head>
   <title>TZM - <%= yield(:title) || 'The Zeitgeist Movement' %></title>
-  <%= stylesheet_link_tag :all %>
-  <%= stylesheet_link_tag 'compiled/grid.css',   :media => 'screen, projection' %>
-  <%= stylesheet_link_tag 'compiled/text.css',   :media => 'screen, projection' %>
-  <%= stylesheet_link_tag 'compiled/styles.css', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/grid',   :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/text',   :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'compiled/styles', :media => 'screen, projection' %>
   <%= csrf_meta_tag %>
   <%= yield :css %>
   <%= yield :head %>
 </head>
 <% page_class = content_for?(:page_class) ? yield(:page_class) : "one-column" %>
-<% page_head_class = "pagehead " + yield(:page_head_class) %>
 <body>
   <div class="<%= page_class %>" id="page">
 
