@@ -37,3 +37,10 @@ Factory.define :site_option do |f|
   f.value "Test value"
   f.mutable "true"
 end
+
+Factory.define :feedback_request do |f|
+  f.subject "Test Subject"
+  f.message "Test Message"
+  f.email "test@test.com"
+  f.category FeedbackRequest::CATEGORIES.first
+end

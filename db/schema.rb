@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101120181839) do
+ActiveRecord::Schema.define(:version => 20101128181313) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(:version => 20101120181839) do
     t.string   "type"
     t.integer  "sort_order", :default => 0
     t.integer  "chapter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "feedback_requests", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "category"
+    t.string   "status"
+    t.string   "subject"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
