@@ -20,6 +20,12 @@ describe FeedbackRequest do
       end
     end
 
+    it 'should disregard email when a user is supplied' do
+      user = Factory(:user)
+      feedback = build(:email => '', :user => user)
+      feedback.should be_valid
+    end
+
     it 'should reject invalid subjects' do
       ['','a'*256].each do |invalid_subject|
         build(:subject => invalid_subject).should_not be_valid

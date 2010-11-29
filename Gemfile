@@ -12,7 +12,10 @@ gem 'compass', '>= 0.10.6'
 gem 'compass-960-plugin', '>= 0.10.0'
 
 group :development, :test do
-  gem 'rspec-rails', '>= 2.0.0.beta.22'
+  #gem 'spork', :git => 'git://github.com/chrismdp/spork.git'
+  gem 'spork', '0.9.0.rc2'
+  gem 'rspec', '>= 2.1.0'
+  gem 'rspec-rails', '>= 2.1.0'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'cucumber'
@@ -26,8 +29,8 @@ end
 group :development do
   gem 'faker', '0.3.1'
   gem 'annotate-models', '1.0.4'
+  gem 'factory_girl_rails', '1.0'
 end
 
 group :test do
-  gem 'factory_girl_rails', '1.0'
 end
