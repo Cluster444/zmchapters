@@ -1,0 +1,23 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+
+<%= paginate(@feedback) %>
+<table>
+  <tr>
+    <th><%= sortable "category" %></th>
+    <th><%= sortable "status" %></th>
+    <th>Subject</th>
+    <th><%= sortable "created_at", "Submitted Time" %></th>
+    <th></th>
+  </tr>
+  <% for record in @feedback %>
+    <tr>
+      <td><%= record.category.humanize %></td>
+      <td><%= record.status.humanize %></td>
+      <td><%= record.subject %></td>
+      <td><%= time_ago_in_words(record.created_at) %> ago</td>
+      <td><%= link_to "View", feedback_request_path(record) %></td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate(@feedback) %>

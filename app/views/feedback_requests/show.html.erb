@@ -1,2 +1,11 @@
-<h1>FeedbackRequests#show</h1>
-<p>Find me in app/views/feedback_requests/show.html.erb</p>
+<% title @feedback.subject %>
+<% page_class 'one-column' %>
+
+<% content_for :page_head, content_tag(:h1, @feedback.subject) %>
+
+<article>
+  <h1><%= @feedback.subject %></h1>
+  <span class="timestamp"><%= time_ago_in_words(@feedback.created_at) %> ago</span>
+  <%= @feedback.status.humanize %> <%= @feedback.category %>
+  <p><%= @feedback.message %></p>
+</article>

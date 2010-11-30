@@ -6,7 +6,7 @@ Feature: Submit feedback/bug request
   Scenario: Submit a request
     Given a user exists
     And is logged in
-    When I go to the feedback page
+    When I go to the new feedback request page
     And I select "Bug" from "Category"
     And I fill in "Test Subject" for "Subject"
     And I fill in "Test Message" for "Message"

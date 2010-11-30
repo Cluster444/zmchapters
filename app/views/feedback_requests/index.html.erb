@@ -1,2 +1,14 @@
-<h1>FeedbackRequests#index</h1>
-<p>Find me in app/views/feedback_requests/index.html.erb</p>
+<% title "Feedback" %>
+<% page_class 'one-column' %>
+
+<%= content_for :page_head, content_tag(:h1, "Feedback Items") %>
+
+<%= form_tag feedback_requests_path, :method => :get, :id => "feedback_search" do %>
+  <div id="search-container">
+    <div>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag ">", :name => nil, :id => "search-button" %>
+    </div>
+  </div>
+  <div id="feedback"><%= render 'feedback_requests' %></div>
+<% end %>

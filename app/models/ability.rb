@@ -12,11 +12,12 @@ class Ability
       can :read, User
       can :update, user
       can :read, Page
-      can :create, FeedbackRequest
+      can :create, FeedbackRequest if feedback_open?
     end
 
-    if user.new_record? and registration_open?
-      can :create, User
+    if user.new_record?
+      can :create, User if registration_open?
+      can :create, FeedbackRequest if feedback_public?
     end
   end
 
@@ -24,6 +25,24 @@ private
   
   def registration_open?
     option = SiteOption.find_by_key(:site_registration)
+    if option.nil?
+      false
+    else
+      option.value == "open"
+    end
+  end
+
+  def feedback_public?
+    option = SiteOption.find_by_key(:feedback_status)
+    if option.nil?
+      false
+    else
+      option.value == "public" || option.value == "open"
+    end
+  end
+
+  def feedback_open?
+    option = SiteOption.find_by_key(:feedback_status)
     if option.nil?
       false
     else

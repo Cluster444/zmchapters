@@ -3,10 +3,10 @@ module ApplicationHelper
     link_to(content, [:edit, object]) if can? :update, object
   end
 
-  def create_link(object, content = "Create")
+  def create_link(object, content = "Create", opts={})
     if can? :create, object
       object_class = (object.kind_of?(Class) ? object : object.class)
-      link_to(content, [:new, object_class.name.underscore.to_sym])
+      link_to(content, [:new, object_class.name.underscore.to_sym], opts)
     end
   end
 

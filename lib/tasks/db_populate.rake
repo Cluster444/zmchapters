@@ -43,6 +43,14 @@ def build_children(parents, depth)
   build_children(GeographicLocation.where("depth = ?", depth), depth+1) unless depth == 2
 end
 
+def guard(model, opts={}, &block)
+  model.delete_all if ENV["DESTROY"] == "true"
+  guarded = (opts[:if] and opts[:if].call(model)) or (not opts[:if] and model.exists?)
+  yield and return unless guarded
+  puts "Records exist for #{model.name}. Set the environment variable DESTROY=true to delete existing records"
+end
+
+
 EARTH_GEONAME_ID = 6295630
 
 namespace :db do
@@ -51,7 +59,7 @@ namespace :db do
     desc 'Pull in country info from web service'
     
     task :countries => :environment do
-      unless GeographicLocation.all.any?
+      guard GeographicLocation do
         puts "Fetching geographic territories from geonames"
         earth = GeographicLocation.new(:geoname_id => EARTH_GEONAME_ID)
         build_children([earth], 0)
@@ -63,7 +71,7 @@ namespace :db do
   
     desc 'Populate database with chapters'
     task :chapters => :countries do
-      unless Chapter.all.any?
+      guard Chapter do
         puts "Generating chapters"
         chapters = []
         GeographicLocation.countries.each do |country|
@@ -78,7 +86,7 @@ namespace :db do
 
     desc 'Populate database with links'
     task :links => :chapters do
-      unless ExternalUrl.all.any?
+      guard ExternalUrl do
         puts "Generate external urls"
         i = 1
         count = Chapter.all.count
@@ -98,55 +106,62 @@ namespace :db do
     
     desc "Populate the database with required site options"
     task :site_options => :environment do
-      SiteOption.create! :key => 'site_registration', :type => 'string', :value => 'closed', :mutable => false
+      guard SiteOption do
+        puts "Setting site registration to closed"
+        SiteOption.create! :key => 'site_registration', :type => 'string', :value => 'closed', :mutable => false
+        puts "Setting feedback status to closed"
+        SiteOption.create! :key => 'feedback_status',   :type => 'string', :value => 'closed', :mutable => false
+      end
     end
     
     desc "Populate the database with default pages"
     task :pages => :environment do
-      Page.create! :uri => 'protocols', :title => "Protocols", :content => "TODO"
+      guard Page do
+        puts "Creating protocols page"
+        Page.create! :uri => 'protocols', :title => "Protocols", :content => "TODO"
+      end
     end
 
     desc "Populate the database with feedback"
     task :feedback, [:anon_count,:user_count] => :environment do |t,args|
       args.with_defaults(:anon_count => 10, :user_count => 10)
-      if FeedbackRequest.count > 0
-        if ENV["DESTROY"] == "true"
-          puts "Deleting existing feedback records"
-          FeedbackRequest.delete_all
-        else return; end
+      guard FeedbackRequest do
+        puts "Generating new feedback"
+        cat_count = FeedbackRequest::CATEGORIES.count
+        state_count = FeedbackRequest::STATES.count
+        users = (1..5).collect do |i|
+          username = Faker::Internet.user_name
+          User.create! :name => Faker::Name.name,
+                       :username => username,
+                       :email => [username,Faker::Internet.domain_name].join("@"),
+                       :password => 'testpass',
+                       :password_confirmation => 'testpass'
+        end
+        requests = []
+        puts "Creating #{args.anon_count} feedback records from anonymous users"
+        requests << 1.upto(args.anon_count.to_i).collect do |i|
+          FeedbackRequest.new :email => Faker::Internet.email,
+                              :category => FeedbackRequest::CATEGORIES[i % cat_count],
+                              :status => FeedbackRequest::STATES[i % state_count],
+                              :subject => Faker::Lorem.sentence(6),
+                              :message => Faker::Lorem.paragraph(5)
+        end
+        puts "Creating #{args.user_count} feedback records from registered users"
+        requests << 1.upto(args.user_count.to_i).collect do |i|
+          FeedbackRequest.new :category => FeedbackRequest::CATEGORIES[i % cat_count],
+                              :status => FeedbackRequest::STATES[i % state_count],
+                              :subject => Faker::Lorem.sentence(6),
+                              :message => Faker::Lorem.paragraph(5),
+                              :user_id => users[i%5].id
+        end
+        FeedbackRequest.import requests.flatten, :validate => false
       end
-      
-      puts "Generating new feedback"
-      count = FeedbackRequest::CATEGORIES.count
-      users = (1..5).collect do |i|
-        username = Faker::Internet.user_name
-        User.create! :name => Faker::Name.name,
-                     :username => username,
-                     :email => [username,Faker::Internet.domain_name].join("@"),
-                     :password => 'testpass',
-                     :password_confirmation => 'testpass'
-      end
-      requests = []
-      puts "Creating #{args.anon_count} feedback records from anonymous users"
-      requests << 1.upto(args.anon_count.to_i).collect do |i|
-        FeedbackRequest.new :email => Faker::Internet.email,
-                            :category => FeedbackRequest::CATEGORIES[i % count],
-                            :subject => Faker::Lorem.sentence(6),
-                            :message => Faker::Lorem.paragraph(5)
-      end
-      puts "Creating #{args.user_count} feedback records from registered users"
-      requests << 1.upto(args.user_count.to_i).collect do |i|
-        FeedbackRequest.new :category => FeedbackRequest::CATEGORIES[i % count],
-                            :subject => Faker::Lorem.sentence(6),
-                            :message => Faker::Lorem.paragraph(5),
-                            :user_id => users[i%5].id
-      end
-      FeedbackRequest.import requests.flatten, :validate => false
     end
       
     desc 'Populate the database with all information'
-    task :all => [:chapters, :site_options, :pages] do
-      if Rails.env.development?
+    task :all => [:chapters, :site_options, :pages, :feedback] do
+      guard User, :if => proc {|u| u.where(:admin => true).any?}, do
+        puts "Creating an admin user with email admin@zmchapters.com and password adminpass"
         u = User.create! :name => "Dev Admin",
                          :username => 'admin',
                          :email => 'admin@zmchapters.com',

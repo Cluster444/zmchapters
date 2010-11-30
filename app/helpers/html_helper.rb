@@ -1,4 +1,8 @@
 module HtmlHelper
+  def paginate(collection, opts={})
+    content_tag(:center, will_paginate(collection, opts))
+  end
+
   def ul(opts={}, &block)
     ListRenderer.new(self, block).to_ul
   end
