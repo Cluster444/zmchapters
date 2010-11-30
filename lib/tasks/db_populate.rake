@@ -105,6 +105,44 @@ namespace :db do
     task :pages => :environment do
       Page.create! :uri => 'protocols', :title => "Protocols", :content => "TODO"
     end
+
+    desc "Populate the database with feedback"
+    task :feedback, [:anon_count,:user_count] => :environment do |t,args|
+      args.with_defaults(:anon_count => 10, :user_count => 10)
+      if FeedbackRequest.count > 0
+        if ENV["DESTROY"] == "true"
+          puts "Deleting existing feedback records"
+          FeedbackRequest.delete_all
+        else return; end
+      end
+      
+      puts "Generating new feedback"
+      count = FeedbackRequest::CATEGORIES.count
+      users = (1..5).collect do |i|
+        username = Faker::Internet.user_name
+        User.create! :name => Faker::Name.name,
+                     :username => username,
+                     :email => [username,Faker::Internet.domain_name].join("@"),
+                     :password => 'testpass',
+                     :password_confirmation => 'testpass'
+      end
+      requests = []
+      puts "Creating #{args.anon_count} feedback records from anonymous users"
+      requests << 1.upto(args.anon_count.to_i).collect do |i|
+        FeedbackRequest.new :email => Faker::Internet.email,
+                            :category => FeedbackRequest::CATEGORIES[i % count],
+                            :subject => Faker::Lorem.sentence(6),
+                            :message => Faker::Lorem.paragraph(5)
+      end
+      puts "Creating #{args.user_count} feedback records from registered users"
+      requests << 1.upto(args.user_count.to_i).collect do |i|
+        FeedbackRequest.new :category => FeedbackRequest::CATEGORIES[i % count],
+                            :subject => Faker::Lorem.sentence(6),
+                            :message => Faker::Lorem.paragraph(5),
+                            :user_id => users[i%5].id
+      end
+      FeedbackRequest.import requests.flatten, :validate => false
+    end
       
     desc 'Populate the database with all information'
     task :all => [:chapters, :site_options, :pages] do
