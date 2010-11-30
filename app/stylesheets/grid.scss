@@ -9,7 +9,10 @@
 $ninesixty-columns: 24;
 
 #body { @include grid-container; }
-
+#page {
+  position:relative;
+  z-index:10;
+}
 #page.form {  
   #content {
     @include grid-unit-base;

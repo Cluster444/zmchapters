@@ -26,7 +26,7 @@
 
 <div id="nav-container">
   <ul id="nav" class="container_24">
-    <ul id="control-nav" class="auth">
+    <span id="control-nav" class="auth">
       <% if user_signed_in? %>
         <a href="#" class="user">User</a>
         <% if current_user.admin? %>
@@ -39,7 +39,7 @@
           <%= link_to 'Sign Up', new_user_path %>
         <% end %>
       <% end %>
-    </ul>
+    </span>
     <li class="first"><%= link_to 'Home', root_path, :class => 'home' %></li>
     <li>
       <%= link_to 'Chapters', chapters_path %>
