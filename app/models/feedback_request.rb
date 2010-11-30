@@ -1,7 +1,7 @@
 class FeedbackRequest < ActiveRecord::Base
   CATEGORIES = %w(bug feature)
   STATES = %w(new acknowledged resolved closed rejected)
-  
+
   belongs_to :user
 
   validates :email,    :presence => true, :length => {:maximum => 255}, :if => "user.nil?"

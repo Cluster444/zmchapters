@@ -1,0 +1,18 @@
+<%= form_for @feedback do |f| %>
+  <%= f.error_messages %>
+  <div class="field">
+    <%= f.label :category %>
+    <%= f.select :category, FeedbackRequest::CATEGORIES.collect {|fr| [fr.humanize,fr]}, :prompt => true %>
+  </div>
+  <div class="field">
+    <%= f.label :subject %>
+    <%= f.text_field :subject %>
+  </div>
+  <div class="field text_area">
+    <%= f.label :message %>
+    <%= f.text_area :message %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit Feedback" %>
+  </div>
+<% end %>

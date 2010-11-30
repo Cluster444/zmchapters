@@ -28,16 +28,6 @@ ActiveRecord::Schema.define(:version => 20101128181313) do
     t.integer  "chapter_id"
   end
 
-  create_table "external_urls", :force => true do |t|
-    t.string   "url"
-    t.string   "title"
-    t.string   "type"
-    t.integer  "sort_order", :default => 0
-    t.integer  "chapter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "feedback_requests", :force => true do |t|
     t.integer  "user_id"
     t.string   "email"
@@ -58,18 +48,6 @@ ActiveRecord::Schema.define(:version => 20101128181313) do
     t.integer  "depth"
     t.string   "name"
     t.integer  "geoname_id"
-  end
-
-  create_table "geographic_territories", :force => true do |t|
-    t.string   "name"
-    t.integer  "geoname_id"
-    t.string   "fcode"
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "pages", :force => true do |t|

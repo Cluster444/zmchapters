@@ -29,8 +29,12 @@ end
 group :development do
   gem 'faker', '0.3.1'
   gem 'annotate-models', '1.0.4'
-  gem 'factory_girl_rails', '1.0'
 end
 
 group :test do
+end
+
+group :noload do
+  #get loaded in spec/spec_helper by spork
+  gem 'factory_girl_rails', '1.0'
 end

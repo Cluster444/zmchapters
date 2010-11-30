@@ -11,6 +11,8 @@
 </head>
 <% page_class = content_for?(:page_class) ? yield(:page_class) : "one-column" %>
 <body>
+  <%= render '/shared/feedback' %>
+
   <div class="<%= page_class %>" id="page">
 
     <%= render :partial => '/shared/header' %>
