@@ -46,7 +46,6 @@
   @include box-shadow(#555, 0, 5px, 10px);
   @include box-shadow(#F2F2F2, 0, 19px, 0, 0 inset);
   #nav {
-    margin-bottom: -1px;
     overflow: hidden;
     position: relative;
     background: #EAEAEA;
@@ -54,7 +53,10 @@
     border: 1px solid #AAA;
     border-top: 0;
     height: 37px;
+    margin: 0 auto;
+    margin-bottom: -1px;
     overflow:visible;
+    width: 960px;
     z-index:#998;
     li {
       float: left;

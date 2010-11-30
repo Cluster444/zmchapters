@@ -13,10 +13,11 @@
         height: 300px;
       }
     }
+    
     label {
       display: block;
       font-size: 1em;
-      width: 100px;
+      width: 140px;
       padding-left: 2px;
     }
     input, select {
@@ -35,8 +36,12 @@
   .actions {
     input { @include button(large); }
   }
-  &.rm {
-    display: inline;
+  .field.rm {
+    height: 35px;
+    input {
+      float:left;
+      width:auto;
+    }
   }
 }
 
