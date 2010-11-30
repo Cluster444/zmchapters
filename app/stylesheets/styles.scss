@@ -15,7 +15,7 @@ a {
 
 #body {
   overflow:hidden;
-  margin-top:10px;
+  margin:10px auto;
   min-height:600px;
   height: auto !important;
 }
@@ -57,6 +57,13 @@ a {
     }
     ul {
       @include vert-list;
+      li:hover a{
+         border:none;
+         position:relative;
+         padding:5px;
+         white-space: nowrap;
+         z-index:999;
+      }
     }
   }
 }

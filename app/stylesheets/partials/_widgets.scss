@@ -57,6 +57,9 @@
       &.current {
         background: white;
         font-weight: bold;
+        &:hover {
+          background-color: #FFF;
+        }
       }
       &:hover {
         background-color: #CCC;
