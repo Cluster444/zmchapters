@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101201045233) do
+ActiveRecord::Schema.define(:version => 20101201053126) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -48,6 +48,9 @@ ActiveRecord::Schema.define(:version => 20101201045233) do
     t.integer  "depth"
     t.string   "name"
     t.integer  "geoname_id"
+    t.string   "lat"
+    t.string   "lng"
+    t.string   "zoom"
   end
 
   create_table "pages", :force => true do |t|

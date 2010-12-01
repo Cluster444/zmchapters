@@ -19,9 +19,10 @@ module GeographicLocationsHelper
 
   def link_to_new_chapter(location)
     if location.is_territory?
-      link_to("Create Chapter", new_chapter_path(:location_id => location.id))
+      link_to("Create Territory Chapter", new_chapter_path(:location_id => location.id, :name => location.name, :category => 'subcountry')) +
+      link_to("Create Subchapter", new_chapter_path(:location_id => location.id, :category => 'subterritory'))
     elsif location.is_country? and not location.chapters.any?
-      link_to("Create Chapter", new_chapter_path(:location_id => location.id, :name => location.name, :category => 'country'))
+      link_to("Create Country Chapter", new_chapter_path(:location_id => location.id, :name => location.name, :category => 'country'))
     end
   end
 end

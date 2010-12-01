@@ -27,21 +27,42 @@ class ChaptersController < ApplicationController
   end
 
   def new
-    @chapter = Chapter.new
-    @chapter.category = params[:category]
-    @chapter.name = params[:name]
-    if params[:location_id]
-      @chapter.geographic_location = GeographicLocation.find(params[:location_id])
-    end
+    @chapter = Chapter.new params[:chapter]
+    location = GeographicLocation.find(params[:location_id]) rescue nil
+    case(params[:category])
+      when "country"
+        @chapter.name = params[:name]
+        @chapter.category = "country"
+        @chapter.geographic_location = location
+      when "subcountry"
+        @chapter.name = params[:name]
+        @chapter.category = "territory"
+        @chapter.geographic_location = location
+      when "subterritory"
+        @parent_location = location
+      else
+        if params[:commit] = "Lookup"
+          unless location.children.collect(&:name).include?(@chapter.name)
+            g = GeographicLocation.create! :name => @chapter.name
+            g.move_to_child_of(location)
+            @chapter.geographic_location = g
+            flash[:notice] = "Created new geography for #{@chapter.name}"
+          else
+            @chapter.geographic_location = location.children.reject {|c| c.name != @chapter.name}.first
+          end
+        end
+    end 
   end
 
   def edit
     @chapter = Chapter.find params[:id]
   end
   
+  
   def create
+    location = GeographicLocation.find params[:location_id]
+    location.update_attributes! params[:geo] unless params[:geo].nil?
     @chapter = Chapter.new params[:chapter]
-    location = GeographicLocation.find params[:geo][:id]
     @chapter.geographic_location = location
     @chapter.save!
     flash[:notice] = "Chapter created successfully"

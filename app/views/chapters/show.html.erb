@@ -1,6 +1,8 @@
 <% title @chapter.name %>
 <% page_class 'two-column' %>
 
+<%= render :partial => '/shared/map', :locals => {:geo => @chapter.geographic_location} %>
+
 <% if current_user %>
   <% if current_user.chapter.nil? %>
     <%= content_for :user_control_panel do %>
@@ -12,10 +14,21 @@
   <% end %>
 <% end %>
 
-<%= content_for :page_head, content_tag(:h1, @chapter.name) %>
+<%= content_for :admin_control_panel do %>
+  <% unless @chapter.geographic_location.is_country? %>
+    <% geo = @chapter.geographic_location.is_territory? ? @chapter.geographic_location : @chapter.geographic_location.parent %>
+    <li><%= link_to "Create #{geo.name} Subchapter", new_chapter_path(:location_id => geo.id, :category => 'subterritory') %></li>
+  <% else %>
+    <li><%= link_to "Create Territory Chapter", geo_path(@chapter.geographic_location) %></li>
+  <% end %>
+<% end %>
+
+<%= content_for :page_head, content_tag(:h1, "#{@chapter.name} #{@chapter.category} chapter") %>
+
+<div id="map"></div>
 
 <%= content_for :sidebar do %>
-  <section id="chapter_coordinators" class="first">
+  <section>
     <h1>Coordinators</h1>
     <% if @chapter.coordinators.any? %>
       <ul>
@@ -27,7 +40,7 @@
       <span class="empty">No Coordinators</span>
     <% end %>
   </section>
-  <section id="chapter_links">
+  <section>
     <h1>Links</h1>
     <ul>
       <li><a href="#">Website</a></li>
@@ -35,7 +48,7 @@
       <li><a href="#">Events</a></li>
     </ul>
   </section>
-  <section id="chapter_stats">
+  <section class="last">
     <h1>Info</h1>
     <ul>
       <li><%= pluralize @chapter.users.count, 'Members' %></li>

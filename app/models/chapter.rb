@@ -11,8 +11,8 @@ class Chapter < ActiveRecord::Base
   validates :name, :presence => true, 
                    :length => {:maximum => 100}
 
-  validates :category, :presence => true, 
-                       :inclusion => {:in => CATEGORIES}
+  validates :category, :presence => true#, 
+                       #:inclusion => {:in => CATEGORIES}
 
   validates :status, :presence => true, 
                      :inclusion => {:in => STATES}, 

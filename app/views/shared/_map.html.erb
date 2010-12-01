@@ -1,0 +1,34 @@
+<% if geo.nil? %>
+  <% lat = 0 %>
+  <% lng = 0 %>
+  <% zoom = 2 %>
+<% else %>
+  <% lat = geo.lat %>
+  <% lng = geo.lng %>
+  <% zoom = geo.zoom %>
+<% end %>
+
+<%= content_for :js do %>
+  <script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script type="text/javascript">
+    function onMove(event) {
+      $("#geo_lat").val(event.object.center.lat);
+      $("#geo_lng").val(event.object.center.lon);
+      $("#geo_zoom").val(event.object.zoom);
+    }
+    $(function() {
+      from = new OpenLayers.Projection("EPSG:4326"); // Transform from WGS 1984
+      to   = new OpenLayers.Projection("EPSG:900913");    // to Spherical Mercator
+
+      map = new OpenLayers.Map("map", {
+        eventListeners: {
+          "moveend": onMove
+        }
+      });
+      map.addLayer(new OpenLayers.Layer.OSM());
+      latlng = new OpenLayers.LonLat(<%= "#{lng}, #{lat}" %>);
+      map.setCenter(latlng, <%= zoom %>);
+    });
+  </script>
+<% end %>
+
