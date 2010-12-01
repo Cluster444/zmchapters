@@ -107,18 +107,21 @@ namespace :db do
     desc "Populate the database with required site options"
     task :site_options => :environment do
       guard SiteOption do
-        puts "Setting site registration to closed"
-        SiteOption.create! :key => 'site_registration', :type => 'string', :value => 'closed', :mutable => false
-        puts "Setting feedback status to closed"
-        SiteOption.create! :key => 'feedback_status',   :type => 'string', :value => 'closed', :mutable => false
+        puts "Setting site registration to open"
+        SiteOption.create! :key => 'site_registration', :type => 'string', :value => 'open', :mutable => true
+        puts "Setting feedback status to open"
+        SiteOption.create! :key => 'feedback_status',   :type => 'string', :value => 'open', :mutable => true
       end
     end
     
     desc "Populate the database with default pages"
     task :pages => :environment do
       guard Page do
+        content = 5.times.collect { "<p>"+Faker::Lorem.paragraph(10)+"</p>" }
         puts "Creating protocols page"
-        Page.create! :uri => 'protocols', :title => "Protocols", :content => "TODO"
+        Page.create! :uri => 'protocols', :title => "Protocols", :content => content, :layout => 'one-column'
+        puts "Creating home page"
+        Page.create! :uri => 'home', :title => "ZM Chapters", :content => content, :layout => 'two-column'
       end
     end
 

@@ -1,5 +1,5 @@
-<% title(@page.title, true) %>
-<% css "pages/#{@page.uri}" %>
+<% title @page.title %>
+<% page_class @page.layout %>
 
 <%= content_for :admin_control_panel do %>
   <li><%= link_to "Edit #{@page.title}", send("edit_#{@page.uri}_path") %></li>

@@ -14,13 +14,13 @@ Tzm::Application.routes.draw do
 
   resources :site_options, :only => [:index,:edit,:update]
   
-  pages = ['protocols']
+  pages = ['protocols',"home"]
 
   pages.each do |page|
     get page, :to => 'pages#show', :uri => page
     get page+'/edit', :to => 'pages#edit', :uri => page, :as => "edit_#{page}"
     put page, :to => 'pages#update', :uri => page
   end
-
-  root :to => "chapters#index"
+  
+  root :to => "pages#show", :uri => "home"
 end
