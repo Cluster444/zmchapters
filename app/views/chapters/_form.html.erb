@@ -44,8 +44,8 @@
     <div class="field select_text">
       <%= label_tag :category %>
       <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}, @chapter.category.downcase) %>
-      <%= f.text_field :category %>
-      <a href="#" id="show_text_field" style="font-size:12px;">Add Custom Category</a>
+      <%= f.text_field :category, :style => "display:none;" %>
+      <!--<a href="#" id="show_text_field" style="font-size:12px;">Add Custom Category</a>-->
     </div>
     <div style="display:none;">
       <div class="field">
