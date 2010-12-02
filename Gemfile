@@ -24,6 +24,7 @@ group :development, :test do
   gem 'celerity', :require => nil
   gem 'database_cleaner'
   gem 'newrelic_rpm'
+  gem 'rcov'
 end
 
 group :development do

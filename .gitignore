@@ -9,3 +9,4 @@ script/
 webrat.log
 features/tmp
 public/stylesheets/compiled
+coverage

@@ -118,6 +118,7 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
+    rcov (0.9.9)
     role_model (0.6.0)
     rspec (2.2.0)
       rspec-core (~> 2.2)
@@ -172,6 +173,7 @@ DEPENDENCIES
   newrelic_rpm
   pickle
   rails (= 3.0.0)
+  rcov
   role_model
   rspec (>= 2.1.0)
   rspec-rails (>= 2.1.0)
