@@ -1,4 +1,4 @@
-<% if geo.nil? %>
+<% if geo.nil? || geo.lat.nil? %>
   <% lat = 0 %>
   <% lng = 0 %>
   <% zoom = 2 %>
@@ -8,26 +8,39 @@
   <% zoom = geo.zoom %>
 <% end %>
 
+<% if events.nil? %>
+  <% events = false %>
+<% end %>
+
 <%= content_for :js do %>
   <script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script type="text/javascript">
-    function onMove(event) {
-      $("#geo_lat").val(event.object.center.lat);
-      $("#geo_lng").val(event.object.center.lon);
-      $("#geo_zoom").val(event.object.zoom);
-    }
     $(function() {
       from = new OpenLayers.Projection("EPSG:4326"); // Transform from WGS 1984
       to   = new OpenLayers.Projection("EPSG:900913");    // to Spherical Mercator
 
       map = new OpenLayers.Map("map", {
-        eventListeners: {
-          "moveend": onMove
-        }
+        <% if events %>
+          eventListeners: {
+            "moveend": onMove
+          }
+        <% end %>
       });
       map.addLayer(new OpenLayers.Layer.OSM());
       latlng = new OpenLayers.LonLat(<%= "#{lng}, #{lat}" %>);
       map.setCenter(latlng, <%= zoom %>);
+
+      // Markers
+      var markers = new OpenLayers.Layer.Markers("Markers");
+
+      var size = new OpenLayers.Size(21,25);
+      var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+      var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
+      
+      <% GeographicLocation.markers.each do |l| %>
+        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= "#{l.lng}, #{l.lat}" %>), icon.clone()));
+      <% end %>
+      map.addLayer(markers);
     });
   </script>
 <% end %>

@@ -1,7 +1,7 @@
 <% title @chapter.name %>
 <% page_class 'two-column' %>
 
-<%= render :partial => '/shared/map', :locals => {:geo => @chapter.geographic_location} %>
+<%= render :partial => '/shared/map', :locals => {:geo => @chapter.geographic_location, :events => false} %>
 
 <% if current_user %>
   <% if current_user.chapter.nil? %>
@@ -15,9 +15,9 @@
 <% end %>
 
 <%= content_for :admin_control_panel do %>
-  <% unless @chapter.geographic_location.is_country? %>
-    <% geo = @chapter.geographic_location.is_territory? ? @chapter.geographic_location : @chapter.geographic_location.parent %>
-    <li><%= link_to "Create #{geo.name} Subchapter", new_chapter_path(:location_id => geo.id, :category => 'subterritory') %></li>
+  <% unless @location.is_country? %>
+    <% geo = @location.is_territory? ? @location : @location.parent %>
+    <li><%= link_to "Create #{geo.name} Subchapter", new_chapter_path(:location_id => geo.id, :category => 'subchapter') %></li>
   <% else %>
     <li><%= link_to "Create Territory Chapter", geo_path(@chapter.geographic_location) %></li>
   <% end %>

@@ -1,0 +1,33 @@
+<% title "New Geography" %>
+<% page_class 'form' %>
+
+<%= content_for :page_head do %>
+  <h1>Create a new location in <em><%= @parent.name %></em></h1>
+<% end %>
+
+<%= content_for :js do %>
+  <script type="text/javascript">
+    function onMove(event) {
+      $("#geographic_location_lat").val(event.object.center.lat);
+      $("#geographic_location_lng").val(event.object.center.lon);
+      $("#geographic_location_zoom").val(event.object.zoom);
+    }
+  </script>
+<% end %>
+  
+<%= render :partial => '/shared/map', :locals => {:geo => @parent, :events => true} %>
+
+<%= form_for GeographicLocation.new, :url => geo_index_path do |f| %>
+  <%= hidden_field_tag :parent_id, @parent.id %>
+  <%= f.hidden_field :lat %>
+  <%= f.hidden_field :lng %>
+  <%= f.hidden_field :zoom %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div id="map"></div>
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

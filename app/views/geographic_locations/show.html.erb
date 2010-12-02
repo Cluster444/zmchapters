@@ -5,7 +5,7 @@
   <%= content_for :admin_control_panel, content_tag(:li, link_to_new_chapter(@location)) %>
 <% end %>
 
-<%= render :partial => '/shared/map', :locals => {:geo => @location} %>
+<%= render :partial => '/shared/map', :locals => {:geo => @location, :events => false} %>
 
 <%= content_for :page_head do %>
   <h1><%= link_to "Geography", geo_index_path %> / <%=raw breadcrumbs_for_location(@location).join(" / ") %></h1>

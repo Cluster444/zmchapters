@@ -1,93 +1,178 @@
 require 'spec_helper'
 
 describe ChaptersController do
-  include Devise::TestHelpers
-
-  def do_create
-    geo = Factory(:geo)
-    post :create, :chapter => Factory.attributes_for(:chapter, :geographic_location_id => geo.id)
+  def mock_chapter
+    @chapter ||= mock_model(Chapter)
   end
 
-  def do_update
-    put :update, :id => 1, :chapter => {:name => "value"}
-  end
-
-  def mock_chapter(stubs={})
-    @mock_chapter ||= mock_model(Chapter, stubs)
-  end
-
-  before :each do
-    Chapter.delete_all
-    @chapters = (1..3).collect {Factory(:chapter)}
-    @chapter = @chapters.first
+  def mock_location
+    @location ||= mock_model(GeographicLocation, :name => "Geo")
   end
 
   describe "GET index" do
     it 'assigns all chapters as @chapters' do
+      Chapter.should_receive(:index).and_return([mock_chapter])
       get :index
-      assigns[:chapters].should == @chapters
+      assigns[:chapters].should == [mock_chapter]
+    end
+
+    it 'should be successful' do
+      get :index
+      response.should be_success
+    end
+
+    it 'should render the index template' do
+      get :index
+      response.should render_template('chapters/index')
+    end
+
+    it 'should pass through all params to the model index call' do
+      input_params = {"search" => 'foo', "sort" => 'foo', "direction" => 'asc', "per_page" => 15, "page" => 3}
+      Chapter.should_receive(:index).with(input_params)
+      get :index, input_params
+    end
+
+    it 'should filter params that the model doesn\'t need' do
+      Chapter.should_receive(:index).with({})
+      get :index
     end
   end
-  
+
   describe "GET show" do
     describe "for a record that exists" do
       it 'should assign @chapter from the id' do
-        get :show, :id => @chapter.id
-        assigns[:chapter].should == @chapter
+        Chapter.should_receive(:find).with(1).and_return(mock_chapter)
+        get :show, :id => 1
+        assigns[:chapter].should == mock_chapter
+      end
+
+      it 'should be successful' do
+        Chapter.stub(:find).and_return(mock_chapter)
+        get :show, :id => 1
+        response.should be_success
       end
     end
 
     describe "for a record that doesn't exist" do
+      before :each do
+        Chapter.stub(:find).and_raise(ActiveRecord::RecordNotFound)
+      end
+        
       it 'should redirect to the index with a flash error' do
-        get :show, :id => @chapters.last.id + 1
-        response.should redirect_to chapters_url
+        get :show, :id => 1
+        response.should redirect_to(chapters_path)
+      end
+
+      it 'should have a flash error' do
+        get :show, :id => 1
         flash[:error].should_not be_nil
       end
     end
   end
 
-  describe "GET search" do
-    describe "for a single result" do
-      before :each do
-        @chapter = Factory(:chapter, :name => 'Calgary')
-      end
-
-      it 'should assign a @chapter' do
-        get 'search', :search_name => @chapter.name
-        assigns[:chapter].should == @chapter
-      end
-
-      it 'should render show' do
-        get 'search', :search_name => @chapter.name
-        response.should render_template 'chapters/show'
-      end
-    end
-
-    describe "for multiple results" do
-      before :each do
-        @chapters = ['Calgary','California'].collect {|n| Factory(:chapter, :name => n)}
-      end
-
-      it 'should assign @chapters' do
-        get 'search', :search_name => 'Cal'
-        assigns[:chapters].should == @chapters
-      end
-        
-      it 'should render index' do
-        get 'search', :search_name => 'Cal'
-        response.should render_template 'chapters/index'
-      end
-    end
-  end
-
   describe "GET new" do
-    it 'should assign a new chapter to @chapter' do
-      get :new
-      assigns[:chapter].should_not be_nil
-      assigns[:chapter].should be_new_record
+    before :each do
+      GeographicLocation.stub(:find).with(1).and_return(mock_location)
+      @admin = Factory(:admin)
+      sign_in @admin
+    end
+    
+    describe 'with no geography selected' do
+      before :each do
+        GeographicLocation.stub(:find).and_return(nil)
+      end
+
+      it 'should redirect to the chapter map page' do
+        get :new
+        response.should redirect_to(geo_index_path)
+      end
+
+      it 'should have a flash error' do
+        get :new
+        flash[:error].should_not be_nil
+      end
+    end
+
+    describe 'with a country selected' do
+      before :each do
+        mock_location.stub(:is_country?).and_return(true)
+      end
+
+      it 'should assign a new chapter' do
+        Chapter.should_receive(:new).and_return(mock_chapter)
+        mock_chapter.stub(:name=)
+        mock_chapter.stub(:category=)
+        mock_chapter.stub(:geographic_location=)
+        get :new, :location_id => 1
+        assigns[:chapter].should == mock_chapter
+      end
+
+      it 'should set the chapter\'s location/name/category' do
+        Chapter.stub(:new).and_return(mock_chapter)
+        mock_chapter.should_receive(:geographic_location=).with(mock_location)
+        mock_chapter.should_receive(:name=).with(mock_location.name)
+        mock_chapter.should_receive(:category=).with('country')
+        get :new, :location_id => 1
+      end
+    end
+
+    describe 'with a territory selected' do
+      before :each do
+        Chapter.stub(:new).and_return(mock_chapter)
+        mock_chapter.stub(:name=)
+        mock_chapter.stub(:category=)
+        mock_chapter.stub(:geographic_location=)
+        mock_location.stub(:is_country?).and_return(false)
+        mock_location.stub(:is_territory?).and_return(true)
+      end
+
+      describe 'when the category is not subchapter' do
+        it 'should assign a new chapter' do
+          Chapter.should_receive(:new).and_return(mock_chapter)
+          get :new, :category => 'territory', :location_id => 1
+          assigns[:chapter].should == mock_chapter
+        end
+
+        it 'should assign the location/name from the location' do
+          mock_chapter.should_receive(:geographic_location=).with(mock_location)
+          mock_chapter.should_receive(:name=).with(mock_location.name)
+          mock_chapter.should_receive(:category=).with("territory")
+          get :new, :category => 'territory', :location_id => 1
+        end
+      end
+
+      describe 'when the category is subchapter' do
+        it 'should redirect to the new location page' do
+          get :new, :category => 'subchapter', :location_id => 1
+          response.should redirect_to(new_geo_url(:parent_id => mock_location.id))
+        end
+      end
+    end
+
+    describe 'when a subterritory is selected' do
+      before :each do
+        Chapter.stub(:new).and_return(mock_chapter)
+        mock_chapter.stub(:name=)
+        mock_chapter.stub(:geographic_location=)
+        mock_location.stub(:is_country?).and_return(false)
+        mock_location.stub(:is_territory?).and_return(false)
+        mock_location.stub(:is_subterritory?).and_return(true)
+      end
+
+      it 'should assign parent to the given location' do
+        get :new, :location_id => 1
+        assigns[:location].should == mock_location
+      end
+
+      it 'should assign the location/name of the given location' do
+        mock_chapter.should_receive(:name=).with(mock_location.name)
+        mock_chapter.should_receive(:geographic_location=).with(mock_location)
+        get :new, :location_id => 1
+      end
     end
   end
 
+=begin
   describe "GET edit" do
     describe "for a record that exists" do
       it 'should assign the chapter for the id to @chapter' do
@@ -189,4 +274,5 @@ describe ChaptersController do
       end
     end
   end
+=end
 end

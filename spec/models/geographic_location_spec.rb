@@ -63,6 +63,10 @@ describe GeographicLocation do
         bad_name_geo.should_not be_valid
       end
     end
+
+    it 'should require latitude'
+    it 'should require longtitude'
+    it 'should require zoom'
   end
   
   describe 'geo set operations' do

@@ -1,5 +1,4 @@
-<% geo = @chapter.geographic_location.parent unless @chapter.geographic_location.nil? %>
-<%= render :partial => '/shared/map', :locals => {:geo => geo} %>
+
 <% content_for :js do %>
   <script type="text/javascript">
     $(function() {
@@ -14,56 +13,42 @@
     });
   </script>
 <% end %>
-<% if @chapter.geographic_location.nil? %>
-  <%= form_tag new_chapter_path, :method => :get do %>
-    <%= hidden_field_tag :location_id, @parent_location.id %>
-    <div class="field">
-      <%= label_tag :name %>
-      <%= text_field :chapter, :name %><br />
-      <%= @parent_location.self_and_ancestors_name %>
-    </div>
-    <div class="field select_text">
-      <%= label_tag :category %>
-      <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}) %>
-      <%= text_field :chapter, :category %>
-      <a href="#" id="show_text_field" style="font-size:12px;">Add Custom Category</a>
-    </div>
-    <div class="actions">
-      <%= submit_tag "Lookup" %>
-    </div>
+
+<% if @location.need_coordinates? %>
+  <%= content_for :js do %>
+    <script type="text/javascript">
+      function onMove(event) {
+        $("#geo_lat").val(event.object.center.lat);
+        $("#geo_lng").val(event.object.center.lon);
+        $("#geo_zoom").val(event.object.zoom);
+      }
+    </script>
   <% end %>
-<% else %>
-  <%= form_for @chapter do |f| %>
-  <%= hidden_field_tag :location_id, @chapter.geographic_location.id %>
-    <%= f.error_messages %>
-    <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name %><br />
-      <%= @chapter.geographic_location.parent.self_and_parent_name %>
-    </div>
-    <div class="field select_text">
-      <%= label_tag :category %>
-      <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}, @chapter.category.downcase) %>
-      <%= f.text_field :category, :style => "display:none;" %>
-      <!--<a href="#" id="show_text_field" style="font-size:12px;">Add Custom Category</a>-->
-    </div>
-    <div style="display:none;">
-      <div class="field">
-        <%= label :geo, :lat %>
-        <%= text_field :geo, :lat %>
-      </div>
-      <div class="field">
-        <%= label :geo, :lng %>
-        <%= text_field :geo, :lng %>
-      </div>
-      <div class="field">
-        <%= label :geo, :zoom %>
-        <%= text_field :geo, :zoom %>
-      </div>
-    </div>
+  <%= render :partial => '/shared/map', :locals => {:geo => @location.parent, :events => true} %>
+<% end %>
+
+<%= form_for @chapter do |f| %>
+  <%= hidden_field_tag :location_id, @location.id %>
+  <% if @location.need_coordinates? %>
+    <%= hidden_field :geo, :lat %>
+    <%= hidden_field :geo, :lng %>
+    <%= hidden_field :geo, :zoom %>
+  <% end %>
+  <%= f.error_messages %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %><br />
+    <%= @chapter.geographic_location.parent.self_and_parent_name %>
+  </div>
+  <div class="field select_text">
+    <%= label_tag :category %>
+    <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}) %>
+    <%= f.text_field :category, :style => "display:none;" %>
+  </div>
+  <% if @location.need_coordinates? %>
     <div id="map"></div>
-    <div class="actions">
-      <%= f.submit "Save" %>
-    </div>
   <% end %>
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
 <% end %>

@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-  load_and_authorize_resource :chapter
+  load_and_authorize_resource
   helper_method :sort_column, :sort_direction
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -8,50 +8,32 @@ class ChaptersController < ApplicationController
   end
 
   def index
-    @chapters = Chapter.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
+    @chapters = Chapter.index(index_params)
   end
 
   def show
-    @chapter = Chapter.find params[:id]
-  end
-
-  def search
-    result = Chapter.search_name params[:search_name]
-    if result.class == Chapter
-      @chapter = result
-      render :show
-    else
-      @chapters = result
-      render :index
-    end
+    @location = @chapter.geographic_location
   end
 
   def new
-    @chapter = Chapter.new params[:chapter]
-    location = GeographicLocation.find(params[:location_id]) rescue nil
-    case(params[:category])
-      when "country"
-        @chapter.name = params[:name]
-        @chapter.category = "country"
-        @chapter.geographic_location = location
-      when "subcountry"
-        @chapter.name = params[:name]
-        @chapter.category = "territory"
-        @chapter.geographic_location = location
-      when "subterritory"
-        @parent_location = location
-      else
-        if params[:commit] = "Lookup"
-          unless location.children.collect(&:name).include?(@chapter.name)
-            g = GeographicLocation.create! :name => @chapter.name
-            g.move_to_child_of(location)
-            @chapter.geographic_location = g
-            flash[:notice] = "Created new geography for #{@chapter.name}"
-          else
-            @chapter.geographic_location = location.children.reject {|c| c.name != @chapter.name}.first
-          end
+    @location = GeographicLocation.find(params[:location_id]) rescue nil
+    if @location.nil?
+      flash[:error] = "Please select a location before creating a chapter"
+      redirect_to geo_index_path
+    else
+      @chapter.geographic_location = @location
+      @chapter.name = @location.name
+      if @location.is_country?
+        @chapter.category = 'country'
+      elsif @location.is_territory?
+        if params[:category] == "subchapter"
+          store_location(new_chapter_path)
+          redirect_to new_geo_url(:parent_id => @location.id)
+        else
+          @chapter.category = params[:category]
         end
-    end 
+      end
+    end
   end
 
   def edit
@@ -95,5 +77,10 @@ private
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def index_params
+    acceptable_keys = [:search, :sort, :direction, :per_page, :page]
+    params.select { |key,value| acceptable_keys.include?(key.to_sym) }
   end
 end

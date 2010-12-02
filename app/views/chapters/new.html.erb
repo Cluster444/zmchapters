@@ -3,4 +3,8 @@
 
 <%= content_for :page_head, content_tag(:h1, "New Chapter") %>
 
-<%= render 'form' %>
+<% if @chapter.geographic_location.nil? %>
+  <%= render 'select_location' %>
+<% else %>
+  <%= render 'form' %>
+<% end %>
