@@ -163,7 +163,7 @@ namespace :db do
       
     desc 'Populate the database with all information'
     task :all => [:chapters, :site_options, :pages, :feedback] do
-      guard User, :if => proc {|u| u.where(:admin => true).any?}, do
+      guard User, :if => proc {|u| u.where(:admin => true).any?} do
         puts "Creating an admin user with email admin@zmchapters.com and password adminpass"
         u = User.create! :name => "Dev Admin",
                          :username => 'admin',
