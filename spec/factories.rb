@@ -5,7 +5,7 @@ end
 Factory.define :chapter do |f|
   f.name "Test Chapter"
   f.category Chapter::CATEGORIES.first
-  f.geographic_location Factory(:geo)
+  f.association :geographic_location, :factory => :geo
 end
 
 Factory.define :user do |f|
