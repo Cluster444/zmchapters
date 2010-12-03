@@ -4,7 +4,11 @@
 <%= content_for :admin_control_panel do %>
   <li><%= link_to "Edit #{@page.title}", send("edit_#{@page.uri}_path") %></li>
 <% end %>
-  
-<div class="<%= @page.uri %>">
-  <%=raw @page.content %>
-</div>
+
+<% if @page.has_template? %>
+  <%= render "/pages/templates/#{@page.uri}" %>
+<% else %>
+  <div class="<%= @page.uri %>">
+    <%=raw @page.content %>
+  </div>
+<% end %>

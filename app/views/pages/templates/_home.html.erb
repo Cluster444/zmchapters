@@ -1,0 +1,27 @@
+
+<%= content_for :page_head, content_tag(:h1, "Welcome to ZM Chapters") %>
+
+<%= content_for :sidebar do %>
+  <section>
+    <h1>Global Info</h1>
+    <ul>
+      <li><%= pluralize Chapter.count, "Chapter" %></li>
+      <li><%= pluralize  User.count, "Member" %></li>
+      <li><%= pluralize Coordinator.count, "Coordinator" %></li>
+    </ul>
+  </section>
+  <section>
+    <h1>New Chapters</h1>
+    <ul>
+      <% unless Chapter.exists? %>
+        <li>No new chapters</li>
+      <% else %>
+        <% Chapter.order("created_at DESC").limit(5).each do |chapter| %>
+          <li><%= link_to chapter.name, chapter_path(chapter) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
+
+<%=raw @page.content %>
