@@ -10,14 +10,18 @@ class Ability
       can :read, GeographicLocation
       can :read, Chapter
       can :read, User
-      can :update, user
       can :read, Page
-      can :create, FeedbackRequest if feedback_open?
+      if user.new_record?
+        can :create, User if registration_open?
+        can :create, FeedbackRequest if feedback_public?
+      else
+        can :update, user
+        can :create, FeedbackRequest if feedback_open?
+        can :read, FeedbackRequest, :user_id => user.id
+      end
     end
 
     if user.new_record?
-      can :create, User if registration_open?
-      can :create, FeedbackRequest if feedback_public?
     end
   end
 
