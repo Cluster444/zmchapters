@@ -3,38 +3,38 @@ require 'spec_helper'
 describe GeographicLocation do
   
   before :each do
-    @attr = Factory.attributes_for :geo
-  end
-
-  after :each do
     GeographicLocation.delete_all
   end
-
-  def geo(name)
-    Factory(:geo, :name => name)
+  
+  def create(name, opts={})
+    Factory.create(:geo, opts)
+  end
+  
+  def build(opts={})
+    Factory.build(:geo, opts)
   end
 
   def make_geo_set
-    na = geo("North America")
-    eu = geo("Europe")
-    
-    canada = geo("Canada")
-    usa = geo("USA")
-    germany = geo("Germany")
-    finland = geo("Finland")
-
-    canada.move_to_child_of na
-    usa.move_to_child_of na
-    germany.move_to_child_of eu
-    finland.move_to_child_of eu
-
-    [canada,usa,germany,finland].each do |country|
-      ('A'..'C').each {|t| geo(t).move_to_child_of country}
-    end
+    @continent = create("Continent")
+    @country   = create("Country")
+    @territory = create("Territory")
+    @city      = create("City")
+    @country.move_to_child_of(@continent)
+    @territory.move_to_child_of(@country)
+    @city.move_to_child_of(@territory)
   end
 
   it 'should create a new record with valid attributes' do
-    GeographicLocation.create! @attr
+    Factory.create(:geo)
+  end
+
+  it 'should tell whether coordinate information is needed' do
+    location = create("Test")
+    location.need_coordinates?.should be_false
+    location.update_attribute :lat, nil
+    location.update_attribute :lng, nil
+    location.update_attribute :zoom, nil
+    location.need_coordinates?.should be_true
   end
   
   describe 'associations' do
@@ -58,42 +58,71 @@ describe GeographicLocation do
 
   describe 'validations' do
     it 'should require a name of max length 255' do
-      ['','a'*256].each do |bad_name|
-        bad_name_geo = Factory.build(:geo, :name => bad_name)
-        bad_name_geo.should_not be_valid
-      end
+      ['','a'*256].each { |bad_name| build(:name => bad_name).should_not be_valid }
     end
 
-    it 'should require latitude'
-    it 'should require longtitude'
-    it 'should require zoom'
+    it 'should require latitude' do
+      [''].each { |bad_lat| build(:lat => bad_lat).should_not be_valid }
+    end
+
+    it 'should require longtitude' do
+      [''].each { |bad_lng| build(:lng => bad_lng).should_not be_valid }
+    end
+
+    it 'should require zoom' do
+      [''].each { |bad_zoom| build(:zoom => bad_zoom).should_not be_valid }
+    end
   end
   
-  describe 'geo set operations' do
+  describe 'scopes' do
     before :each do
       make_geo_set
     end
 
     it 'should provide a list of continents' do
-      GeographicLocation.roots.should == GeographicLocation.continents
+      GeographicLocation.continents.should == [@continent]
     end
 
     it 'should provide a list of countries' do
-      GeographicLocation.continents.collect do |continent|
-        continent.children
-      end.flatten.should == GeographicLocation.countries
+      GeographicLocation.countries.should == [@country]
     end
         
     it 'should provide a list of territories' do
-      GeographicLocation.countries.collect do |country|
-        country.children
-      end.flatten.should == GeographicLocation.territories
+      GeographicLocation.territories.should == [@territory]
+    end
+  end
+
+  describe "type queries" do
+    before :each do
+      make_geo_set
     end
 
-    it 'should find countries with chapters' do
-      country = GeographicLocation.countries.first
-      Factory(:chapter, :geographic_location => country)
-      GeographicLocation.countries_with_chapters.should == [country]
+    it 'should tell if the location is a continent' do
+      @continent.is_continent?.should be_true
+      @continent.is_country?.should be_false
+      @continent.is_territory?.should be_false
+      @continent.is_subterritory?.should be_false
+    end
+
+    it 'should tell if the location is a country' do
+      @country.is_continent?.should be_false
+      @country.is_country?.should be_true
+      @country.is_territory?.should be_false
+      @country.is_subterritory?.should be_false
+    end
+
+    it 'should tell if the location is a territory' do
+      @territory.is_continent?.should be_false
+      @territory.is_country?.should be_false
+      @territory.is_territory?.should be_true
+      @territory.is_subterritory?.should be_false
+    end
+
+    it 'should tell if the location is a subterritory' do
+      @city.is_continent?.should be_false
+      @city.is_country?.should be_false
+      @city.is_territory?.should be_false
+      @city.is_subterritory?.should be_true
     end
   end
 

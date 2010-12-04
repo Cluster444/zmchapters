@@ -5,28 +5,19 @@ class GeographicLocation < ActiveRecord::Base
   has_many :users
 
   validates :name, :presence => true, :length => {:maximum => 255}
+  validates :lat,  :presence => true
+  validates :lng,  :presence => true
+  validates :zoom, :presence => true
 
-  scope :continents,     where(:depth => 0)
+  scope :continents,     roots
   scope :countries,      where(:depth => 1)
   scope :territories,    where(:depth => 2)
   scope :subterritories, where(:depth => 3)
   
-  def self.countries_with_chapters
-    countries.reject {|country| not country.chapters.any?}
-  end
-
   def self.markers
     select(:lat, :lng).where("lat != 'nil' AND lng != 'nil' AND depth > 2")
   end
   
-  def children_with_chapters
-    children.reject {|child| not child.chapters.any?}
-  end
-
-  def children_without_chapters
-    children.reject {|child| child.chapters.any?}
-  end
-
   def need_coordinates?
     lat.nil? || lng.nil? || zoom.nil?
   end

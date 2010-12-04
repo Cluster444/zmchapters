@@ -1,5 +1,8 @@
 Factory.define :geo, :class => GeographicLocation do |f|
   f.name "Test Geo"
+  f.lat "0"
+  f.lng "0"
+  f.zoom "2"
 end
 
 Factory.define :chapter do |f|
