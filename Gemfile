@@ -10,6 +10,7 @@ gem 'nested_set'
 gem 'activerecord-import', '>= 0.2.0'
 gem 'compass', '>= 0.10.6'
 gem 'compass-960-plugin', '>= 0.10.0'
+gem 'gravatar_image_tag'
 
 group :development, :test do
   #gem 'spork', :git => 'git://github.com/chrismdp/spork.git'

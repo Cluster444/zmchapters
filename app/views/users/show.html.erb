@@ -1,31 +1,30 @@
 <% title @user.username, false %>
-<% css 'users/show' %>
+<% page_class 'two-column' %>
 <% page_head_class 'userpage' %>
 
 <%= content_for :page_head do %>
-  <h1>
+  <h1 class="avatared">
+    <span class="tooltipped">
+      <a href="http://gravatar.com/emails/">
+        <%= gravatar_for @user, :gravatar => {:size => 48} %>
+      </a>
+    </span>
     <%= @user.username %>
     <em>(<%= @user.name %>)</em>
   </h1>
   <ul class="actions">
     <% if user_signed_in? and current_user == @user %>
       <li class="text">This is you!</li>
-      <li>
-        <%= link_to content_tag(:span, "Edit Your Profile"), edit_user_path(current_user) %>
-      </li>
+      <li><%= link_to content_tag(:span, "Edit Your Profile"), edit_user_path(current_user) %></li>
+      <% if @user.chapter.nil? %>
+        <li>or <%= link_to content_tag(:span, "Join a Chapter"), chapters_path %></li>
+      <% end %>
     <% end %>
   </ul>
 <% end %>
 
-<div class="profile-box grey-box-shadow">
-  <% if @user.chapter.nil? %>
-    <% unless @user.geographic_location.nil? %>
-      <%= link_to "Find a chapter in your area.", geo_path(@user.geographic_location.id) %>
-    <% else %>
-      <%= link_to "Join a chapter", chapters_path %>
-    <% end %>
-  <% else %>
-    <h3><%= @user.chapter.name %></h3>
-    <%= @user.geographic_location.self_and_parent_name %>
-  <% end %>
-</div>
+<%= content_for :sidebar do %>
+  <section>
+    <h1>Todo</h1>
+  </section>
+<% end %>

@@ -78,6 +78,7 @@ GEM
     gherkin (2.2.9)
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
+    gravatar_image_tag (0.1.0)
     haml (3.0.21)
     i18n (0.4.1)
     json (1.4.6)
@@ -168,6 +169,7 @@ DEPENDENCIES
   devise
   factory_girl_rails (= 1.0)
   faker (= 0.3.1)
+  gravatar_image_tag
   mysql2
   nested_set
   newrelic_rpm

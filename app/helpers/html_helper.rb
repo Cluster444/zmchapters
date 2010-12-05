@@ -3,6 +3,10 @@ module HtmlHelper
     content_tag(:center, will_paginate(collection, opts))
   end
 
+  def gravatar_for(user, opts={})
+    gravatar_image_tag(user.email, :alt => user.name, :class => 'gravatar', :gravatar => opts[:gravatar])
+  end
+
   def ul(opts={}, &block)
     ListRenderer.new(self, block).to_ul
   end

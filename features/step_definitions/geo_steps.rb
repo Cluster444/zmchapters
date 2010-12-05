@@ -14,7 +14,7 @@ Given(/^a location exists for "(?:(?:([a-zA-Z ]+), )?(?:([a-zA-Z ]+), ))?([a-zA-
 end
 
 Given(/^a location exists with (.+)$/) do |fields|
-  Given %{a geographic location exists with #{fields}}
+  Given %{a geographic location exists with #{fields}, lat: "0", lng: "0", zoom: "2"}
 end
 
 Given(/^"([^"]+)" is a location within "([^"]+)"$/) do |child, parent|

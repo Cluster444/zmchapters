@@ -1,11 +1,10 @@
 Feature: Create a chapter
-  In order to allow members to start new chapters
-  As an admin
-  I need to be able to create new chapters
+  To provide people with regional collaboration
+  Admins need to be able to create chapters
   
   Background:
     Given a location exists for "Alberta, Canada, North America"
-
+  
   Scenario: Create a country chapter
     Given an admin exists
     And is logged in

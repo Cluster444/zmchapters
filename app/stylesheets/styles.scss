@@ -100,6 +100,15 @@ $flash_green_border: $flash_green_bg - #727;
     height: 28px;
     line-height: 28px;
     margin: 0 0 10px;
+    &.avatared {
+      .tooltipped { display: inline-block; }
+      img {
+        border: 1px solid #DDD;
+        margin-right: 5px;
+        padding: 2px;
+        vertical-align: middle;
+      }
+    }
     em {
       color: #99A7AF;
       font-style: normal;
