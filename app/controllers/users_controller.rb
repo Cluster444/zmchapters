@@ -17,12 +17,9 @@ class UsersController < ApplicationController
   def edit; end
 
   def create
-    unless params[:location_id].blank?
-      @user.geographic_location = GeographicLocation.find_by_id(params[:location_id])
-    end
     @user.save!
     flash[:notice] = "User created successfully"
-    redirect_to @user
+    redirect_to (user_signed_in? ? @user : new_user_session_path)
   rescue ActiveRecord::RecordInvalid
     render :new
   end
@@ -32,7 +29,6 @@ class UsersController < ApplicationController
       begin
         chapter = Chapter.find(params[:chapter_id])
         @user.update_attribute :chapter, chapter
-        @user.update_attribute :geographic_location, chapter.geographic_location
       rescue ActiveRecord::RecordNotFound
         raise ActiveRecord::RecordInvalid.new(@user)
       end

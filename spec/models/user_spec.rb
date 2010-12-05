@@ -19,11 +19,6 @@ describe User do
   end
 
   describe 'associations' do
-    it 'should have a geographic location' do
-      user = User.new
-      user.should respond_to :geographic_location
-    end
-
     it 'should have a chapter' do
       user = User.new
       user.should respond_to :chapter
@@ -44,14 +39,6 @@ describe User do
       ['','a'*31,'dup_username'].each do |bad_username|
         bad_username_user = Factory.build(:user, :username => bad_username)
         bad_username_user.should_not be_valid
-      end
-    end
-
-    it 'should require a unique email' do
-      Factory(:user, :email => 'dup@test.com')
-      ['','dup@test.com'].each do |bad_email|
-        bad_email_user = Factory.build(:user, :email => bad_email)
-        bad_email_user.should_not be_valid
       end
     end
   end

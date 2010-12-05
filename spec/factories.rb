@@ -49,6 +49,3 @@ Factory.define :feedback_request do |f|
   f.email "test@test.com"
   f.category FeedbackRequest::CATEGORIES.first
 end
-
-Factory.define :event_item do |f|
-end

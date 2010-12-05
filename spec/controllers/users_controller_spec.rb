@@ -105,12 +105,6 @@ describe UsersController do
       assigns[:user].should == mock_user
     end
 
-    it 'should set the users location if one was given' do
-      GeographicLocation.should_receive(:find_by_id).with(1) { mock_location }
-      mock_user.should_receive(:geographic_location=).with(mock_location)
-      create :location_id => 1
-    end
-
     it 'should save the record' do
       mock_user.should_receive(:save!)
       create
@@ -121,9 +115,15 @@ describe UsersController do
       flash[:notice].should_not be_nil
     end
 
-    it 'should redirect to the user\'s page' do
+    it 'should redirect to the user\'s page when an admin creates the user' do
       create
       response.should redirect_to(mock_user)
+    end
+
+    it 'should redirect to the login page when a guest creates a user' do
+      sign_out @admin
+      create
+      response.should redirect_to(new_user_session_path)
     end
 
     it 'should render new when validatoion fails' do
@@ -158,10 +158,6 @@ describe UsersController do
         @chapter ||= mock_model(Chapter)
       end
 
-      def mock_location
-        @location ||= mock_model(GeographicLocation)
-      end
-
       before :each do
         mock_user.stub(:update_attribute)
         Chapter.stub(:find) { mock_chapter }
@@ -170,11 +166,6 @@ describe UsersController do
 
       it 'should update the user\'s chapter' do
         mock_user.should_receive(:update_attribute).with(:chapter, mock_chapter)
-        update :chapter_id => mock_chapter.id
-      end
-
-      it 'should update the user\'s location' do
-        mock_user.should_receive(:update_attribute).with(:geographic_location, mock_location)
         update :chapter_id => mock_chapter.id
       end
 
