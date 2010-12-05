@@ -1,83 +1,69 @@
 require 'spec_helper'
 
 describe CoordinatorsController do
-  include Devise::TestHelpers
-
-  before :all do
-    @chapter = Factory(:chapter)
-  end
-
   def mock_coordinator(stubs={})
     (@mock_coordinator ||= mock_model(Coordinator).as_null_object).tap do |coordinator|
       coordinator.stub(stubs) unless stubs.empty?
     end
   end
 
-  describe "GET index" do
-    it "assigns all coordinators as @coordinators" do
-      pending
-      #Coordinator.stub(:all) { [mock_coordinator] }
-      #get :index
-      #assigns(:coordinators).should eq([mock_coordinator])
-    end
+  before :each do
+    @admin = Factory(:admin)
+    sign_in @admin
   end
 
   describe "GET new" do
-    it "assigns a new coordinator as @coordinator" do
-      new_coordinator = Coordinator.new
-      Coordinator.stub(:new) { new_coordinator }
+    before :each do
+      Coordinator.stub!(:new).and_return(mock_coordinator)
+    end
+
+    it 'assigns coordinator with a new record' do
       get :new
-      assigns[:coordinator].should be(new_coordinator)
+      assigns[:coordinator].should == mock_coordinator
+    end
+
+    it 'should be successful' do
+      get :new
+      response.should be_success
     end
   end
 
   describe "POST create" do
-
-    describe "with valid params" do
-      it "assigns a newly created coordinator as @coordinator" do
-        Coordinator.stub(:new) { mock_coordinator(:save => true) }
-        post :create, :coordinator => {'these' => 'params'}
-        assigns(:coordinator).should be(mock_coordinator)
-      end
-
-      it "redirects to the chapter page" do
-        pending
-        #Coordinator.stub(:new) { mock_coordinator(:save => true) }
-        #post :create, :coordinator => {}
-        #response.should redirect_to()
-      end
+    def create
+      post :create, :coordinator => {"with"=>"params"}
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved coordinator as @coordinator" do
-        Coordinator.stub(:new) { mock_coordinator(:save => false) }
-        post :create, :coordinator => {'these' => 'params'}
-        assigns[:coordinator].should be(mock_coordinator)
-      end
-
-      it "re-renders the 'new' template" do
-        Coordinator.stub(:new) { mock_coordinator(:save => false) }
-        post :create, :coordinator => {}
-        response.should render_template("new")
-      end
+    before :each do
+      Coordinator.stub(:new) { mock_coordinator }
+      mock_coordinator.stub(:save!)
+    end
+    
+    it 'assigns coordinator with a new record' do
+      Coordinator.should_receive(:new).with({"with"=>"params"}) { mock_coordinator(:save!) }
+      create
+      assigns[:coordinator].should == mock_coordinator
     end
 
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested coordinator" do
-      pending
-      #Coordinator.should_receive(:find).with("37") { mock_coordinator }
-      #mock_coordinator.should_receive(:destroy)
-      #delete :destroy, :id => "37"
+    it 'should save the record' do
+      mock_coordinator.should_receive(:save!)
+      create
     end
 
-    it "redirects to the coordinators list" do
-      pending
-      #Coordinator.stub(:find) { mock_coordinator }
-      #delete :destroy, :id => "1"
-      #response.should redirect_to
+    it 'should set a flash notice' do
+      create
+      flash[:notice].should_not be_nil
+    end
+
+    it 'should redirect to the user page of the new coordinator' do
+      mock_coordinator(:user => @admin)
+      create
+      response.should redirect_to(users_path(@admin))
+    end
+
+    it 'should render new when validation fails' do
+      mock_coordinator.stub(:save!) { raise ActiveRecord::RecordInvalid.new(mock_coordinator) }
+      create
+      response.should render_template('coordinators/new')
     end
   end
-
 end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource :user
+  load_and_authorize_resource
 
   helper_method :sort_column, :sort_direction
 
@@ -8,70 +8,43 @@ class UsersController < ApplicationController
     flash[:error] = "User not found"
   end
 
-  before_filter :load_chapter_or_location, :only => [:create,:update]
-
   def index
-    @users = User.search(params[:search]).order(sort_column + " " + sort_direction).paginate(:per_page => 20, :page => params[:page])
+    @users = User.index(index_params)
   end
 
-  def show
-    @user = User.find params[:id]
-    unless @user.chapter.nil?
-      @chapter = @user.chapter
-      @country = @user.geographic_location.parent
-    end
-  end
-
-  def new
-    @user = User.new
-  end
-
-  def edit
-    @user = User.find params[:id]
-  end
+  def show; end
+  def new;  end
+  def edit; end
 
   def create
-    @user = User.new params[:user]
-    @user.chapter = @chapter unless @chapter.nil?
-    @user.geographic_location = @location unless @location.nil?
-    @user.save!
-    flash[:success] = "Account created successfully"
-    if current_user.try(:admin?)
-      redirect_to @user
-    else
-      redirect_to new_user_session_path
+    unless params[:location_id].blank?
+      @user.geographic_location = GeographicLocation.find_by_id(params[:location_id])
     end
+    @user.save!
+    flash[:notice] = "User created successfully"
+    redirect_to @user
   rescue ActiveRecord::RecordInvalid
     render :new
   end
 
   def update
-    @user = User.find params[:id]
-    @user.chapter = @chapter unless @chapter.nil?
-    @user.geographic_location = @location unless @location.nil?
+    unless params[:chapter_id].blank?
+      begin
+        chapter = Chapter.find(params[:chapter_id])
+        @user.update_attribute :chapter, chapter
+        @user.update_attribute :geographic_location, chapter.geographic_location
+      rescue ActiveRecord::RecordNotFound
+        raise ActiveRecord::RecordInvalid.new(@user)
+      end
+    end
     @user.update_attributes! params[:user]
-    flash[:success] = "User updated succesfully"
-    redirect_to user_url(@user)
+    flash[:notice] = "User updated successfully"
+    redirect_to @user
   rescue ActiveRecord::RecordInvalid
     render :edit
   end
 
-  def destroy
-    @user = User.find params[:id]
-    @user.destroy
-    flash[:success] = "User removed"
-    redirect_to users_url
-  end
-
 private
-  def load_chapter_or_location
-    if params[:chapter] and params[:chapter][:id]
-      @chapter = Chapter.find params[:chapter][:id]
-      @location = @chapter.geographic_location
-    elsif params[:geo] and params[:geo][:id]
-      @location = GeographicLocation.find params[:geo][:id]
-    end
-  end
 
   def sort_column
     User.column_names.include?(params[:sort]) ? params[:sort] : "name"

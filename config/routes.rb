@@ -2,7 +2,7 @@ Tzm::Application.routes.draw do
   devise_for :users
   resources :users, :path => 'user'
   resources :coordinators, :only => [:new, :create]
-  resources :feedback_requests, :path => 'feedback', :only => [:index,:show,:new,:create]
+  resources :feedback_requests, :path => 'feedback', :except => [:destroy]
 
   resources :chapters
 

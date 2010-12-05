@@ -40,7 +40,6 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.find params[:id]
   end
   
-  
   def create
     location = GeographicLocation.find params[:location_id]
     location.update_attributes! params[:geo] unless params[:geo].nil?
@@ -77,10 +76,5 @@ private
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-  def index_params
-    acceptable_keys = [:search, :sort, :direction, :per_page, :page]
-    params.select { |key,value| acceptable_keys.include?(key.to_sym) }
   end
 end

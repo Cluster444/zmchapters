@@ -10,6 +10,11 @@ describe ChaptersController do
   end
 
   describe "GET index" do
+    before :each do
+      @admin = Factory(:admin)
+      sign_in @admin
+    end
+
     it 'assigns all chapters as @chapters' do
       Chapter.should_receive(:index).and_return([mock_chapter])
       get :index
@@ -40,14 +45,24 @@ describe ChaptersController do
 
   describe "GET show" do
     describe "for a record that exists" do
+      before :each do
+        Chapter.stub!(:find).and_return(mock_chapter)
+        mock_chapter.stub!(:geographic_location).and_return(mock_location)
+      end
+
       it 'should assign @chapter from the id' do
         Chapter.should_receive(:find).with(1).and_return(mock_chapter)
         get :show, :id => 1
         assigns[:chapter].should == mock_chapter
       end
 
+      it 'should assign location from the chapters location' do
+        mock_chapter.should_receive(:geographic_location).and_return(mock_location)
+        get :show, :id => 1
+        assigns[:location].should == mock_location
+      end
+
       it 'should be successful' do
-        Chapter.stub(:find).and_return(mock_chapter)
         get :show, :id => 1
         response.should be_success
       end

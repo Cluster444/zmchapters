@@ -51,11 +51,6 @@ describe FeedbackRequest do
     end
   end
 
-  describe 'associations' do
-    it 'should associate with the user submitting the request'
-    it 'should have an email if no user is supplied'
-  end
-
   describe 'status' do
     it 'should mark all new records with a state of new' do
       feedback = create

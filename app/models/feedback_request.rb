@@ -1,4 +1,6 @@
 class FeedbackRequest < ActiveRecord::Base
+  extend Index
+
   CATEGORIES = %w(bug feature)
   STATES = %w(new acknowledged resolved closed rejected)
 
@@ -16,14 +18,6 @@ class FeedbackRequest < ActiveRecord::Base
   scope :rejected,     where(:status => 'rejected')
 
   before_create lambda { self.status = "new" }
-
-  def self.search(search)
-    if search
-      where('subject LIKE ? OR message LIKE ?', "%#{search}%", "%#{search}%")
-    else
-      scoped
-    end
-  end
 
   def acknowledge!
     update_attribute :status, "acknowledged"

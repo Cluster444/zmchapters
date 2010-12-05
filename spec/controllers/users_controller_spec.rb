@@ -1,174 +1,204 @@
 require 'spec_helper'
 
 describe UsersController do
-  include Devise::TestHelpers
-
-  def do_create
-    post :create, :user => {:name=>"value"}
-  end
-
-  def do_update
-    post :update, :id => 1, :user => {:name=>"value"}
+  def params
+    {"with"=>"params"}
   end
 
   def mock_user(stubs={})
-    @mock_user ||= mock_model(User, stubs)
+    (@user ||= mock_model(User).as_null_object).tap do |user|
+      user.stub(stubs) unless stubs.empty?
+    end
+  end
+  
+  def invalid
+    raise ActiveRecord::RecordInvalid.new(mock_user)
   end
 
   before :each do
-    mock_user
+    @admin = Factory(:admin)
+    sign_in @admin
   end
 
   describe "GET index" do
-    it 'assigns all users as @users' do
-      @users = (1..5).collect {Factory :user}
+    it 'should assign users with the records for the given params' do
+      User.should_receive(:index) { [mock_user] }
       get :index
-      assigns[:users].should == @users
+      assigns[:users].should == [mock_user]
+    end
+
+    it 'should be successful' do
+      User.stub(:index) { [mock_user] }
+      get :index
+      response.should be_success
     end
   end
 
-  describe "GET show" do
-    describe "for a record that exists" do
-      it 'should assign @user from the id' do
-        User.should_receive(:find).with(1).once.and_return(@mock_user)
-        @mock_user.stub!(:chapter).and_return(nil)
-        get :show, :id => 1
-        assigns[:user].should == @mock_user
-      end
-    end
-
-    describe "for a record that does not exist" do
-      it 'should redirect to the index with a flash error' do
-        User.should_receive(:find).with(1).once.and_raise(ActiveRecord::RecordNotFound)
-        get :show, :id => 1
-        response.should redirect_to users_url
-        flash[:error].should_not be_nil
-      end
-    end
-  end
-
-  describe "GET new" do
-    it 'should assign a new chapter to @chapter' do
-      User.should_receive(:new).and_return(@mock_user)
-      get :new
-      assigns[:user].should == @mock_user
-    end
-  end
-
-  describe "GET edit" do
-    describe "for a record that exists" do
-      it 'should assign @user from the id' do
-        User.should_receive(:find).with(1).and_return(@mock_user)
-        get :edit, :id => 1
-        assigns[:user].should == @mock_user
-      end
-    end
-
-    describe "for a record that does not exist" do
-      it 'should redirect to the index with a flash error' do
-        User.should_receive(:find).with(1).and_raise(ActiveRecord::RecordNotFound)
-        get :edit, :id => 1
-        response.should redirect_to users_url
-        flash[:error].should_not be_nil
-      end
-    end
-  end
-
-  describe "POST create" do
+  describe 'GET show' do
     before :each do
-      User.stub!(:new).with("name"=>"value").and_return(@mock_user)
-      @mock_user.stub!(:save!)
+      User.stub(:find) { mock_user }
     end
 
-    it 'should assign a new user with the given params' do
-      User.should_receive(:new).with("name"=>"value").and_return(@mock_user)
-      do_create
-      assigns[:user].should == @mock_user
-    end
-      
-    it 'should save the user' do
-      @mock_user.should_receive(:save!)
-      do_create
+    it 'should assign user with the requested record' do
+      get :show, :id => 1
+      assigns[:user].should == mock_user
     end
 
-    describe "with valid params" do
-      it 'should redirect to index with a flash success' do
-        do_create
-        response.should redirect_to user_url(@mock_user)
-        flash[:success].should_not be_nil
-      end
-    end
-
-    describe "with invalid params" do
-      it 'should render new' do
-        @mock_user.stub!(:save!).and_raise(ActiveRecord::RecordInvalid.new(@mock_user))
-        do_create
-        response.should render_template 'users/new'
-      end
+    it 'should be successful' do
+      get :show, :id => 1
+      response.should be_success
     end
   end
 
-  describe "PUT update" do
-    describe "for a record that exists" do
+  describe 'GET new' do
+    before :each do
+      User.stub(:new) { mock_user }
+    end
+
+    it 'should assign user with a new record' do
+      get :new
+      assigns[:user].should == mock_user
+    end
+
+    it 'should be successful' do
+      get :new
+      response.should be_success
+    end
+  end
+
+  describe 'GET edit' do
+    before :each do
+      User.stub(:find) { mock_user }
+    end
+
+    it 'should assign user with the requested record' do
+      get :edit, :id => 1
+      assigns[:user].should == mock_user
+    end
+
+    it 'should be successful' do
+      get :edit, :id => 1
+      response.should be_success
+    end
+  end
+
+  describe 'POST create' do
+    def create(opts={})
+      opts[:user] = params
+      post :create, opts
+    end
+
+    def mock_location
+      @location ||= mock_model(GeographicLocation)
+    end
+
+    before :each do
+      User.stub(:new) { mock_user }
+      mock_user.stub(:attributes=)
+      mock_user.stub(:save!)
+    end
+
+    it 'should assign user with a new record and the given params' do
+      User.should_receive(:new) { mock_user }
+      mock_user.should_receive(:attributes=).with(params)
+      create
+      assigns[:user].should == mock_user
+    end
+
+    it 'should set the users location if one was given' do
+      GeographicLocation.should_receive(:find_by_id).with(1) { mock_location }
+      mock_user.should_receive(:geographic_location=).with(mock_location)
+      create :location_id => 1
+    end
+
+    it 'should save the record' do
+      mock_user.should_receive(:save!)
+      create
+    end
+
+    it 'should set a flash notice' do
+      create
+      flash[:notice].should_not be_nil
+    end
+
+    it 'should redirect to the user\'s page' do
+      create
+      response.should redirect_to(mock_user)
+    end
+
+    it 'should render new when validatoion fails' do
+      mock_user.stub(:save!) { invalid }
+      create
+      response.should render_template('users/new')
+    end
+  end
+
+  describe 'PUT update' do
+    def update(opts={})
+      put :update, opts.merge(:id => 1, :user => params)
+    end
+
+    before :each do
+      User.stub(:find) { mock_user }
+      mock_user.stub(:update_attributes!)
+    end
+
+    it 'should assign user with the requested record' do
+      update
+      assigns[:user].should == mock_user
+    end
+    
+    it 'should update the record with the given params' do
+      mock_user.should_receive(:update_attributes!).with(params)
+      update
+    end
+
+    describe 'chapter update' do
+      def mock_chapter
+        @chapter ||= mock_model(Chapter)
+      end
+
+      def mock_location
+        @location ||= mock_model(GeographicLocation)
+      end
+
       before :each do
-        User.stub!(:find).with(1).and_return(@mock_user)
-        @mock_user.stub!(:update_attributes!).with("name"=>"value")
+        mock_user.stub(:update_attribute)
+        Chapter.stub(:find) { mock_chapter }
+        mock_chapter.stub(:geographic_location) { mock_location }
       end
 
-      it 'should assign @user from the given id' do
-        User.should_receive(:find).with(1).and_return(@mock_user)
-        do_update
-        assigns[:user].should == @mock_user
+      it 'should update the user\'s chapter' do
+        mock_user.should_receive(:update_attribute).with(:chapter, mock_chapter)
+        update :chapter_id => mock_chapter.id
       end
 
-      it 'should update the attributes' do
-        @mock_user.should_receive(:update_attributes!).with("name"=>"value")
-        do_update
+      it 'should update the user\'s location' do
+        mock_user.should_receive(:update_attribute).with(:geographic_location, mock_location)
+        update :chapter_id => mock_chapter.id
       end
 
-      describe "with valid params" do
-        it 'should redirect to show with a flash success' do
-          do_update
-          response.should redirect_to user_url(@mock_user)
-          flash[:success].should_not be_nil
-        end
-      end
-
-      describe "with invalid params" do
-        it 'should render edit' do
-          @mock_user.stub!(:update_attributes!).with("name"=>"value").and_raise(ActiveRecord::RecordInvalid.new(@mock_user))
-          do_update
-          response.should render_template 'users/edit'
-        end
+      it 'should render edit if the chapter does not exist' do
+        Chapter.stub(:find) { raise ActiveRecord::RecordNotFound }
+        update :chapter_id => mock_chapter.id
+        response.should render_template('users/edit')
       end
     end
 
-    describe "for a record that does not exist" do
-      it 'should redirect to index with flash error' do
-        User.stub!(:find).with(1).and_raise(ActiveRecord::RecordNotFound)
-        do_update
-        response.should redirect_to users_url
-        flash[:error].should_not be_nil
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    describe "for a record that exists" do
-      it 'should redirect to index with a flash success' do
-        User.stub!(:find).with(1).and_return(@mock_user)
-        @mock_user.should_receive(:destroy)
-        delete :destroy, :id => 1
-      end
+    it 'should set a flash notice' do
+      update
+      flash[:notice].should_not be_nil
     end
 
-    describe "for a record that does not exist" do
-      it 'should redirect to index with a flash error' do
-        User.stub!(:find).with(1).and_raise(ActiveRecord::RecordNotFound)
-        delete :destroy, :id => 1
-        response.should redirect_to users_url
-        flash[:error].should_not be_nil
-      end
+    it 'should redirect to the user\'s page' do
+      update
+      response.should redirect_to(mock_user)
+    end
+
+    it 'should render edit when validation fails' do
+      mock_user.stub(:update_attributes!) { invalid }
+      update
+      response.should render_template('users/edit')
     end
   end
 end

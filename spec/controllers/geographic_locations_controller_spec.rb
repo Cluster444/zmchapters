@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe GeographicLocationsController do
-  include Devise::TestHelpers
-  
   def mock_location
     @location ||= mock_model(GeographicLocation)
   end
 
   describe 'GET index' do
-    pending
   end
 
   describe 'GET show' do
+    before :each do
+      GeographicLocation.stub(:find) { mock_location }
+    end
+
     it 'should assign location with the given location' do
       GeographicLocation.should_receive(:find).with(1).and_return(mock_location)
       get :show, :id => 1
@@ -19,7 +20,6 @@ describe GeographicLocationsController do
     end
 
     it 'should be successful' do
-      GeographicLocation.stub(:find).and_return(mock_location)
       get :show, :id => 1
       response.should be_success
     end
@@ -72,6 +72,7 @@ describe GeographicLocationsController do
         GeographicLocation.stub(:new).and_return(mock_location)
         mock_location.stub(:save).and_return(true)
         mock_location.stub(:attributes=)
+        mock_location.stub(:move_to_child_of)
       end
 
       it 'should assign parent with the given location' do
