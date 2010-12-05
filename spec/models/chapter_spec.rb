@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Chapter do
   
   before :all do
-    @continent = Factory(:geo, :name => "Continent")
-    @country   = Factory(:geo, :name => "Country")
-    @territory = Factory(:geo, :name => "Territory")
-    @city      = Factory(:geo, :name => "City")
+    @continent = Factory(:location, :name => "Continent")
+    @country   = Factory(:location, :name => "Country")
+    @territory = Factory(:location, :name => "Territory")
+    @city      = Factory(:location, :name => "City")
     @country.move_to_child_of @continent
     @territory.move_to_child_of @country
     @city.move_to_child_of @territory

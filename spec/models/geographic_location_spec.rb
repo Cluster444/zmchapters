@@ -2,16 +2,21 @@ require 'spec_helper'
 
 describe GeographicLocation do
   
+  it 'is deprecated' do
+    assert false, 'rename to Location'
+  end
+
   before :each do
     GeographicLocation.delete_all
   end
   
-  def create(name, opts={})
-    Factory.create(:geo, opts)
+  def create(name=nil, opts={})
+    opts.merge(:name => name) unless name.nil?
+    Factory.create(:location, opts)
   end
   
   def build(opts={})
-    Factory.build(:geo, opts)
+    Factory.build(:location, opts)
   end
 
   def make_geo_set
@@ -25,7 +30,7 @@ describe GeographicLocation do
   end
 
   it 'should create a new record with valid attributes' do
-    Factory.create(:geo)
+    Factory.create(:location)
   end
 
   it 'should tell whether coordinate information is needed' do
@@ -128,15 +133,15 @@ describe GeographicLocation do
 
   describe "formatted output" do
     before :each do
-      @continent = Factory(:geo, :name => "Continent")
-      @country = Factory(:geo, :name => "Country")
-      @state = Factory(:geo, :name => "State")
-      @country.move_to_child_of @continent
-      @state.move_to_child_of @country
+      make_geo_set
+    end
+    
+    it 'is deprecated' do
+      assert false, "merge this into a helper"
     end
 
     it 'should provide a name with ancestors for state' do
-      @state.self_and_ancestors_name.should == "#{@state.name}, #{@country.name}, #{@continent.name}"
+      @territory.self_and_ancestors_name.should == "#{@territory.name}, #{@country.name}, #{@continent.name}"
     end
 
     it 'should provide a name with ancestors for country' do
@@ -148,7 +153,7 @@ describe GeographicLocation do
     end
 
     it 'should provide aname with parent for territory' do
-      @state.self_and_parent_name.should == "#{@state.name}, #{@country.name}"
+      @territory.self_and_parent_name.should == "#{@territory.name}, #{@country.name}"
     end
 
     it 'should provide a name with parent for country' do

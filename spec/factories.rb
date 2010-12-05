@@ -1,4 +1,4 @@
-Factory.define :geo, :class => GeographicLocation do |f|
+Factory.define :location, :class => GeographicLocation do |f|
   f.name "Test Geo"
   f.lat "0"
   f.lng "0"
@@ -8,7 +8,7 @@ end
 Factory.define :chapter do |f|
   f.name "Test Chapter"
   f.category Chapter::CATEGORIES.first
-  f.association :geographic_location, :factory => :geo
+  f.association :geographic_location, :factory => :location
 end
 
 Factory.define :user do |f|
@@ -16,7 +16,8 @@ Factory.define :user do |f|
   f.sequence(:username) {|n| "test#{n}" }
   f.sequence(:email) {|n| "test#{n}@test.com"}
   f.password 'testpassword'
-  f.password_confirmation 'testpassword'
+  f.password_confirmation { |u| u.password }
+  f.association :chapter
 end
 
 Factory.define :admin, :parent => :user do |f|
@@ -24,7 +25,8 @@ Factory.define :admin, :parent => :user do |f|
 end
 
 Factory.define :coordinator do |f|
-  f.chapter Factory(:chapter)
+  f.association :user
+  f.association :chapter
 end
 
 Factory.define :page do |f|
@@ -46,4 +48,7 @@ Factory.define :feedback_request do |f|
   f.message "Test Message"
   f.email "test@test.com"
   f.category FeedbackRequest::CATEGORIES.first
+end
+
+Factory.define :event_item do |f|
 end
