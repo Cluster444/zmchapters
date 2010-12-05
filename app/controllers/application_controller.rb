@@ -18,4 +18,9 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
+
+  def index_params(extra_keys=[])
+    acceptable_keys = [:search, :sort, :direction, :page, :per_page] + extra_keys
+    params.select { |key| acceptable_keys.include?(key.to_sym) }
+  end
 end
