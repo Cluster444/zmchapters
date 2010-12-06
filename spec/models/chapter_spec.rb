@@ -108,4 +108,45 @@ describe Chapter do
       it 'on coordinator count desc'
     end
   end
+
+  describe 'custom finders' do
+    describe 'by location' do
+      def create_location(name, parent=nil)
+        l = Factory.create(:location, :name => name)
+        l.move_to_child_of(parent) unless parent.nil?
+        l
+      end
+
+      def create_chapter(location)
+        Factory.create(:chapter, :geographic_location => location)
+      end
+      
+      before :each do
+        [@continent,@country,@territory,@city].collect do |location|
+          create_chapter(location)
+        end
+      end
+
+      it 'should find chapters within a continent' do
+        continent = create_location("Other Continent")
+        country   = create_location("Other Country", continent)
+        chapters = [create_chapter(country)]
+        Chapter.find_all_by_location(continent).should == chapters
+      end
+
+      it 'should find chapters within a country' do
+        country = create_location("Other Country", @continent)
+        territory = create_location("Other Territory", country)
+        chapters = [create_chapter(territory)]
+        Chapter.find_all_by_location(country).should == chapters
+      end
+
+      it 'should find chapters within a territory' do
+        territory = create_location("territory", @country)
+        city = create_location("city", territory)
+        chapters = [create_chapter(city)]
+        Chapter.find_all_by_location(territory).should == chapters
+      end
+    end
+  end
 end

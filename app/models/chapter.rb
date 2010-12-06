@@ -15,6 +15,11 @@ class Chapter < ActiveRecord::Base
   validates :status,   :presence => true, :inclusion => {:in => STATES}, :unless => :new_record?
   validates :geographic_location, :presence => true
   
+  def self.find_all_by_location(location)
+    ids = location.descendants.collect(&:id)
+    where(:geographic_location_id => ids)
+  end
+
   def pending!
     self.status = "pending"
   end
