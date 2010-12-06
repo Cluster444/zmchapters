@@ -20,6 +20,10 @@ class Chapter < ActiveRecord::Base
     where(:geographic_location_id => ids)
   end
 
+  def location
+    geographic_location
+  end
+
   def pending!
     self.status = "pending"
   end

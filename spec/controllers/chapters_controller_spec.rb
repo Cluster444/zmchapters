@@ -47,17 +47,25 @@ describe ChaptersController do
     describe "for a record that exists" do
       before :each do
         Chapter.stub!(:find).and_return(mock_chapter)
+        Chapter.stub!(:find_all_by_location) { [] }
         mock_chapter.stub!(:geographic_location).and_return(mock_location)
+        mock_chapter.stub!(:location) { mock_location }
       end
 
-      it 'should assign @chapter from the id' do
+      it 'should assign chapter with the requested record' do
         Chapter.should_receive(:find).with(1).and_return(mock_chapter)
         get :show, :id => 1
         assigns[:chapter].should == mock_chapter
       end
+      
+      it 'should assign subchapters with descendent chapters' do
+        Chapter.should_receive(:find_all_by_location).with(mock_location) { [mock_chapter] }
+        get :show, :id => 1
+        assigns[:subchapters].should == [mock_chapter]
+      end
 
       it 'should assign location from the chapters location' do
-        mock_chapter.should_receive(:geographic_location).and_return(mock_location)
+        mock_chapter.should_receive(:location) { mock_location }
         get :show, :id => 1
         assigns[:location].should == mock_location
       end

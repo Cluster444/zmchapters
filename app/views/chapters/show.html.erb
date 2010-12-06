@@ -48,6 +48,16 @@
       <li><a href="#">Events</a></li>
     </ul>
   </section>
+  <% if @subchapters.any? %>
+    <section>
+      <h1>Chapters in<br /><%= @chapter.name %></h1>
+      <ul>
+        <% @subchapters.each do |chapter| %>
+          <li><%= link_to chapter.name, chapter_path(chapter) %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
   <section class="last">
     <h1>Info</h1>
     <ul>

@@ -12,7 +12,8 @@ class ChaptersController < ApplicationController
   end
 
   def show
-    @location = @chapter.geographic_location
+    @location = @chapter.location
+    @subchapters = Chapter.find_all_by_location(@location)
   end
 
   def new
