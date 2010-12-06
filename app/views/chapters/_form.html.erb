@@ -14,26 +14,8 @@
   </script>
 <% end %>
 
-<% if @location.need_coordinates? %>
-  <%= content_for :js do %>
-    <script type="text/javascript">
-      function onMove(event) {
-        $("#geo_lat").val(event.object.center.lat);
-        $("#geo_lng").val(event.object.center.lon);
-        $("#geo_zoom").val(event.object.zoom);
-      }
-    </script>
-  <% end %>
-  <%= render :partial => '/shared/map', :locals => {:geo => @location.parent, :events => true} %>
-<% end %>
-
 <%= form_for @chapter do |f| %>
   <%= hidden_field_tag :location_id, @location.id %>
-  <% if @location.need_coordinates? %>
-    <%= hidden_field :geo, :lat %>
-    <%= hidden_field :geo, :lng %>
-    <%= hidden_field :geo, :zoom %>
-  <% end %>
   <%= f.error_messages %>
   <div class="field">
     <%= f.label :name %>
@@ -45,9 +27,24 @@
     <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}) %>
     <%= f.text_field :category, :style => "display:none;" %>
   </div>
+
   <% if @location.need_coordinates? %>
+    <%= content_for :js do %>
+      <script type="text/javascript">
+        function onMove(event) {
+          $("#location_lat").val(event.object.center.lat);
+          $("#location_lng").val(event.object.center.lon);
+          $("#location_zoom").val(event.object.zoom);
+        }
+      </script>
+    <% end %>
+    <%= hidden_field :location, :lat %>
+    <%= hidden_field :location, :lng %>
+    <%= hidden_field :location, :zoom %>
+    <%= render :partial => '/shared/map', :locals => {:map => @map.merge(:events => true)} %>
     <div id="map"></div>
   <% end %>
+
   <div class="actions">
     <%= f.submit "Save" %>
   </div>

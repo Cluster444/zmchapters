@@ -87,7 +87,7 @@ describe Chapter do
     end
 
     it 'should filter by a search param' do
-      chapters = ["This City","That City"].collect { |name| Factory(:chapter, :name => name) }
+      chapters = ["That City","This City"].collect { |name| Factory(:chapter, :name => name) }
       Chapter.index(:search => "city").should == chapters
     end
     

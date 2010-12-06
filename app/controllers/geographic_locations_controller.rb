@@ -2,15 +2,18 @@ class GeographicLocationsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @map = {:lat => 0, :lng => 0, :zoom => 2, :markers => GeographicLocation.markers}
   end
 
   def show
     @location = @geographic_location
+    @map = @location.coordinates_hash.merge(:markers => GeographicLocation.markers)
   end
 
   def new
     @parent = GeographicLocation.find params[:parent_id]
     @location = @geographic_location
+    @map = @parent.coordinates_hash.merge(:markers => GeographicLocation.markers)
   end
 
   def create

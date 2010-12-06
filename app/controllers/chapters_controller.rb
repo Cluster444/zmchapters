@@ -8,20 +8,32 @@ class ChaptersController < ApplicationController
   end
 
   def index
+    if params[:view] == 'map'
+      @map = {:lat => 0, :lng => 0, :zoom => 2}
+      @map[:markers] = GeographicLocation.markers
+    end
     @chapters = Chapter.index(index_params)
   end
-
+  
   def show
     @location = @chapter.location
+    if params[:view] == 'map'
+      @map = {:lat => @location.lat, :lng => @location.lng, :zoom => @location.zoom}
+      @map[:markers] = GeographicLocation.markers
+    end
     @subchapters = Chapter.find_all_by_location(@location)
   end
 
   def new
     @location = GeographicLocation.find(params[:location_id]) rescue nil
+  
     if @location.nil?
       flash[:error] = "Please select a location before creating a chapter"
       redirect_to geo_index_path
     else
+      if @location.need_coordinates?
+        @map = {:lat => @location.lat, :lng => @location.lng, :zoom => @location.zoom}
+      end
       @chapter.geographic_location = @location
       @chapter.name = @location.name
       if @location.is_country?

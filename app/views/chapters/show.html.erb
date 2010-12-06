@@ -1,19 +1,6 @@
 <% title @chapter.name %>
 <% page_class 'two-column' %>
 
-<%= render :partial => '/shared/map', :locals => {:geo => @chapter.geographic_location, :events => false} %>
-
-<% if current_user %>
-  <% if current_user.chapter.nil? %>
-    <%= content_for :user_control_panel do %>
-      <%= form_for current_user, :method => :put do |f| %>
-        <%= hidden_field :chapter, :id %>
-        <%= f.submit "Join this chapter" %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-
 <%= content_for :admin_control_panel do %>
   <% unless @location.is_country? %>
     <% geo = @location.is_territory? ? @location : @location.parent %>
@@ -25,7 +12,13 @@
 
 <%= content_for :page_head, content_tag(:h1, "#{@chapter.name} #{@chapter.category} chapter") %>
 
-<div id="map"></div>
+<% if params[:view] == 'map' %>
+  <%= render :partial => '/shared/map', :locals => {:map => @map} %>
+  <%= link_to "Close", chapter_path(@chapter) %>
+  <div id="map"></div>
+<% else %>
+  <%= link_to "Map", map_chapter_path(@chapter) %>
+<% end %>
 
 <%= content_for :sidebar do %>
   <section>

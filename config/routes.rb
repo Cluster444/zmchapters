@@ -4,7 +4,14 @@ Tzm::Application.routes.draw do
   resources :coordinators, :only => [:new, :create]
   resources :feedback_requests, :path => 'feedback', :except => [:destroy]
 
-  resources :chapters
+  resources :chapters do
+    collection do
+      get :map, :action => :index, :view => 'map'
+    end
+    member do
+      get :map, :action => :show, :view => 'map'
+    end
+  end
 
   resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show,:new,:create] do
     member do

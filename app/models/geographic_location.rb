@@ -17,6 +17,10 @@ class GeographicLocation < ActiveRecord::Base
   def self.markers
     select(:lat, :lng).where("lat != 'nil' AND lng != 'nil' AND depth > 2")
   end
+
+  def coordinates_hash
+    {:lat => (lat || 0), :lng => (lng || 0), :zoom => (zoom || 2)}
+  end
   
   def need_coordinates?
     lat.nil? || lng.nil? || zoom.nil?

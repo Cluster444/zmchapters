@@ -1,8 +1,6 @@
 <% title 'Continents' %>
 <% page_class 'one-column' %>
 
-<%= render :partial => '/shared/map', :locals => {:geo => nil, :events => false} %>
-
 <%= content_for :page_head do %>
   <h1>Geography</h1>
   <ul class="button-bar">
@@ -12,4 +10,5 @@
   </ul>
 <% end %>
 
+<%= render :partial => '/shared/map', :locals => {:map => @map.merge(:events => false)} %>
 <div id="map"></div>
