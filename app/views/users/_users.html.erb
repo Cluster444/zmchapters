@@ -17,8 +17,8 @@
       <td><%= link_to user.name, user_path(user) %></td>
       <td><%= user.username %></td>
       <td><%= user.chapter.nil? ? "No Chapter" : user.chapter.name %></td>
-      <td><%= user.geographic_location.nil? ? "No Location" : user.geographic_location.self_and_parent_name %></td>
-      <% if can? :update, user  %>
+      <td><%= user.location.self_and_parent_name %></td>
+      <% if can? :update, User %>
         <td><%= link_to "Edit", edit_user_path(user) %></td>
       <% end %>
     </tr>
