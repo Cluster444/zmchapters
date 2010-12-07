@@ -1,0 +1,15 @@
+<% title "Select Country" %>
+<% page_class 'form' %>
+
+<%= form_tag new_chapter_path, :method => :get do %>
+  <%= hidden_field_tag :category, "country" %>
+  <div class="field">
+    <%= label_tag "Country" %>
+    <% countries_without_chapters = GeographicLocation.countries.reject{|country| country.chapters.any?}.sort{|a,b| a.name.downcase <=> b.name.downcase}.collect{|country| [country.name,country.id]} %>
+
+    <%= select_tag :location_id, options_for_select(countries_without_chapters) %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Continue" %>
+  </div>
+<% end %>

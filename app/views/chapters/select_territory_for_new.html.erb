@@ -1,0 +1,14 @@
+<% title "Select Territory" %>
+<% page_class 'form' %>
+
+<%= form_tag new_chapter_path, :method => :get do %>
+  <%= hidden_field_tag :category, "territory" %>
+  <div class="field">
+    <%= label_tag "Territory" %>
+    <% territories_without_chapters = @parent.children.reject{|territory| territory.chapters.any?}.collect{|t|[t.name,t.id]} %>
+    <%= select_tag :location_id, options_for_select(territories_without_chapters) %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Continue" %>
+  </div>
+<% end %>

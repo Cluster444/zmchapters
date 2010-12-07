@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
-  def index_params(extra_keys=[])
-    acceptable_keys = [:search, :sort, :direction, :page, :per_page] + extra_keys
-    params.select { |key| acceptable_keys.include?(key.to_sym) }
+  def index_params
+    index_keys = [:search, :sort, :direction, :page, :per_page].collect{|k|k.to_s}
+    params.select { |k,v| index_keys.include?(k) }
   end
 end

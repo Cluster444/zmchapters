@@ -23,8 +23,10 @@
       var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
       var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png',size,offset);
       
-      <% map[:markers].each do |l| %>
-        markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= "#{l.lng}, #{l.lat}" %>), icon.clone()));
+      <% unless map[:markers].nil? %>
+        <% map[:markers].each do |l| %>
+          markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(<%= "#{l.lng}, #{l.lat}" %>), icon.clone()));
+        <% end %>
       <% end %>
       map.addLayer(markers);
     });

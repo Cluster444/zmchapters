@@ -1,6 +1,10 @@
 <% title 'Chapters' %>
 <% page_class 'one-column' %>
 
+<%= content_for :admin_control_panel do %>
+  <li><%= link_to "Create Country Chapter", select_country_for_new_chapters_path %></li>
+<% end %>
+
 <%= content_for :page_head, content_tag(:h1, "ZM Chapter Index") %>
 
 <% if params[:view] == 'map' %>

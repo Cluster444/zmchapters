@@ -6,7 +6,7 @@
     <% geo = @location.is_territory? ? @location : @location.parent %>
     <li><%= link_to "Create #{geo.name} Subchapter", new_chapter_path(:location_id => geo.id, :category => 'subchapter') %></li>
   <% else %>
-    <li><%= link_to "Create Territory Chapter", geo_path(@chapter.geographic_location) %></li>
+    <li><%= link_to "Create Territory Chapter", select_territory_for_new_chapters_path(:parent_id => @location.id) %></li>
   <% end %>
 <% end %>
 
@@ -21,20 +21,18 @@
 <% end %>
 
 <%= content_for :sidebar do %>
-  <section>
-    <h1>Coordinators</h1>
-    <% if @chapter.coordinators.any? %>
+  <% if @chapter.coordinators.any? %>
+    <section>
+      <h1>Coordinators</h1>
       <ul>
         <% @chapter.coordinators.each do |coordinator| %>
           <li><%= coordinator.user.name_with_username %></li>
         <% end %>
       </ul>
-    <% else %>
-      <span class="empty">No Coordinators</span>
-    <% end %>
-  </section>
+    </section>
+  <% end %>
   <section>
-    <h1>Links</h1>
+    <h1>Links(TODO)</h1>
     <ul>
       <li><a href="#">Website</a></li>
       <li><a href="#">Forum</a></li>

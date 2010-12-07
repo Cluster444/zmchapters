@@ -23,6 +23,16 @@ class ChaptersController < ApplicationController
     end
     @subchapters = Chapter.find_all_by_location(@location)
   end
+  
+  def select_country_for_new
+  end
+
+  def select_territory_for_new
+    @parent = GeographicLocation.find(params[:parent_id])
+  rescue
+    flash[:notice] = "Could not find the selected location."
+    redirect_to chapters_path
+  end
 
   def new
     @location = GeographicLocation.find(params[:location_id]) rescue nil
@@ -31,9 +41,7 @@ class ChaptersController < ApplicationController
       flash[:error] = "Please select a location before creating a chapter"
       redirect_to geo_index_path
     else
-      if @location.need_coordinates?
-        @map = {:lat => @location.lat, :lng => @location.lng, :zoom => @location.zoom}
-      end
+      @map = @location.coordinates_hash
       @chapter.geographic_location = @location
       @chapter.name = @location.name
       if @location.is_country?
@@ -55,7 +63,7 @@ class ChaptersController < ApplicationController
   
   def create
     location = GeographicLocation.find params[:location_id]
-    location.update_attributes! params[:geo] unless params[:geo].nil?
+    location.update_attributes! params[:location] unless params[:location].nil?
     @chapter = Chapter.new params[:chapter]
     @chapter.geographic_location = location
     @chapter.save!

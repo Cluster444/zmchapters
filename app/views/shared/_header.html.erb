@@ -33,19 +33,7 @@
       <% end %>
     </span>
     <li class="first"><%= link_to 'Home', root_path, :class => 'home' %></li>
-    <li>
-      <a href="#">Chapters</a>
-      <ul class="submenu">
-        <li><%= link_to "Browse", chapters_path %></li>
-        <li><%= link_to "Map", geo_index_path %></li>
-      </ul>
-    </li>
-    <li><%= link_to 'Members', users_path %></li>
-    <li class="last">
-      <a href="#">Resources</a>
-      <ul class="submenu">
-        <li><%= link_to "Protocols", protocols_path %></li>
-      </ul>
-    </li>
+    <li><%= link_to "Chapters", chapters_path %></li>
+    <li class="last"><%= link_to 'Members', users_path %></li>
   </ul>
 </div>

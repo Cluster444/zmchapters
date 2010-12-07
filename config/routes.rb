@@ -7,6 +7,8 @@ Tzm::Application.routes.draw do
   resources :chapters do
     collection do
       get :map, :action => :index, :view => 'map'
+      get :select_country_for_new
+      get :select_territory_for_new
     end
     member do
       get :map, :action => :show, :view => 'map'
