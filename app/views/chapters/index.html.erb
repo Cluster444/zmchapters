@@ -7,13 +7,8 @@
 
 <%= content_for :page_head, content_tag(:h1, "ZM Chapter Index") %>
 
-<% if params[:view] == 'map' %>
-  <%= render :partial => '/shared/map', :locals => {:map => @map} %>
-  <%= link_to "Close", chapters_path, :style => "" %>
-  <div id="map"></div>
-<% else %>
-  <%= link_to "Show Map", map_chapters_path %>
-<% end %>
+<%= render '/shared/map' %>
+
 <%= form_tag chapters_path, :method => :get, :id => "chapters_search" do %>
   <div id="search-container">
     <div>

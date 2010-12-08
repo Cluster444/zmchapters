@@ -13,13 +13,7 @@
 
 <%= content_for :page_head, content_tag(:h1, "#{@chapter.name} #{@chapter.category} chapter") %>
 
-<% if params[:view] == 'map' %>
-  <%= render :partial => '/shared/map', :locals => {:map => @map} %>
-  <%= link_to "Close", chapter_path(@chapter) %>
-  <div id="map"></div>
-<% else %>
-  <%= link_to "Map", map_chapter_path(@chapter) %>
-<% end %>
+<%= render '/shared/map' %>
 
 <%= content_for :sidebar do %>
   <% if @chapter.coordinators.any? %>

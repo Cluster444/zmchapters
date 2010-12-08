@@ -24,8 +24,7 @@
   <%= f.hidden_field :lat %>
   <%= f.hidden_field :lng %>
   <%= f.hidden_field :zoom %>
-  <%= render :partial => '/shared/map', :locals => {:map => @map.merge(:events => true)} %>
-  <div id="map"></div>
+  <%= render '/shared/map' %>
 
   <div class="actions">
     <%= f.submit "Save" %>

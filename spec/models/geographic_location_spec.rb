@@ -41,6 +41,24 @@ describe GeographicLocation do
     location.update_attribute :zoom, nil
     location.need_coordinates?.should be_true
   end
+
+  it 'should provide a hash of map information for a location' do
+    map = create.map_hash
+    map.should have_key(:lat)
+    map.should have_key(:lng)
+    map.should have_key(:zoom)
+    map.should have_key(:markers)
+    map.should have_key(:events)
+  end
+
+  it 'should provide a hash of default map information' do
+    map = GeographicLocation.map_hash
+    map.should have_key(:lat)
+    map.should have_key(:lng)
+    map.should have_key(:zoom)
+    map.should have_key(:markers)
+    map.should have_key(:events)
+  end
   
   describe 'associations' do
     it 'should have chapters' do

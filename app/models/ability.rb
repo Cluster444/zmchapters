@@ -20,9 +20,6 @@ class Ability
         can :read, FeedbackRequest, :user_id => user.id
       end
     end
-
-    if user.new_record?
-    end
   end
 
 private

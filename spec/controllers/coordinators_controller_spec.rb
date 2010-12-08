@@ -8,8 +8,7 @@ describe CoordinatorsController do
   end
 
   before :each do
-    @admin = Factory(:admin)
-    sign_in @admin
+    User.stub(:new) { mock_model(User, :admin? => true) }
   end
 
   describe "GET new" do

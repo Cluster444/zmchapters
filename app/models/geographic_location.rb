@@ -14,14 +14,30 @@ class GeographicLocation < ActiveRecord::Base
   scope :territories,    where(:depth => 2)
   scope :subterritories, where(:depth => 3)
   
+  def self.map_hash
+    {
+      :lat => 0,
+      :lng => 0,
+      :zoom => 2,
+      :markers => markers,
+      :events => false
+    }
+  end
+
   def self.markers
     select(:lat, :lng).where("lat != 'nil' AND lng != 'nil' AND depth > 2")
   end
 
-  def coordinates_hash
-    {:lat => (lat || 0), :lng => (lng || 0), :zoom => (zoom || 2)}
+  def map_hash
+    {
+      :lat => (lat || 0),
+      :lng => (lng || 0),
+      :zoom => (zoom || 2),
+      :markers => GeographicLocation.markers,
+      :events => false
+    }
   end
-  
+
   def need_coordinates?
     lat.nil? || lng.nil? || zoom.nil?
   end

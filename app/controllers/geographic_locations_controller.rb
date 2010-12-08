@@ -2,18 +2,18 @@ class GeographicLocationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @map = {:lat => 0, :lng => 0, :zoom => 2, :markers => GeographicLocation.markers}
+    @map = GeographicLocation.map_hash
   end
 
   def show
     @location = @geographic_location
-    @map = @location.coordinates_hash.merge(:markers => GeographicLocation.markers)
+    @map = @location.map_hash
   end
 
   def new
     @parent = GeographicLocation.find params[:parent_id]
     @location = @geographic_location
-    @map = @parent.coordinates_hash.merge(:markers => GeographicLocation.markers)
+    @map = @parent.map_hash.merge(:events => true)
   end
 
   def create
@@ -28,6 +28,7 @@ class GeographicLocationsController < ApplicationController
         redirect_to(geo_url(@location))
       end
     else
+      @map = @location.map_hash.merge(:events => true)
       render :new
     end
   end

@@ -1,19 +1,4 @@
 
-<% content_for :js do %>
-  <script type="text/javascript">
-    $(function() {
-      $("select#category").change(function(event) {
-        $("#chapter_category").val($("select#category :selected").text());
-      });
-      $("#show_text_field").click(function(event) {
-        $("select#category").hide();
-        $("#chapter_category").show();
-        return false;
-      });
-    });
-  </script>
-<% end %>
-
 <%= form_for @chapter do |f| %>
   <%= hidden_field_tag :location_id, @location.id %>
   <%= f.error_messages %>
@@ -24,8 +9,7 @@
   </div>
   <div class="field select_text">
     <%= label_tag :category %>
-    <%= select_tag :category, options_for_select(Chapter::CATEGORIES.collect{|c| [c.humanize,c]}) %>
-    <%= f.text_field :category, :style => "display:none;" %>
+    <%= f.select :category, options_for_select(Chapter::CATEGORIES.collect{|c|[c.humanize,c]}, @chapter.category) %>
   </div>
 
   <% if @location.need_coordinates? || params[:action] == 'edit' %>
@@ -41,8 +25,7 @@
     <%= hidden_field :location, :lat %>
     <%= hidden_field :location, :lng %>
     <%= hidden_field :location, :zoom %>
-    <%= render :partial => '/shared/map', :locals => {:map => @map.merge(:events => true)} %>
-    <div id="map"></div>
+    <%= render '/shared/map' %>
   <% end %>
 
   <div class="actions">

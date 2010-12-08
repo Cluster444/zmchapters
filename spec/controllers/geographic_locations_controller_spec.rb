@@ -5,7 +5,26 @@ describe GeographicLocationsController do
     @location ||= mock_model(GeographicLocation)
   end
 
+  def mock_map
+    {:lat => 0, :lng => 0, :zoom => 0, :markers => [], :events => false}
+  end
+
+  before :each do
+    mock_location.stub(:map_hash) { mock_map }
+    User.stub(:new) { mock_model(User, :admin? => true) }
+  end
+
   describe 'GET index' do
+    it 'should be successful' do
+      get :index
+      response.should be_success
+    end
+
+    it 'should assign map with default values' do
+      GeographicLocation.should_receive(:map_hash) { mock_map }
+      get :index
+      assigns[:map].symbolize_keys.should == mock_map
+    end
   end
 
   describe 'GET show' do
@@ -13,24 +32,19 @@ describe GeographicLocationsController do
       GeographicLocation.stub(:find) { mock_location }
     end
 
-    it 'should assign location with the given location' do
-      GeographicLocation.should_receive(:find).with(1).and_return(mock_location)
-      get :show, :id => 1
-      assigns[:location].should == mock_location
-    end
-
     it 'should be successful' do
       get :show, :id => 1
       response.should be_success
     end
+
+    it 'should assign location with the given location' do
+      GeographicLocation.should_receive(:find).with(1) { mock_location }
+      get :show, :id => 1
+      assigns[:location].should == mock_location
+    end
   end
 
   describe 'GET new' do
-    before :each do
-      @admin = Factory(:admin)
-      sign_in @admin
-    end
-
     describe 'with a parent territory location selected' do
       before :each do
         GeographicLocation.stub(:find).and_return(mock_location)
@@ -57,11 +71,6 @@ describe GeographicLocationsController do
   end
 
   describe "POST create" do
-    before :each do
-      @admin = Factory(:admin)
-      sign_in @admin
-    end
-
     def post_create
       post :create, :geographic_location => {"with"=>"params"}, :parent_id => 1
     end
