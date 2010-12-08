@@ -6,10 +6,8 @@ class CoordinatorsController < ApplicationController
   end
 
   def create
-    @coordinator = Coordinator.new params[:coordinator]
     @coordinator.save!
-    flash[:notice] = "Coordinator created successfully"
-    redirect_to users_url(@coordinator.user)
+    redirect_to @coordinator.chapter, :notice => "Coordinator created successfully"
   rescue ActiveRecord::RecordInvalid
     render :new
   end

@@ -16,92 +16,97 @@ describe FeedbackRequestsController do
   def create
     post :create, :feedback_request => {"with"=>"params"}
   end
+
+  def record_invalid
+    raise ActiveRecord::RecordInvalid.new(mock_feedback)
+  end
   
   describe "GET 'index'" do
     before :each do
-      User.stub(:new) { mock_admin }
-    end
-
-    it 'should assign feedback with multiple records' do
-      FeedbackRequest.should_receive(:index).and_return([mock_feedback])
-      get :index
-      assigns[:feedback].should == [mock_feedback]
+      User.stub :new => mock_admin
+      FeedbackRequest.stub :index => [mock_feedback]
     end
 
     it 'should be successful' do
-      FeedbackRequest.stub(:index).and_return([mock_feedback])
       get :index
       response.should be_success
+    end
+    
+    it 'should assign feedback with multiple records' do
+      FeedbackRequest.should_receive(:index) { [mock_feedback] }
+      get :index
+      assigns[:feedback].should == [mock_feedback]
     end
   end
 
   describe "GET 'show'" do
     before :each do
-      FeedbackRequest.stub!(:find).and_return(mock_feedback)
-      User.stub(:new) { mock_admin }
-    end
-
-    it 'should assign feedback with the selected record' do
-      get :show, :id => 1
-      assigns[:feedback].should == mock_feedback
+      FeedbackRequest.stub :find => mock_feedback
+      User.stub :new => mock_admin
     end
       
     it 'should be successful' do
       get :show, :id => 1
       response.should be_success
     end
+
+    it 'should assign feedback with the selected record' do
+      get :show, :id => 1
+      assigns[:feedback].should == mock_feedback
+    end
   end
 
   describe "GET 'new'" do
     before :each do
-      FeedbackRequest.stub!(:new).and_return(mock_feedback)
-      User.stub(:new) { mock_admin }
+      FeedbackRequest.stub :new => mock_feedback
+      User.stub :new => mock_admin
+    end
+
+    it 'should be successful' do
+      get :new
+      response.should be_success
     end
 
     it 'should assign feedback with a new record' do
       get :new
       assigns[:feedback].should == mock_feedback
     end
-
-    it 'should be successful' do
-      get :new
-      response.should be_success
-    end
   end
 
   describe "GET 'edit' " do
     before :each do
-      FeedbackRequest.stub!(:find).and_return(mock_feedback)
-      User.stub(:new) { mock_admin }
+      FeedbackRequest.stub :find => mock_feedback
+      User.stub :new =>  mock_admin
+    end
+
+    it 'should be successful' do
+      get :edit, :id => 1
+      response.should be_success
     end
 
     it 'should assign feedback with the selected record' do
       get :edit, :id => 1
       assigns[:feedback].should == mock_feedback
     end
-
-    it 'should be successful' do
-      get :edit, :id => 1
-      response.should be_success
-    end
   end
 
   describe "POST 'create'" do
     before :each do
-      FeedbackRequest.stub!(:new).and_return(mock_feedback)
-      mock_feedback.stub!(:attributes=)
-      mock_feedback.stub!(:save!)
+      FeedbackRequest.stub :new => mock_feedback
+      mock_feedback.stub :attributes=
+      mock_feedback.stub :save!
     end
 
     describe "when signed in" do
       before :each do
         @admin = Factory(:admin)
         sign_in @admin
-        mock_feedback.stub!(:user=)
+        mock_feedback.stub :user=
       end
 
       it 'should assign feedback with a new record with the given params' do
-        FeedbackRequest.should_receive(:new).with({"with"=>"params"}).and_return(mock_feedback)
+        FeedbackRequest.should_receive(:new) { mock_feedback }
+        mock_feedback.should_receive(:attributes=).with("with"=>"params")
         create
         assigns[:feedback].should == mock_feedback
       end
@@ -127,7 +132,7 @@ describe FeedbackRequestsController do
       end
 
       it 'should render new when validation fails' do
-        mock_feedback.stub!(:save!).and_raise(ActiveRecord::RecordInvalid.new(mock_feedback))
+        mock_feedback.stub(:save!) { record_invalid }
         create
         response.should render_template('feedback_requests/new')
       end
@@ -166,13 +171,13 @@ describe FeedbackRequestsController do
     end
 
     before :each do
-      FeedbackRequest.stub!(:find).and_return(mock_feedback)
-      mock_feedback.stub(:update_attributes!)
-      User.stub(:new) { mock_admin }
+      FeedbackRequest.stub :find => mock_feedback
+      mock_feedback.stub :update_attributes!
+      User.stub :new => mock_admin
     end
 
     it 'should assign feedback with the requested record' do
-      FeedbackRequest.should_receive(:find).with(1).and_return(mock_feedback)
+      FeedbackRequest.should_receive(:find).with(1) { mock_feedback }
       update
       assigns[:feedback].should == mock_feedback
     end
@@ -193,7 +198,7 @@ describe FeedbackRequestsController do
     end
 
     it 'should render edit when validation fails' do
-      mock_feedback.stub!(:update_attributes!).and_raise(ActiveRecord::RecordInvalid.new(mock_feedback))
+      mock_feedback.stub(:update_attributes!) { record_invalid }
       update
       response.should render_template('feedback_requests/edit')
     end

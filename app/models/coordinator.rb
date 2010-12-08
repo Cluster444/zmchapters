@@ -1,4 +1,6 @@
 class Coordinator < ActiveRecord::Base
+  attr_accessible :user, :chapter
+
   belongs_to :user
   belongs_to :chapter
 
