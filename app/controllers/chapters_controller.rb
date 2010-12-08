@@ -59,6 +59,9 @@ class ChaptersController < ApplicationController
 
   def edit
     @chapter = Chapter.find params[:id]
+    @location = @chapter.location
+    @map = @location.coordinates_hash
+    @map[:markers] = GeographicLocation.markers
   end
   
   def create
@@ -74,6 +77,9 @@ class ChaptersController < ApplicationController
   end
 
   def update
+    if params[:location]
+      @chapter.location.update_attributes! params[:location]
+    end
     @chapter = Chapter.find params[:id]
     @chapter.update_attributes! params[:chapter]
     flash[:notice] = "Chapter updated successfully"

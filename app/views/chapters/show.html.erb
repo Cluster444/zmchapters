@@ -2,6 +2,7 @@
 <% page_class 'two-column' %>
 
 <%= content_for :admin_control_panel do %>
+  <li><%= link_to "Edit Chapter", edit_chapter_path(@chapter) %></li>
   <% unless @location.is_country? %>
     <% geo = @location.is_territory? ? @location : @location.parent %>
     <li><%= link_to "Create #{geo.name} Subchapter", new_chapter_path(:location_id => geo.id, :category => 'subchapter') %></li>

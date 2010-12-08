@@ -28,7 +28,7 @@
     <%= f.text_field :category, :style => "display:none;" %>
   </div>
 
-  <% if @location.need_coordinates? %>
+  <% if @location.need_coordinates? || params[:action] == 'edit' %>
     <%= content_for :js do %>
       <script type="text/javascript">
         function onMove(event) {
