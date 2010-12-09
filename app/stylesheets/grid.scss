@@ -8,11 +8,19 @@
 
 $ninesixty-columns: 24;
 
-#body { @include grid-container; }
-#page {
-  position:relative;
-  z-index:10;
+#body { 
+  @include grid-container;
 }
+
+#page {
+  @include grid-container;
+  header, footer {
+    @include grid-unit-base;
+    @include grid-width(24);
+    margin:0px;
+  }
+}
+
 #page.form {  
   #content {
     @include grid-unit-base;

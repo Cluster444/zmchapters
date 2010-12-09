@@ -12,6 +12,74 @@
   }
 }
 
+header {
+  .auth {
+    @include clearfix;
+    background-color: #ECECEC;
+    font-size: 11px;
+    padding:5px;
+    .account {
+      float: right;
+    }
+  }
+  nav {
+    @include clearfix;
+    border-bottom: 3px solid blue;
+    a:hover { text-decoration: none; }
+    .logo {
+      color: #110787;
+      float: left;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 60px;
+      margin: 0px 80px 0px 0px;
+      padding: 15px 0px 26px 0px;
+      text-transform: uppercase;
+      em {
+        font-size: 60px;
+        font-style: normal;
+        font-weight: 900;
+      }
+    }
+    ul {
+      border-top: 1px solid #8D8D8D;
+      float: left;
+      list-style: none;
+      margin-top: 15px;
+      text-align: left;
+      width: 145px;
+      &.main {
+        margin-right: 10px;
+        width: 135px;
+        li a {
+          color: #222;
+          font-weight: bold;
+        }
+      }
+      li {
+        border-bottom: 1px solid #E2E2E2;
+        text-align: left;
+        margin-left: 0px;
+        a {
+          border-bottom: 1px solid white;
+          border-top: 1px solid white;
+          color: #888;
+          display: block;
+          font-size: 11px;
+          height: 15px;
+          margin: 0px;
+          padding: 2px 0px 0px 3px;
+          &:hover, &:active {
+            background-color: #EDEDED;
+            color: #110787;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
 #control-nav {
   position: absolute;
   right: 10px;

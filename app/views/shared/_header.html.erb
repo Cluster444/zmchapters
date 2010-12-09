@@ -16,24 +16,26 @@
 </div>
 <% end %>
 
-<div id="nav-container">
-  <ul id="nav" class="container_24">
-    <span id="control-nav" class="auth">
-      <% if user_signed_in? %>
-        <% if current_user.admin? %>
-          <a href="#" class="admin">Manager</a>
-        <% end %>
-        <%= link_to "Profile", users_path(current_user) %>
-        <%= link_to "Sign Out", destroy_user_session_path %>
-      <% else %>
-        <%= link_to 'Sign In', new_user_session_path %>
-        <% if can? :create, User %>
-          <%= link_to 'Sign Up', new_user_path %>
-        <% end %>
-      <% end %>
+<header>
+  <div class="auth">
+  <% if user_signed_in? %>
+    <span class="logged-in-as">You are signed in as <%= link_to current_user.name, user_path(current_user) %></span>
+    <span class="account">
+      <%= link_to "My Profile", user_path(current_user) %> |
+      <%= link_to "Sign Out", destroy_user_session_path %>
     </span>
-    <li class="first"><%= link_to 'Home', root_path, :class => 'home' %></li>
-    <li><%= link_to "Chapters", chapters_path %></li>
-    <li class="last"><%= link_to 'Members', users_path %></li>
-  </ul>
-</div>
+  <% else %>
+    <span class="account">
+      <%= link_to "Sign In", new_user_session_path %> |
+      <%= link_to "Register", new_user_path %>
+    </span>
+  <% end %>
+  </div>
+  <nav>
+    <a href="/"><span class="logo"><em>ZM</em>Chapters</span></a>
+    <ul class="main">
+      <li><%= link_to "Chapters", chapters_path %></li>
+      <li><%= link_to "Members", users_path %></li>
+    </ul>
+  </nav>
+</header>

@@ -6,6 +6,10 @@
 
 $anchor_color: #4183C4;
 
+* {
+  font-family: arial, helvetica, sans-serif;
+}
+
 a {
   text-decoration: none;
   color: $anchor_color;

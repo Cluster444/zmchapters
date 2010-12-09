@@ -20,7 +20,6 @@
     <div id="body">
       <div class="pagehead <%= yield(:page_head_class) %> container">
         <%= yield(:page_head) %>
-        <div class="rule"></div>
       </div>
       <% if content_for? :sidebar %>
         <div id="sidebar"><%= yield(:sidebar) %></div>
