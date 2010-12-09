@@ -5,8 +5,6 @@
   <li><%= link_to "Create Country Chapter", select_country_for_new_chapters_path %></li>
 <% end %>
 
-<%= content_for :page_head, content_tag(:h1, "ZM Chapter Index") %>
-
 <%= render '/shared/map' %>
 
 <%= form_tag chapters_path, :method => :get, :id => "chapters_search" do %>

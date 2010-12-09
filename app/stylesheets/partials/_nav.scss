@@ -25,6 +25,7 @@ header {
   nav {
     @include clearfix;
     border-bottom: 3px solid blue;
+    margin-bottom: 10px;
     a:hover { text-decoration: none; }
     .logo {
       color: #110787;
