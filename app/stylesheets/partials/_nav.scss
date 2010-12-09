@@ -12,6 +12,15 @@
   }
 }
 
+.manager {
+  background: #E2E2E2;
+  display: block;
+  left: 10px;
+  padding: 3px 5px 2px;
+  position: fixed;
+  top: 0px;
+}
+
 header {
   .auth {
     @include clearfix;
@@ -108,96 +117,3 @@ header {
   }
 }
 
-#nav-container {
-  margin-bottom: 0px;
-  background:#EEE;
-  border-bottom: 1px solid #BBB;
-  @include box-shadow(#555, 0, 5px, 10px);
-  @include box-shadow(#F6F6F6, 0, 19px, 0, 0 inset);
-  #nav {
-    background: #EAEAEA;
-    background: rgba(100, 100, 100, 0.05);
-    border: 1px solid #AAA;
-    border-top: 0;
-    height: 37px;
-    margin: 0 auto;
-    margin-bottom: -1px;
-    overflow: visible;
-    position:relative;
-    width: 960px;
-    z-index:998;
-    li {
-      float: left;
-      height: 37px;
-      list-style-type: none;
-      margin: 0;
-      border-left: 1px solid #AAA;
-      &.first { border-left: 0 }
-      &.last { border-right: 1px solid #AAA; }
-      a {
-        @include box-shadow(#FFF, 0, 1px, 0, inset);
-        display: block;
-        float: left;
-        padding:8px 15px;
-        text-decoration: none;
-        vertical-align:middle;
-        border-left: 1px solid #FFF;
-        color: #333;
-        text-shadow: 0 1px #FFF;
-        &.home {
-          height:37px;
-          width:40px;
-          text-indent:-999em;
-          padding:0;
-          background:url(/images/home_icon.png) no-repeat 9px center transparent;
-          &:hover {
-            background:url(/images/home_icon.png) no-repeat 9px center #CCC;
-            background-color: rgba(1, 1, 1, 0.01);
-            color: #000;
-          }
-        }
-      }
-      .submenu {
-        background:#EEE;
-        border:1px solid #CCC;
-        border-top:1px solid #AAA;
-        display: none;
-        list-style: none;
-        margin: 0px;
-        margin-left: -999em;
-        min-width: 150px;
-        padding: 5px 0px;
-        position: absolute;
-        top: 37px;
-        z-index: 999;
-        @include border-bottom-radius(5px);
-        li {
-          background:transparent;
-          border:none;
-          margin:0;
-          padding:0;
-          float: none;
-          a {
-            border: 0;
-            min-width: 150px;
-          }
-          &:hover a {
-            background: #DDD;
-          }
-        }
-      }
-      &:hover, &:active, &:focus {
-        a {
-          color:#000;
-          background:#CCC;
-          background: rgba(1, 1, 1, 0.01);
-        }
-        .submenu {
-            display: block;
-            margin-left:-1px;
-            opacity:1;
-        }
-      }
-    }
-  }
-}

@@ -32,12 +32,7 @@ $(document).ready(function() {
 
 /* Navigation Control Animations */
 $(document).ready( function() {
-  $("#control-nav .user").click(function(){
-    $('#control-nav .user').toggleClass('on');
-    $('.user.panel').slideToggle('fast');
-  });
-  $("#control-nav .admin").click(function(){
-    $('#control-nav .admin').toggleClass('on');
+  $(".manager").click(function(){
     $('.admin.panel').slideToggle('fast');
   });
 });
