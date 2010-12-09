@@ -1,22 +1,21 @@
-
 #control-container {
   @include clearfix;
-  background: #EEE;
+  background: #E2E2E2;
   .panel {
-    display:none;
     border: 1px solid #ccc { top: 5px solid #fff; bottom: 0; }
     @include box-shadow(#F5F5F5, 0, 20px, 0, 0, inset);
+    display:none;
     div     { padding: 10px; }
-    &.user  { border-top-color: #2F5; }
     &.admin { border-top-color: #F25; }
   }
 }
 
 .manager {
   background: #E2E2E2;
+  @include border-bottom-radius(5px);
   display: block;
   left: 10px;
-  padding: 3px 5px 2px;
+  padding: 3px 10px 2px;
   position: fixed;
   top: 0px;
 }
@@ -86,33 +85,6 @@ header {
           }
         }
       }
-    }
-  }
-}
-
-#control-nav {
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  a {
-    padding: 6px 10px;
-    background:#FAFAFA;
-    border:1px solid #FFF;
-    color:#333;
-    text-decoration:none;
-    outline:none;
-    &:hover {
-      background: #FFF;
-      color: #000;
-      text-decoration: none;
-    }
-    &.on {
-      background: #EEE;
-      border-top: 1px solid #EEE;
-      color: #111;
-      text-decoration: none;
-      &.user { @include box-shadow(#2F5, 0, -4px, 0, 0, inset); }
-      &.admin { @include box-shadow(#F25, 0, -4px, 0, 0, inset); }
     }
   }
 }
