@@ -6,12 +6,12 @@ Tzm::Application.routes.draw do
 
   resources :chapters do
     collection do
-      get :map, :action => :index, :view => 'map'
       get :select_country_for_new
       get :select_territory_for_new
     end
     member do
-      get :map, :action => :show, :view => 'map'
+      put "links/:link_id", :action => :update_link, :as => :link_for
+      post :links, :action => :create_link, :as => :new_link_for
     end
   end
 

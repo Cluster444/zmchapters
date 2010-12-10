@@ -16,6 +16,7 @@ class ChaptersController < ApplicationController
     @location = @chapter.location
     @map = @location.map_hash
     @subchapters = Chapter.find_all_by_location(@location)
+    @links = @chapter.links
   end
   
   def select_country_for_new
@@ -59,6 +60,17 @@ class ChaptersController < ApplicationController
     render :new
   end
 
+  def create_link
+    @link = Link.new params[:link]
+    @link.linkable = @chapter
+    @link.save!
+    redirect_to @chapter, :notice => "Link added successfully"
+  rescue ActiveRecord::RecordInvalid
+    @location = @chapter.location
+    @map = @location.map_hash.merge(:events => true)
+    render :edit
+  end
+
   def edit
     @location = @chapter.location
     @map = @location.map_hash.merge(:events => true)
@@ -70,6 +82,16 @@ class ChaptersController < ApplicationController
     end
     @chapter.update_attributes! params[:chapter]
     redirect_to @chapter, :notice => "Chapter updated successfully"
+  rescue ActiveRecord::RecordInvalid
+    @location = @chapter.location
+    @map = @location.map_hash.merge(:events => true)
+    render :edit
+  end
+
+  def update_link
+    @link = Link.find params[:link_id]
+    @link.update_attributes! params[:link]
+    redirect_to @chapter, :notice => "Link updated successfully"
   rescue ActiveRecord::RecordInvalid
     @location = @chapter.location
     @map = @location.map_hash.merge(:events => true)
