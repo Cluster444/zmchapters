@@ -17,7 +17,7 @@
   </div>
 <% end %>
 
-<header>
+<div class="header">
   <div class="auth">
   <% if user_signed_in? %>
     <span class="logged-in-as">You are signed in as <%= link_to current_user.name, user_path(current_user) %></span>
@@ -32,11 +32,11 @@
     </span>
   <% end %>
   </div>
-  <nav>
+  <div class="nav">
     <a href="/"><span class="logo"><em>ZM</em>Chapters</span></a>
     <ul class="main">
       <li><%= link_to "Chapters", chapters_path %></li>
       <li><%= link_to "Members", users_path %></li>
     </ul>
-  </nav>
-</header>
+  </div>
+</div>

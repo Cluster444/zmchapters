@@ -20,7 +20,7 @@
   top: 0px;
 }
 
-header {
+.header {
   .auth {
     @include clearfix;
     background-color: #ECECEC;
@@ -30,7 +30,7 @@ header {
       float: right;
     }
   }
-  nav {
+  .nav {
     @include clearfix;
     border-bottom: 3px solid blue;
     margin-bottom: 10px;
