@@ -1,9 +1,21 @@
 <% title 'Edit Chapter' %>
-<% page_class 'form' %>
+<% page_class 'form_for_chapter' %>
 <% page_head_class 'form' %>
 
 <%= content_for :page_head do %>
-  <h1>Edit Chapter<em>(<%= @chapter.name %>)</em></h1>
+  <h1>Edit <em>(<%= @chapter.name %>)</em> Chapter</h1>
 <% end %>
 
-<%= render 'form' %>
+<div class="left">
+  <h1>Chapter</h1>
+  <%= render 'form' %>
+</div>
+<div class="links right">
+  <h1>Links</h1>
+  <% if @links.any? %>
+    <% @links.each do |link| %>
+      <%= render :partial => 'link_form', :locals => {:link => link} %>
+    <% end %>
+  <% end %>
+  <%= render :partial => 'link_form', :locals => {:link => Link.new} %>
+</div>

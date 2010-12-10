@@ -36,6 +36,20 @@ $ninesixty-columns: 24;
   }
 }
 
+#page.form_for_chapter {
+  #content {
+    @include grid-unit-base;
+    .left {
+      @include grid-width(12);
+      float: left;
+    }
+    .right {
+      @include grid-width(12);
+      float: right;
+    }
+  }
+}
+
 #page.one-column {
   #content {
     @include grid-unit-base;

@@ -2,6 +2,12 @@
 
 #page.form form {
   h2 { text-align: center; }
+  .inline-field {
+    display: inline;
+    input, select {
+      height: 18px;
+    }
+  }
   .field {
     height: 70px;
     position: relative;
@@ -13,7 +19,6 @@
         height: 300px;
       }
     }
-    
     label {
       display: block;
       font-size: 1em;
@@ -21,7 +26,7 @@
       padding-left: 2px;
     }
     input, select {
-      width: 450px;
+      width: 350px;
       border: 1px solid #BBB;
       font-size: 1.2em;
       padding: 5px;
@@ -46,6 +51,21 @@
 }
 
 #page.form_with_editor {
+  @extend #page.form;
+}
+
+#page.form_for_chapter {
+  .links {
+    margin-left: 10px;
+    form { margin-bottom: 10px; }
+    .title input {
+      width: 170px;
+    }
+    .actions {
+      display: inline;
+      input { @include button(small); }
+    }
+  }
   @extend #page.form;
 }
 

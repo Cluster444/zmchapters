@@ -1,0 +1,18 @@
+<% if link.new_record? %>
+  <% url = new_link_for_chapter_path(:id => @chapter.id) %>
+  <% method = :put %>
+<% else %>
+  <% url = link_for_chapter_path(:id => @chapter.id, :link_id => link.id) %>
+  <% method = :post %>
+<% end %>
+<%= form_for link, :url => url, :method => method do |f| %>
+  <div class="title inline-field">
+    <%= f.text_field :title %>
+  </div>
+  <div class="inline-field">
+    <%= f.text_field :url %>
+  </div>
+  <div class="actions">
+    <%= f.submit(link.new_record? ? "Create" : "Save") %>
+  </div>
+<% end %>

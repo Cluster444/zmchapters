@@ -66,14 +66,12 @@ class ChaptersController < ApplicationController
     @link.save!
     redirect_to @chapter, :notice => "Link added successfully"
   rescue ActiveRecord::RecordInvalid
-    @location = @chapter.location
-    @map = @location.map_hash.merge(:events => true)
+    load_edit_models
     render :edit
   end
 
   def edit
-    @location = @chapter.location
-    @map = @location.map_hash.merge(:events => true)
+    load_edit_models
   end
   
   def update
@@ -83,8 +81,7 @@ class ChaptersController < ApplicationController
     @chapter.update_attributes! params[:chapter]
     redirect_to @chapter, :notice => "Chapter updated successfully"
   rescue ActiveRecord::RecordInvalid
-    @location = @chapter.location
-    @map = @location.map_hash.merge(:events => true)
+    load_edit_models
     render :edit
   end
 
@@ -93,13 +90,18 @@ class ChaptersController < ApplicationController
     @link.update_attributes! params[:link]
     redirect_to @chapter, :notice => "Link updated successfully"
   rescue ActiveRecord::RecordInvalid
-    @location = @chapter.location
-    @map = @location.map_hash.merge(:events => true)
+    load_edit_models
     render :edit
   end
 
 private
   
+  def load_edit_models
+    @location = @chapter.location
+    @map = @location.map_hash.merge(:events => true)
+    @links = @chapter.links
+  end
+
   def sort_column
     Chapter.column_names.include?(params[:sort]) ? params[:sort] : "name"
   end

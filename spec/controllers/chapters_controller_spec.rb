@@ -184,6 +184,7 @@ describe ChaptersController do
     before :each do
       Chapter.stub :find => mock_chapter
       mock_chapter.stub :location => mock_location
+      mock_chapter.stub :links => [mock_link]
       mock_location.stub :map_hash => mock_map
     end
 
@@ -203,6 +204,12 @@ describe ChaptersController do
       mock_location.should_receive(:map_hash) { mock_map }
       edit
       assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
+    end
+
+    it 'should assign links with the chapter\'s links' do
+      mock_chapter.should_receive(:links) { [mock_link] }
+      edit
+      assigns[:links].should == [mock_link]
     end
   end
 
@@ -313,6 +320,7 @@ describe ChaptersController do
       before :each do
         mock_link.stub(:save!) { record_invalid }
         mock_chapter.stub :location => mock_location
+        mock_chapter.stub :links => [mock_link]
         mock_location.stub :map_hash => mock_map
       end
       
@@ -326,6 +334,12 @@ describe ChaptersController do
         mock_location.should_receive(:map_hash) { mock_map }
         create
         assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
+      end
+
+      it 'should assign links with the chapter\'s links' do
+        mock_chapter.should_receive(:links) { [mock_link] }
+        create
+        assigns[:links].should == [mock_link]
       end
 
       it 'should render edit' do
@@ -375,6 +389,7 @@ describe ChaptersController do
       before :each do
         mock_chapter.stub(:update_attributes!) { record_invalid }
         mock_chapter.stub :location => mock_location
+        mock_chapter.stub :links => [mock_link]
         mock_location.stub :map_hash => mock_map
       end
 
@@ -388,6 +403,12 @@ describe ChaptersController do
         mock_location.should_receive(:map_hash) { mock_map }
         update
         assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
+      end
+
+      it 'should assign links with the chapter\'s links' do
+        mock_chapter.should_receive(:links) { [mock_link] }
+        update
+        assigns[:links].should == [mock_link]
       end
 
       it 'should render edit' do
@@ -430,6 +451,7 @@ describe ChaptersController do
       before :each do
         mock_link.stub(:update_attributes!) { record_invalid }
         mock_chapter.stub :location => mock_location
+        mock_chapter.stub :links => [mock_link]
         mock_location.stub :map_hash => mock_map
       end
 
@@ -443,6 +465,12 @@ describe ChaptersController do
         mock_location.should_receive(:map_hash) { mock_map }
         update
         assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
+      end
+
+      it 'should assign links with the chapter\'s links' do
+        mock_chapter.should_receive(:links) { [mock_link] }
+        update
+        assigns[:links].should == [mock_link]
       end
 
       it 'should render edit' do

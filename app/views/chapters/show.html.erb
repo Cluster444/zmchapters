@@ -26,14 +26,16 @@
       </ul>
     </section>
   <% end %>
-  <section>
-    <h1>Links(TODO)</h1>
-    <ul>
-      <li><a href="#">Website</a></li>
-      <li><a href="#">Forum</a></li>
-      <li><a href="#">Events</a></li>
-    </ul>
-  </section>
+  <% if @links.any? %>
+    <section>
+      <h1>Links</h1>
+      <ul>
+        <% @links.each do |link| %>
+          <li><%= link_to link.title, "http://#{link.url}", :target => '_blank' %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
   <% if @subchapters.any? %>
     <section>
       <h1>Chapters in<br /><%= @chapter.name %></h1>
