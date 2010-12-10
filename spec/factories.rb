@@ -1,32 +1,32 @@
-Factory.define :location, :class => GeographicLocation do |f|
-  f.name "Test Geo"
-  f.lat "0"
-  f.lng "0"
-  f.zoom "2"
-end
-
 Factory.define :chapter do |f|
   f.name "Test Chapter"
   f.category Chapter::CATEGORIES.first
   f.association :geographic_location, :factory => :location
 end
 
-Factory.define :user do |f|
-  f.name 'Test User'
-  f.sequence(:username) {|n| "test#{n}" }
-  f.sequence(:email) {|n| "test#{n}@test.com"}
-  f.password 'testpassword'
-  f.password_confirmation { |u| u.password }
-  f.association :chapter
-end
-
-Factory.define :admin, :parent => :user do |f|
-  f.after_create(&:is_admin!)
-end
-
 Factory.define :coordinator do |f|
   f.association :user
   f.association :chapter
+end
+
+Factory.define :feedback_request do |f|
+  f.subject "Test Subject"
+  f.message "Test Message"
+  f.email "test@test.com"
+  f.category FeedbackRequest::CATEGORIES.first
+end
+
+Factory.define :link do |f|
+  f.url "test.com"
+  f.title "Test Link"
+  f.association :linkable, :factory => :chapter
+end
+
+Factory.define :location, :class => GeographicLocation do |f|
+  f.name "Test Geo"
+  f.lat "0"
+  f.lng "0"
+  f.zoom "2"
 end
 
 Factory.define :page do |f|
@@ -43,9 +43,16 @@ Factory.define :site_option do |f|
   f.mutable "true"
 end
 
-Factory.define :feedback_request do |f|
-  f.subject "Test Subject"
-  f.message "Test Message"
-  f.email "test@test.com"
-  f.category FeedbackRequest::CATEGORIES.first
+Factory.define :user do |f|
+  f.name 'Test User'
+  f.sequence(:username) {|n| "test#{n}" }
+  f.sequence(:email) {|n| "test#{n}@test.com"}
+  f.password 'testpassword'
+  f.password_confirmation { |u| u.password }
+  f.association :chapter
 end
+
+Factory.define :admin, :parent => :user do |f|
+  f.after_create(&:is_admin!)
+end
+

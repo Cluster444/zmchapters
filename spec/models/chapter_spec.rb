@@ -35,6 +35,11 @@ describe Chapter do
       chapter = Chapter.new
       chapter.should respond_to :coordinators
     end
+
+    it 'should have links' do
+      chapter = Chapter.new
+      chapter.should respond_to :links
+    end
   end
 
   describe 'validations' do
