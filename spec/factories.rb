@@ -9,6 +9,13 @@ Factory.define :coordinator do |f|
   f.association :chapter
 end
 
+Factory.define :event do |f|
+  f.title "Test Event"
+  f.description "Description of Test Event"
+  f.starts_at DateTime.now + 1.hour
+  f.ends_at DateTime.now + 2.hours
+end
+
 Factory.define :feedback_request do |f|
   f.subject "Test Subject"
   f.message "Test Message"

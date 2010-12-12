@@ -138,6 +138,7 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    shoulda (2.11.3)
     spork (0.9.0.rc2)
     term-ansicolor (1.0.5)
     thor (0.14.3)
@@ -179,5 +180,6 @@ DEPENDENCIES
   role_model
   rspec (>= 2.1.0)
   rspec-rails (>= 2.1.0)
+  shoulda
   spork (= 0.9.0.rc2)
   will_paginate

@@ -13,8 +13,8 @@ gem 'compass-960-plugin', '>= 0.10.0'
 gem 'gravatar_image_tag'
 
 group :development, :test do
-  #gem 'spork', :git => 'git://github.com/chrismdp/spork.git'
   gem 'spork', '0.9.0.rc2'
+  gem 'shoulda'
   gem 'rspec', '>= 2.1.0'
   gem 'rspec-rails', '>= 2.1.0'
   gem 'capybara'
