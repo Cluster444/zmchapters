@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Chapter do
   
+  def create
+    Factory.create(:chapter)
+  end
+
   before :all do
     @continent = Factory(:location, :name => "Continent")
     @country   = Factory(:location, :name => "Country")
@@ -16,55 +20,52 @@ describe Chapter do
     Chapter.delete_all
   end
 
-  it 'should create a new record with valid attributes' do
-    Factory(:chapter)
+  it 'should create a new chapter' do
+    expect { Factory(:chapter) }.to change { Chapter.count }.by(1)
   end
   
-  describe 'associations' do
-    it 'should have a geographic location' do
-      chapter = Chapter.new
-      chapter.should respond_to :geographic_location
-    end
+  it { should allow_mass_assignment_of :name }
+  it { should allow_mass_assignment_of :category }
+  it { should_not allow_mass_assignment_of :status }
+  it { should_not allow_mass_assignment_of :geographic_location }
+  it { should_not allow_mass_assignment_of :users }
+  it { should_not allow_mass_assignment_of :coordinators }
+  it { should_not allow_mass_assignment_of :links }
+  it { should_not allow_mass_assignment_of :events }
 
-    it 'should have users' do
-      chapter = Chapter.new
-      chapter.should respond_to :users
-    end
+  it { should belong_to :geographic_location }
+  it { should have_many :users }
+  it { should have_many :coordinators }
+  it { should have_many :links }
+  it { should have_many :events }
 
-    it 'should have coordinators' do
-      chapter = Chapter.new
-      chapter.should respond_to :coordinators
-    end
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :category }
+  it { should validate_presence_of :geographic_location }
 
-    it 'should have links' do
-      chapter = Chapter.new
-      chapter.should respond_to :links
-    end
+  it { should ensure_length_of(:name).is_at_most(255) }
+  it { should ensure_length_of(:category).is_at_most(255) }
+  
+  it { should allow_value('pending').for(:status) }
+  it { should allow_value('active').for(:status) }
+  it { should allow_value('inactive').for(:status) }
+
+  it { should respond_to :location }
+  it { should respond_to :is_pending! }
+  it { should respond_to :is_active! }
+  it { should respond_to :is_inactive! }
+
+  it 'should allow lifecycle status updates' do
+    @chapter = Factory(:chapter)
+    expect { @chapter.is_active!   }.to change { @chapter.status }.from('pending').to('active')
+    expect { @chapter.is_inactive! }.to change { @chapter.status }.from('active').to('inactive')
+    expect { @chapter.is_pending!  }.to change { @chapter.status }.from('inactive').to('pending')
   end
 
-  describe 'validations' do
-    it 'should require a name of max length 50' do
-      ['','a'*101].each do |bad_name|
-        bad_name_chapter = Factory.build(:chapter, :name => bad_name)
-        bad_name_chapter.should_not be_valid
-      end
-    end
-    
-    it 'should require a category' do
-      blank_category_chapter = Factory.build(:chapter, :category => '')
-      blank_category_chapter.should_not be_valid
-    end
-
-    it 'should reject an invalid status on update' do
-      chapter = Factory(:chapter)
-      chapter.status = "invalid_status"
-      chapter.should_not be_valid
-    end
-
-    it 'should require a geographic location' do
-      chapter = Factory.build(:chapter, :geographic_location => nil)
-      chapter.should_not be_valid
-    end
+  describe 'class methods' do
+    subject { Chapter }
+    it { should respond_to :index }
+    it { should respond_to :find_all_by_location }
   end
 
   describe 'creation' do

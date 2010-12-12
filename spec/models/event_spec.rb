@@ -6,14 +6,25 @@ describe Event do
     Factory.build(:event, opts)
   end
 
-  it 'should create a record' do
+  it 'should create an event' do
     expect { Factory.create(:event) }.to change { Event.count }.by(1)
+  end
+
+  it 'should create a chapter event' do
+    expect { Factory.create(:chapter_event) }.to change { Event.count }.by(1)
+  end
+
+  it 'should create a user event' do
+    expect { Factory.create(:user_event) }.to change { Event.count }.by(1)
   end
 
   it { should allow_mass_assignment_of(:title) }
   it { should allow_mass_assignment_of(:description) }
   it { should allow_mass_assignment_of(:starts_at) }
   it { should allow_mass_assignment_of(:ends_at) }
+  it { should_not allow_mass_assignment_of(:plannable) }
+
+  it { should belong_to :plannable }
 
   it { should validate_presence_of :title }
   it { should ensure_length_of(:title).is_at_most(255) }

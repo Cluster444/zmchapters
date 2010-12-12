@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   attr_accessible :title, :description, :starts_at, :ends_at
 
+  belongs_to :plannable, :polymorphic => true
+
   validates :title,       :presence => true, :length => {:maximum => 255}
   validates :description, :presence => true, :length => {:maximum => 500}
   validates :starts_at,   :presence => true

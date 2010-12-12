@@ -16,6 +16,14 @@ Factory.define :event do |f|
   f.ends_at DateTime.now + 2.hours
 end
 
+Factory.define :chapter_event, :parent => :event do |f|
+  f.association :plannable, :factory => :chapter
+end
+
+Factory.define :user_event, :parent => :event do |f|
+  f.association :plannable, :factory => :user
+end
+
 Factory.define :feedback_request do |f|
   f.subject "Test Subject"
   f.message "Test Message"
