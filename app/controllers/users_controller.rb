@@ -25,19 +25,19 @@ class UsersController < ApplicationController
   end
 
   def update
-    unless params[:chapter_id].blank?
-      begin
-        chapter = Chapter.find(params[:chapter_id])
-        @user.update_attribute :chapter, chapter
-      rescue ActiveRecord::RecordNotFound
-        raise ActiveRecord::RecordInvalid.new(@user)
-      end
-    end
     @user.update_attributes! params[:user]
     flash[:notice] = "User updated successfully"
     redirect_to @user
   rescue ActiveRecord::RecordInvalid
     render :edit
+  end
+
+  def join_chapter
+    chapter = Chapter.find params[:chapter_id]
+    @user.update_attribute :chapter, chapter
+    redirect_to chapter, :notice => "You have joined the #{chapter.name} chapter"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to Chapter, :alert => "Chapter does not exist"
   end
 
 private

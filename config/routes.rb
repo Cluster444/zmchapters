@@ -1,6 +1,11 @@
 Tzm::Application.routes.draw do
   devise_for :users
-  resources :users, :path => 'user'
+  resources :users, :path => 'user' do
+    member do
+      put 'join_chapter/:chapter_id', :action => :join_chapter, :as => 'join_chapter'
+    end
+  end
+
   resources :coordinators, :only => [:new, :create]
   resources :feedback_requests, :path => 'feedback', :except => [:destroy]
   

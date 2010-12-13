@@ -10,6 +10,10 @@ describe UsersController do
       user.stub(stubs) unless stubs.empty?
     end
   end
+
+  def mock_chapter
+    @chapter ||= mock_model(Chapter)
+  end
   
   def invalid
     raise ActiveRecord::RecordInvalid.new(mock_user)
@@ -153,29 +157,6 @@ describe UsersController do
       update
     end
 
-    describe 'chapter update' do
-      def mock_chapter
-        @chapter ||= mock_model(Chapter)
-      end
-
-      before :each do
-        mock_user.stub(:update_attribute)
-        Chapter.stub(:find) { mock_chapter }
-        mock_chapter.stub(:geographic_location) { mock_location }
-      end
-
-      it 'should update the user\'s chapter' do
-        mock_user.should_receive(:update_attribute).with(:chapter, mock_chapter)
-        update :chapter_id => mock_chapter.id
-      end
-
-      it 'should render edit if the chapter does not exist' do
-        Chapter.stub(:find) { raise ActiveRecord::RecordNotFound }
-        update :chapter_id => mock_chapter.id
-        response.should render_template('users/edit')
-      end
-    end
-
     it 'should set a flash notice' do
       update
       flash[:notice].should_not be_nil
@@ -190,6 +171,25 @@ describe UsersController do
       mock_user.stub(:update_attributes!) { invalid }
       update
       response.should render_template('users/edit')
+    end
+  end
+
+  describe "PUT #join_chapter" do
+    before  { User.should_receive(:find).twice { mock_user } }
+    before  { Chapter.should_receive(:find).with(2) { mock_chapter } }
+    before  { mock_chapter.stub :name }
+    before  { mock_user.should_receive(:update_attribute).with(:chapter, mock_chapter) }
+    before  { put :join_chapter, :id => 1, :chapter_id => 2 }
+    subject { controller }
+    it { should set_the_flash }
+    it { should redirect_to(chapter_url(mock_chapter)) }
+
+    describe 'when the chapter does not exist' do
+      before  { Chapter.stub(:find) { raise ActiveRecord::RecordNotFound } }
+      before  { put :join_chapter, :id => 1, :chapter_id => 2 }
+      subject { controller }
+      it { should set_the_flash }
+      it { should redirect_to(chapters_url) }
     end
   end
 end

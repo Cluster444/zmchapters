@@ -11,7 +11,14 @@
   <% end %>
 <% end %>
 
-<%= content_for :page_head, content_tag(:h1, "#{@chapter.name} #{@chapter.category} chapter") %>
+<%= content_for :page_head do %>
+  <h1><%= @chapter.name %> chapter</h1>
+  <% if user_signed_in? and current_user.chapter.nil? %>
+    <ul class="actions">
+      <li><%= button_to "Join this chapter", join_chapter_user_path(current_user, :chapter_id => @chapter.id), :method => :put %></li>
+    </ul>
+  <% end %>
+<% end %>
 
 <%= render '/shared/map' %>
 

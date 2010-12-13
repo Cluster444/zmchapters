@@ -16,6 +16,10 @@
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
+  <div class="field">
+    <%= f.label :chapter %>
+    <%= f.collection_select :chapter_id, Chapter.all, :id, :name %>
+  </div>
   <div class="actions">
     <%= f.submit "Save" %>
   </div>
