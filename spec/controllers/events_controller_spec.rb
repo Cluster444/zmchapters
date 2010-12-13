@@ -9,18 +9,19 @@ describe EventsController do
     @plannable ||= mock_model(Chapter)
   end
   
+  def record_invalid
+    raise ActiveRecord::RecordInvalid.new(mock_event)
+  end
+
   before :each do
-    User.stub :new => mock_model(User, :admin? => true)
-    Event.stub :find => mock_event
+    User.stub  :new      => mock_model(User, :admin? => true)
+    Event.stub :find     => mock_event
     Event.stub :paginate => [mock_event]
-    Event.stub :new => mock_event
+    Event.stub :new      => mock_event
   end
 
   describe "GET #index" do
-    before :each do
-      get :index
-    end
-
+    before  { get :index }
     subject { controller }
     it { should assign_to :events }
     it { should render_template :index }
@@ -28,10 +29,7 @@ describe EventsController do
   end
 
   describe "GET #index.xml" do
-    before :each do
-      get :index, :format => :xml
-    end
-
+    before  { get :index, :format => :xml }
     subject { controller }
     it { should assign_to :events }
     it { should render_template :index }
@@ -39,10 +37,7 @@ describe EventsController do
   end
 
   describe "GET #show" do
-    before :each do
-      get :show, :id => 1
-    end
-
+    before  { get :show, :id => 1 }
     subject { controller }
     it { should assign_to :event }
     it { should render_template :show }
@@ -50,12 +45,13 @@ describe EventsController do
   end
 
   describe "GET #new" do
-    describe 'when a valid plannable is given' do
-      before :each do
-        Chapter.stub :find => mock_plannable
-        get :new, :plannable_type => "Chapter", :plannable_id => 1
-      end
+    def new
+      get :new, :plannable_type => "Chapter", :plannable_id => 1
+    end
 
+    describe 'when a valid plannable is given' do
+      before  { Chapter.stub :find => mock_plannable }
+      before  { new }
       subject { controller }
       it { should assign_to :event }
       it { should assign_to :plannable }
@@ -64,11 +60,8 @@ describe EventsController do
     end
 
     describe 'when an invalid plannable is given' do
-      before :each do
-        Chapter.stub :find => mock_plannable
-        get :new, :plannable_type => "Cahpter", :plannable_id => 1 #intentional typo on chapter
-      end
-
+      before  { Chapter.stub :find => mock_plannable }
+      before  { get :new, :plannable_type => "invalid", :plannable_id => 1 }
       subject { controller }
       it { should assign_to :event }
       it { should_not assign_to :plannable }
@@ -77,11 +70,8 @@ describe EventsController do
     end
 
     describe 'when an invalid plannable id is given' do
-      before :each do
-        Chapter.stub(:find) { raise ActiveRecord::RecordNotFound }
-        get :new, :plannable_type => "Chapter", :plannable_id => 1
-      end
-
+      before  { Chapter.stub(:find) { raise ActiveRecord::RecordNotFound } }
+      before  { new }
       subject { controller }
       it { should assign_to :event }
       it { should_not assign_to :plannable }
@@ -91,10 +81,7 @@ describe EventsController do
   end
 
   describe "GET #edit" do
-    before :each do
-      get :edit, :id => 1
-    end
-
+    before  { get :edit, :id => 1 }
     subject { controller }
     it { should assign_to :event }
     it { should render_template :edit }
@@ -102,16 +89,15 @@ describe EventsController do
   end
   
   describe "POST #create" do
-    def record_invalid
-      raise ActiveRecord::RecordInvalid.new(mock_event)
+    def create
+      post :create, :event => {"with"=>"params"}
     end
 
-    describe 'when validation passes' do
-      before :each do
-        mock_event.stub :save!
-        post :create, :event => {"with"=>"params"}
-      end
+    before { mock_event.stub :attributes= }
 
+    describe 'when validation passes' do
+      before  { mock_event.stub :save! }
+      before  { create }
       subject { controller }
       it { should assign_to :event }
       it { should set_the_flash }
@@ -119,27 +105,22 @@ describe EventsController do
     end
 
     describe 'when validation fails' do
-      before :each do
-        mock_event.stub(:save!) { record_invalid }
-        post :create, :event => {"with"=>"params"}
-      end
-
+      before  { mock_event.stub(:save!) { record_invalid } }
+      before  { create }
       subject { controller }
       it { should assign_to :event }
       it { should render_template :new }
     end
   end
+  
   describe "PUT #update" do
-    def record_invalid
-      raise ActiveRecord::RecordInvalid.new(mock_event)
+    def update
+      put :update, :id => 1, :event => {"with"=>"params"}
     end
 
     describe 'when validation passes' do
-      before :each do
-        mock_event.stub :update_attributes!
-        put :update, :id => 1, :event => {"with"=>"params"}
-      end
-
+      before { mock_event.stub :update_attributes! }
+      before  { update }
       subject { controller }
       it { should assign_to :event }
       it { should set_the_flash }
@@ -147,11 +128,8 @@ describe EventsController do
     end
 
     describe 'when validation fails' do
-      before :each do
-        mock_event.stub(:update_attributes!) { record_invalid }
-        put :update, :id => 1, :event => {"with"=>"params"}
-      end
-
+      before  { mock_event.stub(:update_attributes!) { record_invalid } }
+      before  { update }
       subject { controller }
       it { should assign_to :event }
       it { should render_template :edit }

@@ -4,22 +4,23 @@ class Ability
   def initialize(user)
     user ||= User.new
     
-    if user.admin?
-      can :manage, :all
+    can :manage, :all and return if user.admin?
+
+    if user.new_record?
+      can :create, User if registration_open?
+      can :create, FeedbackRequest if feedback_public?
     else
-      can :read, GeographicLocation
-      can :read, Chapter
-      can :read, User
-      can :read, Page
-      if user.new_record?
-        can :create, User if registration_open?
-        can :create, FeedbackRequest if feedback_public?
-      else
-        can :update, user
-        can :create, FeedbackRequest if feedback_open?
-        can :read, FeedbackRequest, :user_id => user.id
-      end
+      can :update, user
+      can :create, FeedbackRequest if feedback_open?
+      can :read, FeedbackRequest, :user_id => user.id
     end
+    can :read, Chapter
+    can :read, Coordinator
+    can :read, Event
+    can :read, GeographicLocation
+    can :read, Link
+    can :read, Page
+    can :read, User
   end
 
 private

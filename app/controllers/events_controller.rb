@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  load_and_authorize_resource
+
   respond_to :html, :xml, :only => :index
 
   def index
