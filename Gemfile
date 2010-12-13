@@ -11,6 +11,7 @@ gem 'activerecord-import', '>= 0.2.0'
 gem 'compass', '>= 0.10.6'
 gem 'compass-960-plugin', '>= 0.10.0'
 gem 'gravatar_image_tag'
+gem 'faker', '0.3.1'
 
 group :development, :test do
   gem 'spork', '0.9.0.rc2'
@@ -29,7 +30,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'faker', '0.3.1'
   gem 'annotate-models', '1.0.4'
 end
 
