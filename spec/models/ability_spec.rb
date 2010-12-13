@@ -65,6 +65,7 @@ describe 'Ability' do
     it { should be_able_to(:read, User) }
     it { should be_able_to(:read, mock_feedback) }
     it { should be_able_to(:update, mock_user) }
+    it { should be_able_to(:join_chapter, mock_user) }
 
     it { should_not be_able_to(:read, SiteOption) }
     it { should_not be_able_to(:create, User) }

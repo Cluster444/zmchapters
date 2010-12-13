@@ -11,6 +11,7 @@ class Ability
       can :create, FeedbackRequest if feedback_public?
     else
       can :update, user
+      can :join_chapter, user
       can :create, FeedbackRequest if feedback_open?
       can :read, FeedbackRequest, :user_id => user.id
     end
