@@ -72,6 +72,10 @@ a {
   }
 }
 
+.datetime {
+  display: block;
+}
+
 $flash_red_bg: #FCC;
 $flash_red_border: $flash_red_bg - #277;
 $flash_green_bg: #CFC;

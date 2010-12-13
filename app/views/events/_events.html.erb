@@ -1,0 +1,18 @@
+<%= will_paginate @events %>
+<table>
+  <thead>
+    <th>Title</th>
+    <th>Starts</th>
+    <th>Ends</th>
+  </thead>
+  <tbody>
+    <% for event in @events %>
+      <tr>
+        <td><%= link_to event.title, event_url(event) %></td>
+        <td><%= event.starts_at %></td>
+        <td><%= event.ends_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @events %>

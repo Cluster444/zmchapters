@@ -1,0 +1,8 @@
+<% title @event.title %>
+<% page_class 'one-column' %>
+
+<h1><%= @event.title %></h1>
+<span class="datetime">Starts at: <%= @event.starts_at.rfc822 %></span>
+<p>
+  <%=sanitize @event.description %>
+</p>

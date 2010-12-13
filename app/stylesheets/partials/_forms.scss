@@ -12,11 +12,11 @@
     height: 70px;
     position: relative;
     overflow: visible;
-    &.text_area {
+    &.text-area {
       height: 330px;
       textarea {
-        width: 600px;
         height: 300px;
+        width: 600px;
       }
     }
     label {
