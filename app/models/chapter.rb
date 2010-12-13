@@ -1,5 +1,8 @@
 class Chapter < ActiveRecord::Base
   extend Index
+  
+  search_columns :name
+
   STATES = %w(pending active inactive)
   CATEGORIES = %w(country state province territory city county university)
 

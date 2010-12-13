@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   extend Index
+  
+  search_columns :name, :username
 
   attr_accessible :name, :username, :email, :password
   devise :database_authenticatable, :rememberable, :recoverable, :trackable, :validatable
