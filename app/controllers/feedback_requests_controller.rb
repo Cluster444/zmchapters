@@ -4,7 +4,7 @@ class FeedbackRequestsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @feedback = FeedbackRequest.index(index_params)
+    @feedback = FeedbackRequest.index(index_params.merge(:sort => 'created_at'))
   end
 
   def show; @feedback = @feedback_request; end

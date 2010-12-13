@@ -3,7 +3,7 @@ Tzm::Application.routes.draw do
   resources :users, :path => 'user'
   resources :coordinators, :only => [:new, :create]
   resources :feedback_requests, :path => 'feedback', :except => [:destroy]
-
+  
   resources :chapters do
     collection do
       get :select_country_for_new
@@ -14,6 +14,8 @@ Tzm::Application.routes.draw do
       post :links, :action => :create_link, :as => :new_link_for
     end
   end
+
+  resources :events, :except => [:destroy]
 
   resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show,:new,:create] do
     member do

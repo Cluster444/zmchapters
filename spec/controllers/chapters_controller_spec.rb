@@ -13,6 +13,10 @@ describe ChaptersController do
     @location ||= mock_model(GeographicLocation, :name => "Geo")
   end
 
+  def mock_event
+    @event ||= mock_model(Event, :plannable => mock_chapter)
+  end
+
   def mock_map
     { :lat => 0, :lng => 0, :zoom => 2, :markers => [], :events => false }
   end
@@ -26,80 +30,39 @@ describe ChaptersController do
     User.stub(:new) { mock_model(User, :admin? => true) }
   end
 
-  describe "GET index" do
-    it 'should be successful' do
+  describe "GET #index" do
+    before :each do
+      Chapter.stub :index => [mock_chapter]
+      GeographicLocation.stub :map_hash => mock_map
       get :index
-      response.should be_success
     end
 
-    it 'assigns chapters with records returned from the model\'s index' do
-      Chapter.should_receive(:index).and_return([mock_chapter])
-      get :index
-      assigns[:chapters].should == [mock_chapter]
-    end
-
-    it 'should assign map with default positioning and chapter markers' do
-      GeographicLocation.should_receive(:map_hash) { mock_map }
-      get :index, :view => 'map'
-      assigns[:map].symbolize_keys.should == mock_map
-    end
+    subject { controller }
+    it { should assign_to :chapters }
+    it { should assign_to :map }
+    it { should render_template :index }
+    it { should respond_with :success }
   end
 
   describe "GET show" do
-    describe "for a record that exists" do
-      before :each do
-        Chapter.stub :find => mock_chapter
-        Chapter.stub :find_all_by_location =>  []
-        mock_chapter.stub :geographic_location => mock_location
-        mock_chapter.stub :location =>  mock_location
-        mock_chapter.stub :links => [mock_link]
-      end
-
-      it 'should be successful' do
-        get :show, :id => 1
-        response.should be_success
-      end
-
-      it 'should assign chapter with the requested record' do
-        Chapter.should_receive(:find).with(1).and_return(mock_chapter)
-        get :show, :id => 1
-        assigns[:chapter].should == mock_chapter
-      end
-      
-      it 'should assign subchapters with descendent chapters' do
-        Chapter.should_receive(:find_all_by_location).with(mock_location) { [mock_chapter] }
-        get :show, :id => 1
-        assigns[:subchapters].should == [mock_chapter]
-      end
-
-      it 'should assign location from the chapters location' do
-        mock_chapter.should_receive(:location) { mock_location }
-        get :show, :id => 1
-        assigns[:location].should == mock_location
-      end
-
-      it 'should assign links with those associated with the chapter' do
-        mock_chapter.should_receive(:links) { [mock_link] }
-        get :show, :id => 1
-        assigns[:links].should == [mock_link]
-      end
+    before :each do
+      Chapter.stub :find => mock_chapter
+      Chapter.stub :find_all_by_location =>  []
+      mock_chapter.stub :geographic_location => mock_location
+      mock_chapter.stub :location =>  mock_location
+      mock_chapter.stub :links => [mock_link]
+      mock_chapter.stub :events => [mock_event]
+      get :show, :id => 1
     end
 
-    describe "for a record that doesn't exist" do
-      before :each do
-        Chapter.stub(:find).and_raise(ActiveRecord::RecordNotFound)
-      end
-        
-      it 'should redirect to the index with a flash error' do
-        get :show, :id => 1
-        response.should redirect_to(chapters_path)
-      end
-
-      it 'should have a flash error' do
-        get :show, :id => 1
-        flash[:alert].should_not be_nil
-      end
-    end
+    subject { controller }
+    it { should assign_to :chapter }
+    it { should assign_to :subchapters }
+    it { should assign_to :location }
+    it { should assign_to :links }
+    it { should assign_to :events }
+    it { should render_template :show }
+    it { should respond_with :success }
   end
 
   describe "GET new" do
@@ -111,13 +74,11 @@ describe ChaptersController do
       GeographicLocation.stub :find_by_id    => mock_location
       mock_location.stub      :is_country?   => false
       mock_location.stub      :is_territory? => false
+      get :new, :location_id => 1
     end
-    
-    it 'should assign location with the given location' do
-      GeographicLocation.should_receive(:find_by_id).with(1) { mock_location }
-      new
-      assigns[:location].should == mock_location
-    end
+
+    subject { controller }
+    it { should assign_to :location }
 
     describe 'with no geography selected' do
       before :each do

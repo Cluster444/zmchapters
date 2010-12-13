@@ -17,6 +17,7 @@ class ChaptersController < ApplicationController
     @map = @location.map_hash
     @subchapters = Chapter.find_all_by_location(@location)
     @links = @chapter.links
+    @events = @chapter.events
   end
   
   def select_country_for_new
