@@ -11,4 +11,9 @@ class CoordinatorsController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render :new
   end
+
+  def destroy
+    @coordinator.destroy
+    redirect_to chapter_url(@coordinator.chapter), :notice => "Coordinator removed successfully"
+  end
 end

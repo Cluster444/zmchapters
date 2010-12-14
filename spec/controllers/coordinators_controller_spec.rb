@@ -53,4 +53,16 @@ describe CoordinatorsController do
       it { should render_template :new }
     end
   end
+
+  describe "DELETE #destroy" do
+    before do
+      Coordinator.should_receive(:find).with(coordinator.id) { coordinator }
+      coordinator.should_receive(:destroy)
+      coordinator.should_receive(:chapter) { chapter }
+      delete :destroy, :id => coordinator.id
+    end
+
+    it { should set_the_flash }
+    it { should redirect_to(chapter_url(chapter)) }
+  end
 end

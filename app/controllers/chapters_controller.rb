@@ -101,6 +101,7 @@ private
     @location = @chapter.location
     @map = @location.map_hash.merge(:events => true)
     @links = @chapter.links
+    @coordinators = @chapter.coordinators
   end
 
   def sort_column

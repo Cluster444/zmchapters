@@ -27,6 +27,7 @@ describe ChaptersController do
 
   before :each do
     mock_location.stub(:map_hash) { mock_map }
+    mock_chapter.stub(:coordinators) { [] }
     User.stub(:new) { mock_model(User, :admin? => true) }
   end
 

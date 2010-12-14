@@ -19,3 +19,26 @@
   <% end %>
   <%= render :partial => 'link_form', :locals => {:link => Link.new} %>
 </div>
+<div class="coordinators right">
+  <h1>Coordinators</h1>
+  <% if @coordinators.any? %>
+    <ul>
+      <% @coordinators.each do |coordinator| %>
+        <li>
+          <%= coordinator.user.name_with_username %>
+          <%= link_to "Remove", coordinator_path(coordinator), :confirm => "Are you sure?", :method => :delete %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <h4>Add Coordinator</h4>
+  <%= form_for Coordinator.new do |f| %>
+    <%= f.hidden_field :chapter_id, :value => @chapter.id %>
+    <span class="inline-field">
+      <%= f.collection_select :user_id, @chapter.users.reject(&:coordinator?).reject(&:admin), :id, :name_with_username, :prompt => true %>
+    </span>
+    <span class="actions">
+      <%= f.submit "Add" %>
+    </span>
+  <% end %>
+</div>
