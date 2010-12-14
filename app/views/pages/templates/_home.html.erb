@@ -15,7 +15,7 @@
         <li>No new chapters</li>
       <% else %>
         <% Chapter.order("created_at DESC").limit(5).each do |chapter| %>
-          <li><%= link_to chapter.name, chapter_path(chapter) %></li>
+          <li><%= link_to chapter.name, chapter_path(chapter.name) %></li>
         <% end %>
       <% end %>
     </ul>

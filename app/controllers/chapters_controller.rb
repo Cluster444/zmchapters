@@ -58,7 +58,7 @@ class ChaptersController < ApplicationController
     end 
     @chapter.geographic_location = @location
     @chapter.save!
-    redirect_to @chapter, :notice => "Chapter created successfully"
+    redirect_to chapter_path(@chapter.name), :notice => "Chapter created successfully"
   rescue ActiveRecord::RecordInvalid
     @map = @location.map_hash.merge(:events => true)
     render :new
@@ -68,7 +68,7 @@ class ChaptersController < ApplicationController
     @link = Link.new params[:link]
     @link.linkable = @chapter
     @link.save!
-    redirect_to @chapter, :notice => "Link added successfully"
+    redirect_to chapter_path(@chapter.name), :notice => "Link added successfully"
   rescue ActiveRecord::RecordInvalid
     load_edit_models
     render :edit
@@ -83,7 +83,7 @@ class ChaptersController < ApplicationController
       @chapter.location.update_attributes params[:location]
     end
     @chapter.update_attributes! params[:chapter]
-    redirect_to @chapter, :notice => "Chapter updated successfully"
+    redirect_to chapter_path(@chapter.name), :notice => "Chapter updated successfully"
   rescue ActiveRecord::RecordInvalid
     load_edit_models
     render :edit
@@ -92,7 +92,7 @@ class ChaptersController < ApplicationController
   def update_link
     @link = Link.find params[:link_id]
     @link.update_attributes! params[:link]
-    redirect_to @chapter, :notice => "Link updated successfully"
+    redirect_to chapter_path(@chapter.name), :notice => "Link updated successfully"
   rescue ActiveRecord::RecordInvalid
     load_edit_models
     render :edit

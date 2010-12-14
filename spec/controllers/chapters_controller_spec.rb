@@ -246,7 +246,7 @@ describe ChaptersController do
 
     it 'should redirect to the chapter\'s page with a flash notice' do
       create
-      response.should redirect_to(mock_chapter)
+      response.should redirect_to(chapter_path(mock_chapter.name))
       flash[:notice].should_not be_nil
     end
 
@@ -299,7 +299,7 @@ describe ChaptersController do
 
     it 'should redirect to the chapter\'s page with a flash notice' do
       create
-      response.should redirect_to(chapter_path(mock_chapter))
+      response.should redirect_to(chapter_path(mock_chapter.name))
       flash[:notice].should_not be_nil
     end
     
@@ -368,7 +368,7 @@ describe ChaptersController do
 
     it 'should redirect to the chapter\'s page with a flash notice' do
       update
-      response.should redirect_to(mock_chapter)
+      response.should redirect_to(chapter_path(mock_chapter.name))
       flash[:notice].should_not be_nil
     end
 
@@ -430,7 +430,7 @@ describe ChaptersController do
 
     it 'should redirect to the chapter\'s page with a flash notice' do
       update
-      response.should redirect_to(chapter_path(mock_chapter))
+      response.should redirect_to(chapter_path(mock_chapter.name))
       flash[:notice].should_not be_nil
     end
 

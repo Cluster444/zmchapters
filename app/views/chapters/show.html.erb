@@ -48,7 +48,7 @@
       <h1>Chapters in<br /><%= @chapter.name %></h1>
       <ul>
         <% @subchapters.each do |chapter| %>
-          <li><%= link_to chapter.name, chapter_path(chapter) %></li>
+          <li><%= link_to chapter.name, chapter_path(chapter.name) %></li>
         <% end %>
       </ul>
     </section>
