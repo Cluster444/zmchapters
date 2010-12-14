@@ -4,9 +4,13 @@ describe User do
   let(:user)  { Factory.create(:user)  }
   let(:admin) { Factory.create(:admin) }
 
-  describe 'factories' do
+  context 'factories' do
     it { expect { user  }.to change { User.count }.by(1) }
+    it { expect { user  }.to_not change { Chapter.count} }
     it { expect { admin }.to change { User.count }.by(1) }
+    it { expect { admin }.to_not change { Chapter.count } }
+    it { expect { Factory.create(:user_with_chapter) }.to change { User.count }.by(1) }
+    it { expect { Factory.create(:user_with_chapter) }.to change { Chapter.count }.by(1) }
   end
   
   # Associations
@@ -45,7 +49,7 @@ describe User do
   end
 
   context 'when user is assigned as a coordinator' do
-    before  { Factory(:coordinator, :user => user) }
+    before  { Factory(:coordinator_with_chapter, :user => user) }
     subject { user }
     it { should be_coordinator }
   end

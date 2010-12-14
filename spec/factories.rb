@@ -5,6 +5,10 @@ Factory.define :chapter do |f|
 end
 
 Factory.define :coordinator do |f|
+  f.association :user, :factory => :user_with_chapter
+end
+
+Factory.define :coordinator_with_chapter, :class => Coordinator do |f|
   f.association :user
   f.association :chapter
 end
@@ -64,6 +68,9 @@ Factory.define :user do |f|
   f.sequence(:email) {|n| "test#{n}@test.com"}
   f.password 'testpassword'
   f.password_confirmation { |u| u.password }
+end
+
+Factory.define :user_with_chapter, :parent => :user do |f|
   f.association :chapter
 end
 
