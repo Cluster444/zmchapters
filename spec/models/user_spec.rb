@@ -1,70 +1,57 @@
 require 'spec_helper'
 
 describe User do
-  before :each do
-    @attr = Factory.attributes_for :user
+  let(:user)  { Factory.create(:user)  }
+  let(:admin) { Factory.create(:admin) }
+
+  describe 'factories' do
+    it { expect { user  }.to change { User.count }.by(1) }
+    it { expect { admin }.to change { User.count }.by(1) }
+  end
+  
+  # Associations
+  it { should belong_to :chapter }
+  it { should have_many :coordinators }
+
+  # Attribute Protection
+  it { should allow_mass_assignment_of :name }
+  it { should allow_mass_assignment_of :username }
+  it { should allow_mass_assignment_of :email }
+
+  it { should_not allow_mass_assignment_of :admin }
+
+  # Validations
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :username }
+  #it { should validate_uniqueness_of :username }
+  it { should ensure_length_of(:name).is_at_most(50) }
+  it { should ensure_length_of(:username).is_at_most(30) }
+  
+  # Attribute default state assertions
+  it { should_not be_admin }
+  it { should_not be_coordinator }
+  
+  # Behavior
+  context 'when admin is set' do
+    before  { user.is_admin! }
+    subject { user }
+    it { should be_admin }
   end
 
-  it 'should create a new record with valid attributes' do
-    Factory.create(:user)
+  context 'when admin is unset' do
+    before  { admin.is_not_admin! }
+    subject { admin }
+    it { should_not be_admin }
   end
 
-  it 'should have a factory for admin creation' do
-    Factory.create(:admin).should be_admin
+  context 'when user is assigned as a coordinator' do
+    before  { Factory(:coordinator, :user => user) }
+    subject { user }
+    it { should be_coordinator }
   end
 
   it 'should provide a name with username' do
     user = Factory.create(:admin)
     user.name_with_username.should == "#{user.name} (#{user.username})"
-  end
-
-  describe 'associations' do
-    it 'should have a chapter' do
-      user = User.new
-      user.should respond_to :chapter
-    end
-  end
-  
-  describe 'validations' do
-    it 'should require a name of max length 50' do
-      ['','a'*51].each do |bad_name|
-        bad_name_user = Factory.build(:user, :name => bad_name)
-        bad_name_user.should_not be_valid
-      end
-    end
-
-    it 'should require a unique username of max length 30' do
-      #User.create @attr
-      Factory(:user, :username => 'dup_username')
-      ['','a'*31,'dup_username'].each do |bad_username|
-        bad_username_user = Factory.build(:user, :username => bad_username)
-        bad_username_user.should_not be_valid
-      end
-    end
-  end
-
-  describe 'roles' do
-    it 'should not be admin by default' do
-      Factory(:user).should_not be_admin
-    end
-    
-    it 'should not allow admin to be set directly' do
-      user = Factory(:user)
-      user.update_attributes :admin => true
-      user.should_not be_admin
-    end
-
-    it 'should allow admin to be set' do
-      user = Factory(:user)
-      user.is_admin!
-      user.should be_admin
-    end
-
-    it 'should allow admin to be unset' do
-      user = Factory(:user)
-      user.update_attribute :admin, true
-      user.is_not_admin!
-      user.should_not be_admin
-    end
   end
 end
