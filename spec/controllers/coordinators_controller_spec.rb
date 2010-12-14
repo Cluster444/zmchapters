@@ -1,73 +1,56 @@
 require 'spec_helper'
 
 describe CoordinatorsController do
-  def mock_coordinator
-    @coordinator ||= mock_model(Coordinator)
-  end
+  let (:coordinator) { mock_model(Coordinator) }
+  let (:chapter)     { mock_model(Chapter) }
+  let (:user)        { mock_model(User) }
+  
+  def record_invalid; raise ActiveRecord::RecordInvalid.new(coordinator); end
+  def create; post :create, :coordinator => params; end
+  def params; {"user_id" => user.id, "chapter_id" => chapter.id}; end
 
-  def mock_chapter
-    @chapter ||= mock_model(Chapter)
-  end
-
-  def record_invalid
-    raise ActiveRecord::RecordInvalid.new(mock_coordinator)
-  end
-
-  before :each do
-    User.stub(:new) { mock_model(User, :admin? => true) }
-  end
+  before { User.stub(:new) { mock_model(User, :admin? => true) } }
 
   describe "GET new" do
-    before :each do
-      Coordinator.stub! :new => mock_coordinator
-    end
+    before  { Coordinator.should_receive(:new) { coordinator } }
+    before  { get :new }
 
-    it 'assigns coordinator with a new record' do
-      get :new
-      assigns[:coordinator].should == mock_coordinator
-    end
-
-    it 'should be successful' do
-      get :new
-      response.should be_success
-    end
+    subject { controller }
+    it { should assign_to(:coordinator).with(coordinator) }
+    it { should respond_with :success }
   end
 
   describe "POST create" do
-    def create
-      post :create, :coordinator => {"with"=>"params"}
+    before do
+      User.should_receive(:find_by_id).with(user.id) { user }
+      Chapter.should_receive(:find_by_id).with(chapter.id) { chapter }
+      Coordinator.should_receive(:new) { coordinator }
+      coordinator.should_receive(:attributes=).with(params)
+      coordinator.should_receive(:user=).with(user)
+      coordinator.should_receive(:chapter=).with(chapter)
+      coordinator.stub(:chapter => chapter)
     end
 
-    before :each do
-      Coordinator.stub :new => mock_coordinator
-      mock_coordinator.stub :attributes=
-      mock_coordinator.stub :save!
-      mock_coordinator.stub :chapter => mock_chapter
+    context 'before validation' do
+      before  { coordinator.should_receive(:save!) }
+      before  { create }
+      subject { controller }
+      it { should assign_to(:coordinator).with(coordinator) }
     end
     
-    it 'assigns coordinator with a new record' do
-      Coordinator.should_receive(:new) { mock_coordinator }
-      mock_coordinator.should_receive(:attributes=).with({"with"=>"params"})
-      create
-      assigns[:coordinator].should == mock_coordinator
+    context 'when validation passes' do
+      before  { coordinator.should_receive(:save!) }
+      before { create }
+      subject { controller }
+      it { should redirect_to(chapter_path(chapter)) }
+      it { should set_the_flash }
     end
 
-    it 'should save the record' do
-      mock_coordinator.should_receive(:save!)
-      create
-    end
-
-    it 'should redirect to the chapter page of the new coordinator with a flash notice' do
-      mock_coordinator.should_receive(:chapter) { mock_chapter }
-      create
-      response.should redirect_to(chapter_path(mock_chapter))
-      flash[:notice].should_not be_nil
-    end
-
-    it 'should render new when validation fails' do
-      mock_coordinator.stub(:save!) { record_invalid }
-      create
-      response.should render_template('coordinators/new')
+    context 'when validation fails' do
+      before { coordinator.stub(:save!) { record_invalid } }
+      before { create }
+      subject { controller }
+      it { should render_template :new }
     end
   end
 end
