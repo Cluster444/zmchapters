@@ -39,4 +39,6 @@ Tzm::Application.routes.draw do
   end
   
   root :to => "pages#show", :uri => "home"
+
+  get "/:chapter_name", :controller => :chapters, :action => :show, :as => 'chapter'
 end

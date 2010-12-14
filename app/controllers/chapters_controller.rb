@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:show]
 
   helper_method :sort_column, :sort_direction
 
@@ -13,11 +13,14 @@ class ChaptersController < ApplicationController
   end
   
   def show
+    @chapter = Chapter.find_by_name(params[:chapter_name]) || Chapter.find(params[:id])
+    authorize! :read, @chapter
     @location = @chapter.location
     @map = @location.map_hash
     @subchapters = Chapter.find_all_by_location(@location)
     @links = @chapter.links
     @events = @chapter.events
+    @coordinators = @chapter.coordinators
   end
   
   def select_country_for_new

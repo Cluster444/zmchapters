@@ -1,29 +1,34 @@
 require 'spec_helper'
 
 describe ChaptersController do
+  let(:chapter)     { mock_model(Chapter, :name => 'test') }
+  let(:coordinator) { mock_model(Coordinator) }
+  let(:link)        { mock_model(Link) }
+  let(:location)    { mock_model(GeographicLocation) }
+  let(:event)       { mock_model(Event, :plannable => chapter) }
+  let(:map)         { { :lat => 0, :lng => 0, :zoom => 2, :markers => [], :events => false } }
+
   def mock_chapter
-    @chapter ||= mock_model(Chapter)
+    chapter
   end
   
   def mock_link
-    @link ||= mock_model(Link)
+    link
   end
 
   def mock_location
-    @location ||= mock_model(GeographicLocation, :name => "Geo")
+    location
   end
 
   def mock_event
-    @event ||= mock_model(Event, :plannable => mock_chapter)
+    event
   end
 
   def mock_map
-    { :lat => 0, :lng => 0, :zoom => 2, :markers => [], :events => false }
+    map
   end
 
-  def record_invalid
-    raise ActiveRecord::RecordInvalid.new(mock_chapter)
-  end
+  def record_invalid; raise ActiveRecord::RecordInvalid.new(chapter); end
 
   before :each do
     mock_location.stub(:map_hash) { mock_map }
@@ -46,24 +51,43 @@ describe ChaptersController do
   end
 
   describe "GET show" do
-    before :each do
-      Chapter.stub :find => mock_chapter
-      Chapter.stub :find_all_by_location =>  []
-      mock_chapter.stub :geographic_location => mock_location
-      mock_chapter.stub :location =>  mock_location
-      mock_chapter.stub :links => [mock_link]
-      mock_chapter.stub :events => [mock_event]
-      get :show, :id => 1
+    before do
+      Chapter.stub :find_by_name => nil
+      Chapter.stub :find => chapter
+      Chapter.should_receive(:find_all_by_location).with(location) { [chapter] }
+      chapter.should_receive(:location) { location }
+      chapter.should_receive(:links) { [link] }
+      chapter.should_receive(:events) { [event] }
+      chapter.should_receive(:coordinators) { [] }
     end
 
-    subject { controller }
-    it { should assign_to :chapter }
-    it { should assign_to :subchapters }
-    it { should assign_to :location }
-    it { should assign_to :links }
-    it { should assign_to :events }
-    it { should render_template :show }
-    it { should respond_with :success }
+    context 'when using a chapter named route' do
+      before { Chapter.should_receive(:find_by_name).with(chapter.name) { chapter } }
+      before { Chapter.should_not_receive(:find) }
+      before { get :show, :chapter_name => chapter.name }
+      subject { controller }
+      it { should assign_to(:chapter).with(chapter) }
+    end
+
+    context 'when using a chapter id route' do
+      before { Chapter.should_receive(:find_by_name).with(nil) { nil } }
+      before { Chapter.should_receive(:find).with(chapter.id) { chapter } }
+      before { get :show, :id => chapter.id }
+      subject { controller }
+      it { should assign_to(:chapter).with(chapter) }
+    end
+    
+    context do
+      before  { get :show, :id => chapter.id }
+      subject { controller }
+      it { should assign_to(:subchapters).with([chapter]) }
+      it { should assign_to(:location).with(location) }
+      it { should assign_to(:links).with([link]) }
+      it { should assign_to(:events).with([event]) }
+      it { should assign_to(:coordinators) }
+      it { should render_template :show }
+      it { should respond_with :success }
+    end
   end
 
   describe "GET new" do
@@ -73,6 +97,7 @@ describe ChaptersController do
 
     before :each do
       GeographicLocation.stub :find_by_id    => mock_location
+      mock_location.stub      :name => 'foo'
       mock_location.stub      :is_country?   => false
       mock_location.stub      :is_territory? => false
       get :new, :location_id => 1
