@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Chapter do
-  
+  let(:chapter) { Factory.create(:chapter) }
+
   def create
     Factory.create(:chapter)
   end
@@ -21,7 +22,7 @@ describe Chapter do
   end
 
   it 'should create a new chapter' do
-    expect { Factory(:chapter) }.to change { Chapter.count }.by(1)
+    expect { Factory.create(:chapter) }.to change { Chapter.count }.by(1)
   end
   
   it { should allow_mass_assignment_of :name }
@@ -56,15 +57,9 @@ describe Chapter do
   it { should respond_to :is_inactive! }
 
   it 'should allow lifecycle status updates' do
-    @chapter = Factory(:chapter)
-    expect { @chapter.is_active!   }.to change { @chapter.status }.from('pending').to('active')
-    expect { @chapter.is_inactive! }.to change { @chapter.status }.from('active').to('inactive')
-    expect { @chapter.is_pending!  }.to change { @chapter.status }.from('inactive').to('pending')
-  end
-
-  describe 'class methods' do
-    subject { Chapter }
-    it { should respond_to :find_all_by_location }
+    expect { chapter.is_active!   }.to change { chapter.status }.from('pending').to('active')
+    expect { chapter.is_inactive! }.to change { chapter.status }.from('active').to('inactive')
+    expect { chapter.is_pending!  }.to change { chapter.status }.from('inactive').to('pending')
   end
 
   describe 'creation' do

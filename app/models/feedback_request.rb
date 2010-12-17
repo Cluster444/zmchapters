@@ -1,8 +1,17 @@
 class FeedbackRequest < ActiveRecord::Base
   extend Index
 
+  index do |i|
+    i.search :subject, :message
+    i.sort :email, :category, :status, :created_at, :updated_at
+    i.default_sort :created_at, :asc
+    i.paginate 20
+  end
+
   CATEGORIES = %w(bug feature)
   STATES = %w(new acknowledged resolved closed rejected)
+
+  attr_accessible :email, :subject, :message, :category
 
   belongs_to :user
 

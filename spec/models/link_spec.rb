@@ -1,29 +1,25 @@
 require 'spec_helper'
 
 describe Link do
-  def build(opts={})
-    Factory.build(:link, opts)
-  end
+  # Factories
+  it { expect { Factory.create(:link) }.to change { Link.count }.by(1) }
+  
+  # Mass Assignment
+  it { should allow_mass_assignment_of :url }
+  it { should allow_mass_assignment_of :title }
+  it { should allow_mass_assignment_of :linkable }
+  it { should_not allow_mass_assignment_of :linkable_type }
+  it { should_not allow_mass_assignment_of :linkable_id }
 
-  it 'should have a factory' do
-    Factory.create(:link)
-  end
+  # Associations
+  it { should belong_to :linkable }
 
-  describe 'validations' do
-    it 'should reject invalid urls' do
-      ['','a'*256].each do |invalid_url|
-        build(:url => invalid_url).should_not be_valid
-      end
-    end
+  # Validations
+  it { should validate_presence_of :url }
+  it { should validate_presence_of :title }
+  it { should validate_presence_of :linkable }
 
-    it 'should reject invalid titles' do
-      ['','a'*256].each do |invalid_title|
-        build(:title => invalid_title).should_not be_valid
-      end
-    end
+  it { should ensure_length_of(:url).is_at_most(255) }
+  it { should ensure_length_of(:title).is_at_most(255) }
 
-    it 'should require an linkable association' do
-      build(:linkable => nil).should_not be_valid
-    end
-  end
 end

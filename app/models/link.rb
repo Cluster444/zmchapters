@@ -8,6 +8,7 @@ class Link < ActiveRecord::Base
   end
 
   attr_accessible :url, :title, :linkable
+
   belongs_to :linkable, :polymorphic => true
 
   validates :url, :presence => true, :length => {:maximum => 255}

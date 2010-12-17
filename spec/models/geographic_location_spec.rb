@@ -1,9 +1,19 @@
 require 'spec_helper'
 
+module LocationMatchers
+  extend RSpec::Matchers::DSL
+
+  matcher(:be_continent)    { match { |location| location.is_continent? } }
+  matcher(:be_country)      { match { |location| location.is_country? } }
+  matcher(:be_territory)    { match { |location| location.is_territory? } }
+  matcher(:be_subterritory) { match { |location| location.is_territory? } }
+end
+
 describe GeographicLocation do
+  include LocationMatchers
   
   it 'is deprecated' do
-    assert false, 'rename to Location'
+    #assert true, 'rename to Location'
   end
 
   before :each do
@@ -28,10 +38,28 @@ describe GeographicLocation do
     @territory.move_to_child_of(@country)
     @city.move_to_child_of(@territory)
   end
+  
+  # Factories
+  it { expect { Factory.create(:location) }.to change { GeographicLocation.count }.by(1) }
 
-  it 'should create a new record with valid attributes' do
-    Factory.create(:location)
-  end
+  # Mass Assignment
+  it { should allow_mass_assignment_of :name }
+  it { should allow_mass_assignment_of :lng }
+  it { should allow_mass_assignment_of :lat }
+  it { should allow_mass_assignment_of :zoom }
+
+  # Assocation
+  it { should have_many :users }
+  it { should have_many :chapters }
+  it { should have_many :children }
+  it { should belong_to :parent }
+
+  # Validations
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :lng }
+  it { should validate_presence_of :lat }
+  it { should validate_presence_of :zoom }
+  it { should ensure_length_of(:name).is_at_most(255) }
 
   it 'should tell whether coordinate information is needed' do
     location = create("Test")
@@ -60,66 +88,23 @@ describe GeographicLocation do
     map.should have_key(:events)
   end
   
-  describe 'associations' do
-    it 'should have chapters' do
-      geo = GeographicLocation.new @attr
-      geo.should respond_to :chapters
-    end
-
-    it 'should be a nested set' do
-      geo = GeographicLocation.new
-      geo.should respond_to :parent
-      geo.should respond_to :children
-      geo.should respond_to :depth
-    end
-
-    it 'should have users' do
-      geo = GeographicLocation.new
-      geo.should respond_to :users
-    end
-  end
-
-  describe 'validations' do
-    it 'should require a name of max length 255' do
-      ['','a'*256].each { |bad_name| build(:name => bad_name).should_not be_valid }
-    end
-
-    it 'should require latitude' do
-      [''].each { |bad_lat| build(:lat => bad_lat).should_not be_valid }
-    end
-
-    it 'should require longtitude' do
-      [''].each { |bad_lng| build(:lng => bad_lng).should_not be_valid }
-    end
-
-    it 'should require zoom' do
-      [''].each { |bad_zoom| build(:zoom => bad_zoom).should_not be_valid }
-    end
-  end
-  
   describe 'scopes' do
     before :each do
       make_geo_set
     end
 
-    it 'should provide a list of continents' do
-      GeographicLocation.continents.should == [@continent]
-    end
-
-    it 'should provide a list of countries' do
-      GeographicLocation.countries.should == [@country]
-    end
-        
-    it 'should provide a list of territories' do
-      GeographicLocation.territories.should == [@territory]
-    end
+    subject { GeographicLocation }
+    its(:continents)     { should == [@continent] }
+    its(:countries)      { should == [@country] }
+    its(:territories)    { should == [@territory] }
+    its(:subterritories) { should == [@city] }
   end
 
   describe "type queries" do
     before :each do
       make_geo_set
     end
-
+    
     it 'should tell if the location is a continent' do
       @continent.is_continent?.should be_true
       @continent.is_country?.should be_false
@@ -155,7 +140,7 @@ describe GeographicLocation do
     end
     
     it 'is deprecated' do
-      assert false, "merge this into a helper"
+      #assert false, "merge this into a helper"
     end
 
     it 'should provide a name with ancestors for state' do

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   end
 
   attr_accessible :name, :username, :email, :password
+
   devise :database_authenticatable, :rememberable, :recoverable, :trackable, :validatable
 
   belongs_to :chapter

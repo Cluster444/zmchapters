@@ -1,8 +1,10 @@
 class GeographicLocation < ActiveRecord::Base
   acts_as_nested_set
 
+  attr_accessible :name, :lat, :lng, :zoom
+
   has_many :chapters
-  has_many :users
+  has_many :users, :through => :chapters
 
   validates :name, :presence => true, :length => {:maximum => 255}
   validates :lat,  :presence => true
