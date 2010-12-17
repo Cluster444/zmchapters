@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   respond_to :html, :xml, :only => :index
 
   def index
-    respond_with(@events = Event.paginate(:per_page => 20, :page => params[:page]))
+    respond_with(@events = Event.search(index_params))
   end
 
   def show

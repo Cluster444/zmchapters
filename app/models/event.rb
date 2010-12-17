@@ -1,4 +1,12 @@
 class Event < ActiveRecord::Base
+  extend Index
+  index do |i|
+    i.search :title, :description
+    i.sort :title, :starts_at, :ends_at
+    i.default_sort :starts_at, :desc
+    i.paginate 20
+  end
+
   attr_accessible :title, :description, :starts_at, :ends_at
 
   belongs_to :plannable, :polymorphic => true

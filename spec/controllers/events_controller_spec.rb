@@ -16,7 +16,7 @@ describe EventsController do
   before :each do
     User.stub  :new      => mock_model(User, :admin? => true)
     Event.stub :find     => mock_event
-    Event.stub :paginate => [mock_event]
+    Event.stub :search   => [mock_event]
     Event.stub :new      => mock_event
   end
 

@@ -8,7 +8,7 @@ class ChaptersController < ApplicationController
   end
 
   def index
-    @chapters = Chapter.index(index_params)
+    @chapters = Chapter.search(index_params)
     @map = GeographicLocation.map_hash
   end
   

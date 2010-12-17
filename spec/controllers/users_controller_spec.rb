@@ -26,7 +26,7 @@ describe UsersController do
 
   describe "GET index" do
     it 'should assign users with the records for the given params' do
-      User.should_receive(:index) { [mock_user] }
+      User.should_receive(:search) { [mock_user] }
       get :index
       assigns[:users].should == [mock_user]
     end

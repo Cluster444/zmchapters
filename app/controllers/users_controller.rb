@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.index(index_params)
+    @users = User.search(index_params)
   end
 
   def show; end

@@ -78,3 +78,6 @@ Factory.define :admin, :parent => :user do |f|
   f.after_create(&:is_admin!)
 end
 
+Factory.define :test_index do |f|
+  f.sequence(:name) { |n| "Item #{n}" }
+end

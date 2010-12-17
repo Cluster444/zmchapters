@@ -64,7 +64,6 @@ describe Chapter do
 
   describe 'class methods' do
     subject { Chapter }
-    it { should respond_to :index }
     it { should respond_to :find_all_by_location }
   end
 
@@ -72,46 +71,6 @@ describe Chapter do
     it 'should set status to "Pending"' do
       chapter = Factory(:chapter)
       chapter.status.should == "pending"
-    end
-  end
-
-  describe "index" do
-    before :each do
-      @chapters = 5.times.collect { Factory(:chapter, :geographic_location => @city, :category => 'city') }
-    end
-
-    it 'should provide all of the records with no filters' do
-      Chapter.index.should == @chapters
-    end
-
-    it 'should limit based on a per_page param' do
-      Chapter.index(:per_page => 2).should == @chapters[0..1]
-    end
-
-    it 'should offset based on a page param' do
-      Chapter.index(:per_page => 2, :page => 2).should == @chapters[2..3]
-    end
-
-    it 'should filter by a search param' do
-      chapters = ["That City","This City"].collect { |name| Factory(:chapter, :name => name) }
-      Chapter.index(:search => "city").should == chapters
-    end
-    
-    describe 'when sorting' do
-      it 'on name asc' do
-        chapters = ["A","B"].collect { |name| Factory(:chapter, :name => name) }
-        Chapter.index(:sort => 'name', :direction => 'asc')[0..1].should == chapters
-      end
-
-      it 'on name desc' do
-        chapters = ["Z","Y"].collect { |name| Factory(:chapter, :name => name) }
-        Chapter.index(:sort => 'name', :direction => 'desc')[0..1].should == chapters
-      end
-
-      it 'on member count asc'
-      it 'on member count desc'
-      it 'on coordinator count asc'
-      it 'on coordinator count desc'
     end
   end
 

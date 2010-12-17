@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   extend Index
-  
-  search_columns :name, :username
+  index do |i|
+    i.search :name, :username
+    i.sort :name, :username
+    i.default_sort :username, :asc
+    i.paginate 20
+  end
 
   attr_accessible :name, :username, :email, :password
   devise :database_authenticatable, :rememberable, :recoverable, :trackable, :validatable

@@ -31,21 +31,21 @@ describe ChaptersController do
   def record_invalid; raise ActiveRecord::RecordInvalid.new(chapter); end
 
   before :each do
-    mock_location.stub(:map_hash) { mock_map }
-    mock_chapter.stub(:coordinators) { [] }
+    location.stub(:map_hash) { map }
+    chapter.stub(:coordinators) { [] }
     User.stub(:new) { mock_model(User, :admin? => true) }
   end
 
   describe "GET #index" do
-    before :each do
-      Chapter.stub :index => [mock_chapter]
-      GeographicLocation.stub :map_hash => mock_map
+    before do
+      Chapter.should_receive(:search) { [chapter] }
+      GeographicLocation.should_receive(:map_hash) { map }
       get :index
     end
 
     subject { controller }
-    it { should assign_to :chapters }
-    it { should assign_to :map }
+    it { should assign_to(:chapters).with([chapter]) }
+    it { should assign_to(:map).with(map) }
     it { should render_template :index }
     it { should respond_with :success }
   end
@@ -91,74 +91,56 @@ describe ChaptersController do
   end
 
   describe "GET new" do
-    def new
-      get :new, :location_id => 1
+    before { Chapter.should_receive(:new) { chapter } }
+    
+    context 'when an invalid location is given' do
+      before  { GeographicLocation.should_receive(:find_by_id).with(nil) { nil } }
+      before  { get :new }
+      subject { controller }
+      it { should set_the_flash }
+      it { should redirect_to(Chapter) }
     end
 
-    before :each do
-      GeographicLocation.stub :find_by_id    => mock_location
-      mock_location.stub      :name => 'foo'
-      mock_location.stub      :is_country?   => false
-      mock_location.stub      :is_territory? => false
-      get :new, :location_id => 1
-    end
-
-    subject { controller }
-    it { should assign_to :location }
-
-    describe 'with no geography selected' do
-      before :each do
-        GeographicLocation.stub(:find_by_id => nil)
+    context 'when a valid location is given' do
+      before do
+        GeographicLocation.should_receive(:find_by_id).with(location.id) { location }
+        location.should_receive(:map_hash) { map }
+        location.should_receive(:name) { 'name' }
+        chapter.should_receive(:geographic_location=).with(location)
+        chapter.should_receive(:name=).with('name')
+      end
+      
+      context 'and the location is local' do
+        before do
+          location.should_receive(:is_country?) { false }
+          location.should_receive(:is_territory?) { false }
+          get :new, :location_id => location.id
+        end
+        subject { controller }
+        it { should render_template :new }
+        it { should respond_with :success }
       end
 
-      it 'should redirect to the chapter map page' do
-        get :new
-        response.should redirect_to(chapters_path)
+      context 'and the location is a country' do
+        before do
+          location.should_receive(:is_country?) { true }
+          chapter.should_receive(:category=).with('country')
+          get :new, :location_id => location.id
+        end
+        subject { controller }
+        it { should render_template :new }
+        it { should respond_with :success }
       end
 
-      it 'should have a flash error' do
-        get :new
-        flash[:alert].should_not be_nil
-      end
-    end
-
-    it 'should assign map with a map hash from the location with events on' do
-      mock_location.should_receive(:map_hash) { mock_map }
-      new
-      assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
-    end
-
-    it 'should assign the chapter\'s location' do
-      new
-      assigns[:chapter].geographic_location.should == mock_location
-    end
-
-    it 'should assign the chapter\'s name' do
-      new
-      assigns[:chapter].name.should == mock_location.name
-    end
-
-    describe 'with a country selected' do
-      it 'should assign the chapter\'s category to country' do
-        mock_location.stub :is_country? => true
-        new
-        assigns[:chapter].category.should == 'country'
-      end
-    end
-
-    describe 'with a territory selected and the category is a subchapter' do
-      before :each do
-        mock_location.stub :is_territory? => true
-      end
-
-      it 'should set a session return to new chapter path' do
-        get :new, :location_id => 1, :category => 'subchapter'
-        session[:return_to].should == new_chapter_path
-      end
-
-      it 'should redirect to new geo path with a parnet_id param' do
-        get :new, :location_id => 1, :category => 'subchapter'
-        response.should redirect_to(new_geo_url(:parent_id => mock_location.id))
+      context 'and the location is a territory' do
+        before do
+          location.should_receive(:is_country?) { false }
+          location.should_receive(:is_territory?) { true }
+        end
+        context 'and the category is not set' do
+        end
+        context 'and the category is subchapter' do
+        end
       end
     end
   end

@@ -1,11 +1,14 @@
 class Chapter < ActiveRecord::Base
   extend Index
-  
-  search_columns :name
+  index do |i|
+    i.search :name
+    i.sort :name, :category
+    i.default_sort :name, :asc
+    i.paginate 20
+  end
 
   STATES = %w(pending active inactive)
   CATEGORIES = %w(country state province territory city county university)
-
 
   attr_accessible :name, :category
 
