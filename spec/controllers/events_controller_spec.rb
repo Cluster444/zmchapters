@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe EventsController do
+  let(:event)     { mock_model(Event) }
+  let(:plannable) { mock_model(Chapter) }
+
   def mock_event
-    @event ||= mock_model(Event)
+    event
   end
 
   def mock_plannable
-    @plannable ||= mock_model(Chapter)
+    plannable
   end
   
-  def record_invalid
-    raise ActiveRecord::RecordInvalid.new(mock_event)
-  end
+  def record_invalid; raise ActiveRecord::RecordInvalid.new(mock_event); end
 
   before :each do
     User.stub  :new      => mock_model(User, :admin? => true)
@@ -21,25 +22,35 @@ describe EventsController do
   end
 
   describe "GET #index" do
-    before  { get :index }
+    before do
+      Event.should_receive(:search) { [event] }
+      get :index
+    end
     subject { controller }
-    it { should assign_to :events }
+    it { should assign_to(:events).with([event]) }
     it { should render_template :index }
     it { should respond_with :success }
   end
 
   describe "GET #index.xml" do
-    before  { get :index, :format => :xml }
+    before do
+      Event.should_receive(:search) { [event] }
+      get :index, :format => :xml
+    end
     subject { controller }
-    it { should assign_to :events }
+    it { should assign_to(:events).with([event]) }
     it { should render_template :index }
     it { should respond_with :success }
   end
 
   describe "GET #show" do
-    before  { get :show, :id => 1 }
+    before do
+      Event.should_receive(:find).with(event.id) { event }
+      get :show, :id => event.id
+    end
+
     subject { controller }
-    it { should assign_to :event }
+    it { should assign_to(:event).with(event) }
     it { should render_template :show }
     it { should respond_with :success }
   end
@@ -81,9 +92,10 @@ describe EventsController do
   end
 
   describe "GET #edit" do
-    before  { get :edit, :id => 1 }
+    before  { Event.should_receive(:find).with(event.id) { event } }
+    before  { get :edit, :id => event.id }
     subject { controller }
-    it { should assign_to :event }
+    it { should assign_to(:event) }
     it { should render_template :edit }
     it { should respond_with :success }
   end

@@ -4,10 +4,10 @@ describe CoordinatorsController do
   let (:coordinator) { mock_model(Coordinator) }
   let (:chapter)     { mock_model(Chapter) }
   let (:user)        { mock_model(User) }
+  let (:params)      { {"user_id" => user.id, "chapter_id" => chapter.id} }
   
   def record_invalid; raise ActiveRecord::RecordInvalid.new(coordinator); end
   def create; post :create, :coordinator => params; end
-  def params; {"user_id" => user.id, "chapter_id" => chapter.id}; end
 
   before { User.stub(:new) { mock_model(User, :admin? => true) } }
 

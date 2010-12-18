@@ -7,6 +7,8 @@ describe ChaptersController do
   let(:location)    { mock_model(GeographicLocation) }
   let(:event)       { mock_model(Event, :plannable => chapter) }
   let(:map)         { { :lat => 0, :lng => 0, :zoom => 2, :markers => [], :events => false } }
+  let(:params)      { Factory.attributes_for(:chapter) }
+  let(:location_params) { Factory.attributes_for(:location) }
 
   def mock_chapter
     chapter
@@ -151,102 +153,69 @@ describe ChaptersController do
     end
 
     before :each do
-      Chapter.stub :find => mock_chapter
-      mock_chapter.stub :location => mock_location
-      mock_chapter.stub :links => [mock_link]
-      mock_location.stub :map_hash => mock_map
+      Chapter.should_receive(:find).with(chapter.id) { chapter }
+      chapter.should_receive(:location) { location }
+      chapter.should_receive(:links) { [link] }
+      location.should_receive(:map_hash) { map }
+      get :edit, :id => chapter.id
     end
 
-    it 'should assign chapter with the requested record' do
-      Chapter.should_receive(:find).with(1) { mock_chapter }
-      get :edit, :id => 1
-      assigns[:chapter].should == mock_chapter
-    end
-
-    it 'should assign location with the chapter\'s location' do
-      mock_chapter.should_receive(:location) { mock_location }
-      edit
-      assigns[:location].should == mock_location
-    end
-
-    it 'should assign map with the location\'s map hash' do
-      mock_location.should_receive(:map_hash) { mock_map }
-      edit
-      assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
-    end
-
-    it 'should assign links with the chapter\'s links' do
-      mock_chapter.should_receive(:links) { [mock_link] }
-      edit
-      assigns[:links].should == [mock_link]
-    end
+    subject { controller }
+    it { should assign_to(:chapter).with(chapter) }
+    it { should assign_to(:location).with(location) }
+    it { should assign_to(:links).with([link]) }
+    it { should assign_to(:map).with(map.merge(:events => true)) }
+    it { should render_template :edit }
+    it { should respond_with :success }
   end
 
   describe 'POST create' do
     def create(opts={})
-      opts.merge!(:location_id => 1, :chapter => {"with"=>"params"})
+      opts.merge!(:location_id => location.id, :chapter => params)
       post :create, opts
     end
 
-    before :each do
-      GeographicLocation.stub :find => mock_location
-      Chapter.stub :new => mock_chapter
-      mock_chapter.stub :attributes=
-      mock_chapter.stub :geographic_location=
-      mock_chapter.stub :save!
+    before do
+      GeographicLocation.should_receive(:find).with(location.id) { location }
+      Chapter.should_receive(:new) { chapter }
+      chapter.should_receive(:attributes=).with(params.stringify_keys)
+      chapter.should_receive(:geographic_location=).with(location)
     end
 
-    it 'should assign chapter with a new record' do
-      Chapter.should_receive(:new) { mock_chapter }
-      mock_chapter.should_receive(:attributes=).with({"with"=>"params"})
-      create
-      assigns[:chapter].should == mock_chapter
-    end
-    
-    it 'should assign location with the requested location' do
-      GeographicLocation.should_receive(:find).with(1) { mock_location }
-      create
-      assigns[:location].should == mock_location
-    end
-
-    describe 'when a location param exists' do
-      it 'should update the location\'s attributes' do
-        mock_location.should_receive(:update_attributes).with({"with"=>"params"})
-        create :location => {"with"=>"params"}
-      end
-    end
-
-    it 'should assign the chapter\'s location with the requested location' do
-      mock_chapter.should_receive(:geographic_location=).with(mock_location)
-      create
-    end
-
-    it 'should save the record' do
-      mock_chapter.should_receive(:save!)
-      create
-    end
-
-    it 'should redirect to the chapter\'s page with a flash notice' do
-      create
-      response.should redirect_to(chapter_path(mock_chapter.name))
-      flash[:notice].should_not be_nil
-    end
-
-    describe 'when validation fails' do
-      before :each do
-        mock_chapter.stub(:save!) { record_invalid }
+    context 'with a location param hash' do
+      before do
+        location.should_receive(:update_attributes).with(location_params.stringify_keys)
+        chapter.stub :save!
+        create :location => location_params
       end
 
-      it 'should assign map with the location\'s map hash' do
-        mock_location.should_receive(:map_hash) { mock_map }
+      subject { controller }
+      it { should redirect_to(chapter_path(chapter.name)) }
+    end
+
+    context 'when validation passes' do
+      before do
+        chapter.should_receive(:save!)
         create
-        assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
       end
 
-      it 'should render new' do
+      subject { controller }
+      it { should assign_to(:chapter).with(chapter) }
+      it { should assign_to(:location).with(location) }
+      it { should set_the_flash }
+      it { should redirect_to(chapter_path(chapter.name)) }
+    end
+
+    context 'when validation fails' do
+      before do
+        chapter.stub(:save!) { record_invalid }
         create
-        response.should render_template('chapters/new')
       end
+
+      subject { controller }
+      it { should assign_to(:map).with(map.merge(:events => true)) }
+      it { should render_template :new }
+      it { should respond_with :success }
     end
   end
   
@@ -320,70 +289,47 @@ describe ChaptersController do
 
   describe 'PUT update' do
     def update(opts={})
-      opts.merge!(:id => 1, :chapter => {"with"=>"params"})
+      opts.merge!(:id => chapter.id, :chapter => params)
       put :update, opts
     end
     
-    before :each do
-      Chapter.stub :find => mock_chapter
-      mock_chapter.stub :update_attributes!
+    before do
+      Chapter.should_receive(:find).with(chapter.id) { chapter }
+      chapter.stub :location => location
+      chapter.stub :links => [link]
     end
-
-    it 'should assign chapter with the requested record' do
-      Chapter.should_receive(:find).with(1) { mock_chapter }
-      update
-      assigns[:chapter].should == mock_chapter
-    end
-
-    describe 'when a location param exists' do
-      it 'should update the location\'s attributes' do
-        mock_chapter.should_receive(:location) { mock_location }
-        mock_location.should_receive(:update_attributes).with({"with"=>"params"})
-        update :location => {"with"=>"params"}
-      end
-    end
-
-    it 'should update the chapter\'s attributes' do
-      mock_chapter.should_receive(:update_attributes!).with({"with"=>"params"})
-      update
-    end
-
-    it 'should redirect to the chapter\'s page with a flash notice' do
-      update
-      response.should redirect_to(chapter_path(mock_chapter.name))
-      flash[:notice].should_not be_nil
-    end
-
-    describe 'when validation fails' do
-      before :each do
-        mock_chapter.stub(:update_attributes!) { record_invalid }
-        mock_chapter.stub :location => mock_location
-        mock_chapter.stub :links => [mock_link]
-        mock_location.stub :map_hash => mock_map
+    
+    context 'when a location params hash is given' do
+      before do
+        chapter.should_receive(:location) { location }
+        chapter.stub :update_attributes!
+        location.should_receive(:update_attributes).with(location_params.stringify_keys)
+        update :location => location_params
       end
 
-      it 'should assign location with the chapter\'s location' do
-        mock_chapter.should_receive(:location) { mock_location }
+      subject { controller }
+      it { should redirect_to(chapter_path(chapter.name)) }
+    end
+
+    context 'when validation passes' do
+      before do
+        chapter.should_receive(:update_attributes!).with(params.stringify_keys)
         update
-        assigns[:location].should == mock_location
+      end
+      
+      it { should assign_to(:chapter).with(chapter) }
+      it { should set_the_flash }
+      it { should redirect_to(chapter_path(chapter.name)) }
+    end
+
+    context 'when validation fails' do
+      before do
+        chapter.stub(:update_attributes!) { record_invalid }
+        update
       end
 
-      it 'should assign map with the location\'s map hash' do
-        mock_location.should_receive(:map_hash) { mock_map }
-        update
-        assigns[:map].symbolize_keys.should == mock_map.merge(:events => true)
-      end
-
-      it 'should assign links with the chapter\'s links' do
-        mock_chapter.should_receive(:links) { [mock_link] }
-        update
-        assigns[:links].should == [mock_link]
-      end
-
-      it 'should render edit' do
-        update
-        response.should render_template('chapters/edit')
-      end
+      subject { controller }
+      it { should render_template :edit }
     end
   end
 

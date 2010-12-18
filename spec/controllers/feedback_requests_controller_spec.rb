@@ -1,206 +1,169 @@
 require 'spec_helper'
 
 describe FeedbackRequestsController do
+  let(:feedback) { mock_model(FeedbackRequest) }
+  let(:user)     { mock_model(User) }
+  let(:admin)    { mock_model(User, :admin? => true) }
+  let(:params)   { Factory.attributes_for(:feedback_request).stringify_keys }
+
   def mock_feedback
-    @feedback ||= mock_model(FeedbackRequest)
+    feedback
   end
 
   def mock_user
-    @user ||= mock_model(User)
+    user
   end
 
   def mock_admin
-    @user ||= mock_model(User, :admin? => true)
+    admin
   end
 
   def create
-    post :create, :feedback_request => {"with"=>"params"}
+    post :create, :feedback_request => params
   end
 
-  def record_invalid
-    raise ActiveRecord::RecordInvalid.new(mock_feedback)
-  end
+  def record_invalid; raise ActiveRecord::RecordInvalid.new(feedback); end
+
   
   describe "GET 'index'" do
-    before :each do
-      User.stub :new => mock_admin
-      FeedbackRequest.stub :index => [mock_feedback]
+    before { User.stub(:new) { admin } }
+    before do
+      FeedbackRequest.should_receive(:search) { [feedback] }
+      get :index
     end
 
-    it 'should be successful' do
-      get :index
-      response.should be_success
-    end
-    
-    it 'should assign feedback with multiple records' do
-      FeedbackRequest.should_receive(:index) { [mock_feedback] }
-      get :index
-      assigns[:feedback].should == [mock_feedback]
-    end
+    subject { controller }
+    it { should assign_to(:feedbacks).with([feedback]) }
+    it { should render_template :index }
+    it { should respond_with :success }
   end
 
   describe "GET 'show'" do
-    before :each do
-      FeedbackRequest.stub :find => mock_feedback
-      User.stub :new => mock_admin
+    before { User.stub(:new) { admin } }
+    before do
+      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+      get :show, :id => feedback.id
     end
-      
-    it 'should be successful' do
-      get :show, :id => 1
-      response.should be_success
-    end
-
-    it 'should assign feedback with the selected record' do
-      get :show, :id => 1
-      assigns[:feedback].should == mock_feedback
-    end
+    
+    subject { controller }
+    it { should assign_to(:feedback).with(feedback) }
+    it { should render_template :show }
+    it { should respond_with :success }
   end
 
   describe "GET 'new'" do
+    before { User.stub(:new) { admin } }
     before :each do
-      FeedbackRequest.stub :new => mock_feedback
-      User.stub :new => mock_admin
+      FeedbackRequest.should_receive(:new) { feedback }
+      get :new
     end
 
-    it 'should be successful' do
-      get :new
-      response.should be_success
-    end
-
-    it 'should assign feedback with a new record' do
-      get :new
-      assigns[:feedback].should == mock_feedback
-    end
+    subject { controller }
+    it { should assign_to(:feedback).with(feedback) }
+    it { should render_template :new }
+    it { should respond_with :success }
   end
 
   describe "GET 'edit' " do
+    before { User.stub(:new) { admin } }
     before :each do
-      FeedbackRequest.stub :find => mock_feedback
-      User.stub :new =>  mock_admin
+      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+      get :edit, :id => feedback.id
     end
 
-    it 'should be successful' do
-      get :edit, :id => 1
-      response.should be_success
-    end
-
-    it 'should assign feedback with the selected record' do
-      get :edit, :id => 1
-      assigns[:feedback].should == mock_feedback
-    end
+    subject { controller }
+    it { should assign_to(:feedback).with(feedback) }
+    it { should render_template :edit }
+    it { should respond_with :success }
   end
 
   describe "POST 'create'" do
-    before :each do
-      FeedbackRequest.stub :new => mock_feedback
-      mock_feedback.stub :attributes=
-      mock_feedback.stub :save!
+    def create
+      post :create, :feedback_request => params
+    end
+
+    before do
+      FeedbackRequest.should_receive(:new) { feedback }
+      feedback.should_receive(:attributes=).with(params)
     end
 
     describe "when signed in" do
-      before :each do
+      before do
         @admin = Factory(:admin)
         sign_in @admin
         mock_feedback.stub :user=
       end
+      
+      context 'when validation passes' do
+        before do
+          feedback.should_receive(:save!)
+          create
+        end
 
-      it 'should assign feedback with a new record with the given params' do
-        FeedbackRequest.should_receive(:new) { mock_feedback }
-        mock_feedback.should_receive(:attributes=).with("with"=>"params")
-        create
-        assigns[:feedback].should == mock_feedback
+        subject { controller }
+        it { should assign_to(:feedback).with(feedback) }
+        it { should set_the_flash }
+        it { should redirect_to(feedback_request_path(mock_feedback)) }
       end
 
-      it 'should assign user to the feedback with the current user' do
-        mock_feedback.should_receive(:user=).with(@admin)
-        create
-      end
+      context 'when validation fails' do
+        before do
+          feedback.stub(:save!) { record_invalid }
+          create
+        end
 
-      it 'should save the feedback' do
-        mock_feedback.should_receive(:save!)
-        create
-      end
-
-      it 'should set a flash notice' do
-        create
-        flash[:notice].should_not be_nil
-      end
-
-      it 'should redirect to the feedback\'s page' do
-        create
-        response.should redirect_to(feedback_request_path(mock_feedback))
-      end
-
-      it 'should render new when validation fails' do
-        mock_feedback.stub(:save!) { record_invalid }
-        create
-        response.should render_template('feedback_requests/new')
+        subject { controller }
+        it { should assign_to(:feedback).with(feedback) }
+        it { should render_template :new }
       end
     end
 
     describe "when not signed in" do
-      before :each do
-        Factory(:site_option, :key => "feedback_status", :value => "public")
-      end
-
-      it 'should assign feedback with a new record and the given params' do
-        create
-        assigns[:feedback].should == mock_feedback
-      end
-
-      it 'should save the feedback' do
-        mock_feedback.should_receive(:save!)
+      before do
+        SiteOption.stub(:find_by_key) { mock_model(SiteOption, :value => 'public') }
+        FeedbackRequest.should_receive(:new) { feedback }
+        feedback.should_receive(:save!)
         create
       end
 
-      it 'should set a flash notice' do
-        create
-        flash[:notice].should_not be_nil
-      end
-
-      it 'should redirect to the home page' do
-        create
-        response.should redirect_to(home_url)
-      end
+      subject { controller }
+      it { should assign_to(:feedback).with(feedback) }
+      it { should set_the_flash }
+      it { should redirect_to(home_url) }
     end
   end
 
   describe "PUT 'update'" do
+    before { User.stub(:new) { admin } }
     def update
-      put :update, :id => 1, :feedback_request => {"with"=>"params"}
+      put :update, :id => feedback.id, :feedback_request => params
     end
 
-    before :each do
-      FeedbackRequest.stub :find => mock_feedback
-      mock_feedback.stub :update_attributes!
-      User.stub :new => mock_admin
+    before do
+      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+    end
+    
+    context 'when validation passes' do
+      before do
+        feedback.should_receive(:update_attributes!).with(params)
+        update
+      end
+
+      subject { controller }
+      it { should assign_to(:feedback).with(feedback) }
+      it { should set_the_flash }
+      it { should redirect_to(feedback_request_url(feedback)) }
     end
 
-    it 'should assign feedback with the requested record' do
-      FeedbackRequest.should_receive(:find).with(1) { mock_feedback }
-      update
-      assigns[:feedback].should == mock_feedback
-    end
+    context 'when validation fails' do
+      before do
+        feedback.stub(:update_attributes!) { record_invalid }
+        update
+      end
 
-    it 'should update the record with the given params' do
-      mock_feedback.should_receive(:update_attributes!).with({"with"=>"params"})
-      update
-    end
-
-    it 'should set a flash notice' do
-      update
-      flash[:notice].should_not be_nil
-    end
-
-    it 'should redirect to the feedback\'s page' do
-      update
-      response.should redirect_to(feedback_request_url(mock_feedback))
-    end
-
-    it 'should render edit when validation fails' do
-      mock_feedback.stub(:update_attributes!) { record_invalid }
-      update
-      response.should render_template('feedback_requests/edit')
+      subject { controller }
+      it { should assign_to(:feedback).with(feedback) }
+      it { should render_template :edit }
     end
   end
 end

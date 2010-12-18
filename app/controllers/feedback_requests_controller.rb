@@ -4,7 +4,7 @@ class FeedbackRequestsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @feedback = FeedbackRequest.index(index_params.merge(:sort => 'created_at'))
+    @feedbacks = FeedbackRequest.search(index_params)
   end
 
   def show; @feedback = @feedback_request; end
@@ -14,7 +14,7 @@ class FeedbackRequestsController < ApplicationController
   def edit; @feedback = @feedback_request; end
 
   def create
-    @feedback = @feedback_request
+    @feedback = (user_signed_in? ? @feedback_request : FeedbackRequest.new)
     @feedback.user = current_user if user_signed_in?
     @feedback.save!
     redirect_to (user_signed_in? ? @feedback : home_url), :notice => "Feedback submitted successfully"
