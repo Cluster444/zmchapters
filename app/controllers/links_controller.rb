@@ -2,7 +2,7 @@ class LinksController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @links = Link.search(params)
+    @links = Link.search(index_params)
   end
 
   def show;end

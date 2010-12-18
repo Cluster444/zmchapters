@@ -66,3 +66,7 @@ $ninesixty-columns: 24;
     @include grid-width(18);
   }
 }
+
+#page.index {
+  @extend #page.two-column;
+}

@@ -1,0 +1,30 @@
+<% title 'Links' %>
+<% page_class 'index' %>
+
+<%= content_for :sidebar do %>
+  <div>
+    <h1>Search</h1>
+    <%= form_tag links_path, :method => :get do %>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
+<% end %>
+
+<table>
+  <thead>
+    <th>URL</th>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Owner</th>
+    <% if can? :update, Link %>
+      <th></th>
+    <% end %>
+    <% if can? :destroy, Link %>
+      <th></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <%= render 'links' %>
+  </tbody>
+</table>

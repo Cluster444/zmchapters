@@ -1,0 +1,14 @@
+<% for link in @links %>
+  <tr>
+    <td><%= link_to link.url, link.url, :target => '_blank' %></td>
+    <td><%= link.title %></td>
+    <td><%= link.linkable_type %></td>
+    <td><%= link.linkable.name %></td>
+    <% if can? :update, link %>
+      <td><%= link_to "Edit", edit_link_path(link) %></td>
+    <% end %>
+    <% if can? :destroy, link %>
+      <td><%= button_to "Remove", link_path(link), :method => :delete, :confirm => "Are you sure?" %></td>
+    <% end %>
+  </tr>
+<% end %>
