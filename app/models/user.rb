@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   belongs_to :chapter
   has_many :coordinators
+  has_and_belongs_to_many :tasks
 
   validates :name,     :presence => true, :length => {:maximum => 50}
   validates :username, :presence => true, :uniqueness => true, :length => {:maximum => 30}

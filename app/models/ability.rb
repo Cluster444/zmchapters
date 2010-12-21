@@ -5,10 +5,14 @@ class Ability
     user ||= User.new
     
     can :manage, :all and return if user.admin?
-
     if user.new_record?
       can :create, User if registration_open?
       can :create, FeedbackRequest if feedback_public?
+    elsif user.coordinator?
+      coordinator = Coordinator.find_by_user_id user.id
+      can :manage, Link, :linkable => coordinator.chapter
+      can :manage, Task, :taskable => coordinator.chapter
+      can :manage, Event, :plannable => coordinator.chapter
     else
       can :update, user
       can :join_chapter, user
@@ -21,6 +25,7 @@ class Ability
     can :read, GeographicLocation
     can :read, Link
     can :read, Page
+    can :read, Task
     can :read, User
   end
 

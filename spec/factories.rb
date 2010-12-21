@@ -62,6 +62,18 @@ Factory.define :site_option do |f|
   f.mutable "true"
 end
 
+Factory.define :task do |f|
+  f.status 'new'
+  f.priority 'normal'
+  f.category 'category'
+  f.subject 'subject'
+  f.description 'description'
+  f.starts_at DateTime.now + 1.minute
+  f.due_at DateTime.now + 2.minutes
+  f.percent_complete 10
+  f.association :taskable, :factory => :chapter
+end
+
 Factory.define :user do |f|
   f.name 'Test User'
   f.sequence(:username) {|n| "test#{n}" }

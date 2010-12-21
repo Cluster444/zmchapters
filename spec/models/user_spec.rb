@@ -26,6 +26,7 @@ describe User do
   # Associations
   it { should belong_to :chapter }
   it { should have_many :coordinators }
+  it { should have_and_belong_to_many :tasks }
 
   # Validations
   it { should validate_presence_of :name }

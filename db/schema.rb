@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101217092216) do
+ActiveRecord::Schema.define(:version => 20101220190845) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -90,6 +90,28 @@ ActiveRecord::Schema.define(:version => 20101217092216) do
     t.boolean  "mutable"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "status",           :default => "new"
+    t.string   "priority",         :default => "normal"
+    t.string   "category"
+    t.string   "subject"
+    t.text     "description"
+    t.datetime "starts_at"
+    t.datetime "due_at"
+    t.integer  "percent_complete"
+    t.integer  "taskable_id"
+    t.string   "taskable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks_users", :id => false, :force => true do |t|
+    t.integer "task_id"
+    t.integer "user_id"
+    t.boolean "active",      :default => true
+    t.boolean "coordinator", :default => false
   end
 
   create_table "test_indices", :force => true do |t|
