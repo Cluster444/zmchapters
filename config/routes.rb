@@ -1,6 +1,6 @@
 Tzm::Application.routes.draw do
   devise_for :users
-  resources :users, :path => 'user' do
+  resources :users, :path => 'u' do
     member do
       put 'join_chapter/:chapter_id', :action => :join_chapter, :as => 'join_chapter'
     end
@@ -9,7 +9,7 @@ Tzm::Application.routes.draw do
   resources :coordinators, :only => [:new, :create, :destroy]
   resources :feedback_requests, :path => 'feedback', :except => [:destroy]
   
-  resources :chapters do
+  resources :chapters, :except => [:destroy] do
     collection do
       get :select_country_for_new
       get :select_territory_for_new
@@ -43,4 +43,6 @@ Tzm::Application.routes.draw do
   root :to => "pages#show", :uri => "home"
 
   get "/:chapter_name", :controller => :chapters, :action => :show, :as => 'chapter'
+  get "/:chapter_name/edit", :controller => :chapters, :action => :edit, :as => 'edit_chapter'
+  put "/:chapter_name", :controller => :chapters, :action => :update, :as => 'chapter'
 end

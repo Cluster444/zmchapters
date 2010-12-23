@@ -10,6 +10,25 @@ describe ChaptersController do
   let(:params)      { Factory.attributes_for(:chapter) }
   let(:location_params) { Factory.attributes_for(:location) }
 
+  describe 'routing' do
+    # By ID
+    it { should route(:get,    '/chapters').to(       :action => :index)             }
+    it { should route(:get,    '/chapters/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/chapters/new').to(   :action => :new)               }
+    it { should route(:get,    '/chapters/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/chapters').to(       :action => :create)            }
+    it { should route(:put,    '/chapters/1').to(     :action => :update,  :id => 1) }
+    
+    # By Name
+    it { should route(:get, '/SomeChapter').to(     :action => :show,   :chapter_name => 'SomeChapter') }
+    it { should route(:get, '/SomeChapter/edit').to(:action => :edit,   :chapter_name => 'SomeChapter') }
+    it { should route(:put, '/SomeChapter').to(     :action => :update, :chapter_name => 'SomeChapter') }
+
+    # No Destroy
+    it { should_not route(:delete, '/chapters/1').to( :action => :destroy, :id => 1) }
+    it { should_not route(:delete, '/SomeChapter').to(:action => :destroy, :chapter_name => 'SomeChapter') }
+  end
+
   def mock_chapter
     chapter
   end

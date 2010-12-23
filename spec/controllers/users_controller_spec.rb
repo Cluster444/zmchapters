@@ -4,16 +4,16 @@ describe UsersController do
   let(:chapter) { mock_model(Chapter) }
   let(:params)  { Factory.attributes_for(:user) }
 
-  def mock_user(stubs={})
-    user
+  describe 'routing' do
+    it { should route(:get,    '/u').to(       :action => :index)             }
+    it { should route(:get,    '/u/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/u/new').to(   :action => :new)               }
+    it { should route(:get,    '/u/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/u').to(       :action => :create)            }
+    it { should route(:put,    '/u/1').to(     :action => :update,  :id => 1) }
+    it { should route(:delete, '/u/1').to(     :action => :destroy, :id => 1) }
   end
 
-  def mock_chapter
-    chapter
-  end
-  
-  def record_invalid; raise ActiveRecord::RecordInvalid.new(user); end
-  
   before :all do
     User.destroy_all
     @admin = Factory(:admin)
@@ -104,7 +104,7 @@ describe UsersController do
     end
 
     context 'when validation fails' do
-      before  { @admin.stub(:update_attributes!) { raise 'wtf' } }
+      before  { @admin.stub(:update_attributes!) { record_invalid(@admin) } }
       before  { put :update, :id => @admin.id, :user => {:name => 'a'*51} }
       subject { controller }
       it { should assign_to(:user).with(@admin) }

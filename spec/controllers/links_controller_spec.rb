@@ -7,6 +7,16 @@ describe LinksController do
   let(:linkable_params) { {:type => 'Chapter', :id => chapter.id} }
   let(:chapter) { mock_model(Chapter) }
 
+  describe 'routing' do
+    it { should route(:get,    '/links').to(       :action => :index)             }
+    it { should route(:get,    '/links/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/links/new').to(   :action => :new)               }
+    it { should route(:get,    '/links/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/links').to(       :action => :create)            }
+    it { should route(:put,    '/links/1').to(     :action => :update,  :id => 1) }
+    it { should route(:delete, '/links/1').to(     :action => :destroy, :id => 1) }
+  end
+
   before { User.stub(:new) { mock_model(User, :admin? => true) } }
 
   describe '#index' do

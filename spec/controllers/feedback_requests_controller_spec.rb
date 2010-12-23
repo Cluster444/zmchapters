@@ -24,6 +24,15 @@ describe FeedbackRequestsController do
 
   def record_invalid; raise ActiveRecord::RecordInvalid.new(feedback); end
 
+  describe 'routing' do
+    it { should route(:get,    '/feedback').to(       :action => :index)             }
+    it { should route(:get,    '/feedback/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/feedback/new').to(   :action => :new)               }
+    it { should route(:get,    '/feedback/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/feedback').to(       :action => :create)            }
+    it { should route(:put,    '/feedback/1').to(     :action => :update,  :id => 1) }
+    it { should_not route(:delete, '/feedback/1').to(     :action => :destroy, :id => 1) }
+  end
   
   describe "GET 'index'" do
     before { User.stub(:new) { admin } }

@@ -6,6 +6,16 @@ describe EventsController do
   let(:params)  { Factory.attributes_for(:event).stringify_keys }
   let(:plannable_params) { {:type => 'Chapter', :id => chapter.id} }
 
+  describe 'routing' do
+    it { should route(:get,    '/events').to(       :action => :index)             }
+    it { should route(:get,    '/events/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/events/new').to(   :action => :new)               }
+    it { should route(:get,    '/events/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/events').to(       :action => :create)            }
+    it { should route(:put,    '/events/1').to(     :action => :update,  :id => 1) }
+    it { should route(:delete, '/events/1').to(     :action => :destroy, :id => 1) }
+  end
+
   before :each do
     User.stub  :new => mock_model(User, :admin? => true)
   end

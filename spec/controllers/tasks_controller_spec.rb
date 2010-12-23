@@ -6,6 +6,16 @@ describe TasksController do
   let(:params) { Factory.attributes_for(:task).stringify_keys }
   
   before { User.stub(:new) { mock_model(User, :admin? => true) } }
+  
+  describe 'routing' do
+    it { should route(:get,    '/tasks').to(       :action => :index)             }
+    it { should route(:get,    '/tasks/1').to(     :action => :show,    :id => 1) }
+    it { should route(:get,    '/tasks/new').to(   :action => :new)               }
+    it { should route(:get,    '/tasks/1/edit').to(:action => :edit,    :id => 1) }
+    it { should route(:post,   '/tasks').to(       :action => :create)            }
+    it { should route(:put,    '/tasks/1').to(     :action => :update,  :id => 1) }
+    it { should route(:delete, '/tasks/1').to(     :action => :destroy, :id => 1) }
+  end
 
   describe "GET #index" do
     before do

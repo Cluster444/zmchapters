@@ -9,6 +9,12 @@ describe CoordinatorsController do
   def record_invalid; raise ActiveRecord::RecordInvalid.new(coordinator); end
   def create; post :create, :coordinator => params; end
 
+  describe 'routing' do
+    it { should route(:get, '/coordinators/new').to(:action => :new) }
+    it { should route(:post, '/coordinators').to(:action => :create) }
+    it { should route(:delete, '/coordinators/1').to(:action => :destroy, :id => 1) }
+  end
+
   before { User.stub(:new) { mock_model(User, :admin? => true) } }
 
   describe "GET new" do
