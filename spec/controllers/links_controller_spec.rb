@@ -4,12 +4,14 @@ describe LinksController do
   let(:link)   { mock_model(Link) }
   let(:links)  { [link] }
   let(:params) { Factory.attributes_for(:link).stringify_keys }
+  let(:linkable_params) { {:type => 'Chapter', :id => chapter.id} }
+  let(:chapter) { mock_model(Chapter) }
 
   before { User.stub(:new) { mock_model(User, :admin? => true) } }
 
   describe '#index' do
     before do
-      Link.should_receive(:search) { links }
+      Link.stub_chain(:accessible_by, :search) { links }
       get :index
     end
     subject { controller }
@@ -32,12 +34,38 @@ describe LinksController do
   describe '#new' do
     before do
       Link.should_receive(:new) { link }
-      get :new
     end
-    subject { controller }
-    it { should assign_to(:link).with(link) }
-    it { should render_template :new }
-    it { should respond_with :success }
+
+    context 'when a valid plannable is given' do
+      before do
+        Chapter.should_receive(:find).with(chapter.id) { chapter }
+        link.should_receive(:linkable=).with(chapter)
+        post :new, :linkable => linkable_params
+      end
+      subject { controller }
+      it { should assign_to(:link).with(link) }
+      it { should render_template :new }
+      it { should respond_with :success }
+    end
+
+    context 'when an invalid plannable type is given' do
+      before do
+        post :new, :linkable => {:type => 'NotAModel', :id => 1}
+      end
+      subject { controller }
+      it { should set_the_flash }
+      it { should redirect_to(Link) }
+    end
+
+    context 'when an invalid plannable id is given' do
+      before do
+        Chapter.stub(:find) { record_not_found }
+        post :new, :linkable => linkable_params
+      end
+      subject { controller }
+      it { should set_the_flash }
+      it { should redirect_to(Link) }
+    end
   end
 
   describe '#edit' do
@@ -55,12 +83,14 @@ describe LinksController do
     before do
       Link.should_receive(:new) { link }
       link.should_receive(:attributes=).with(params)
+      Chapter.should_receive(:find).with(chapter.id) { chapter }
+      link.should_receive(:linkable=).with(chapter)
     end
 
     context 'when validation passes' do
       before do
         link.should_receive(:save!)
-        post :create, :link => params
+        post :create, :link => params, :linkable => linkable_params
       end
       subject { controller }
       it { should assign_to(:link).with(link) }
@@ -71,7 +101,7 @@ describe LinksController do
     context 'when validation fails' do
       before do
         link.stub(:save!) { record_invalid(link) }
-        post :create, :link => params
+        post :create, :link => params, :linkable => linkable_params
       end
       subject { controller }
       it { should assign_to(:link).with(link) }

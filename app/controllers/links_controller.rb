@@ -1,15 +1,19 @@
 class LinksController < ApplicationController
   load_and_authorize_resource
 
-  def index
-    @links = Link.search(index_params)
+  before_filter :only => [:new, :create] do |controller|
+    controller.load_polymorphic :linkable
   end
 
-  def show;end
+  def index
+    @links = @links.search(index_params)
+  end
 
-  def new;end
+  def show; end
 
-  def edit;end
+  def new; end
+
+  def edit; end
   
   def create
     @link.save!
