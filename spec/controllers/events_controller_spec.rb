@@ -1,29 +1,18 @@
 require 'spec_helper'
 
 describe EventsController do
-  let(:event)     { mock_model(Event) }
-  let(:plannable) { mock_model(Chapter) }
-
-  def mock_event
-    event
-  end
-
-  def mock_plannable
-    plannable
-  end
-  
-  def record_invalid; raise ActiveRecord::RecordInvalid.new(mock_event); end
+  let(:event)   { mock_model(Event) }
+  let(:chapter) { mock_model(Chapter) }
+  let(:params)  { Factory.attributes_for(:event).stringify_keys }
+  let(:plannable_params) { {:type => 'Chapter', :id => chapter.id} }
 
   before :each do
-    User.stub  :new      => mock_model(User, :admin? => true)
-    Event.stub :find     => mock_event
-    Event.stub :search   => [mock_event]
-    Event.stub :new      => mock_event
+    User.stub  :new => mock_model(User, :admin? => true)
   end
 
   describe "GET #index" do
     before do
-      Event.should_receive(:search) { [event] }
+      Event.stub_chain(:accessible_by, :search) { [event] }
       get :index
     end
     subject { controller }
@@ -34,7 +23,7 @@ describe EventsController do
 
   describe "GET #index.xml" do
     before do
-      Event.should_receive(:search) { [event] }
+      Event.stub_chain(:accessible_by, :search) { [event] }
       get :index, :format => :xml
     end
     subject { controller }
@@ -48,7 +37,6 @@ describe EventsController do
       Event.should_receive(:find).with(event.id) { event }
       get :show, :id => event.id
     end
-
     subject { controller }
     it { should assign_to(:event).with(event) }
     it { should render_template :show }
@@ -56,96 +44,114 @@ describe EventsController do
   end
 
   describe "GET #new" do
-    def new
-      get :new, :plannable_type => "Chapter", :plannable_id => 1
+    before do
+      Event.should_receive(:new) { event }
     end
-
-    describe 'when a valid plannable is given' do
-      before  { Chapter.stub :find => mock_plannable }
-      before  { new }
+    context 'when a valid plannable is given' do
+      before do
+        Chapter.should_receive(:find).with(chapter.id) { chapter }
+        event.should_receive(:plannable=).with(chapter)
+        get :new, :plannable => plannable_params
+      end
       subject { controller }
       it { should assign_to :event }
-      it { should assign_to :plannable }
       it { should render_template :new }
       it { should respond_with :success }
     end
 
-    describe 'when an invalid plannable is given' do
-      before  { Chapter.stub :find => mock_plannable }
-      before  { get :new, :plannable_type => "invalid", :plannable_id => 1 }
+    context 'when an invalid plannable is given' do
+      before { get :new, :plannable_type => "NotAModel", :plannable_id => 1 }
       subject { controller }
-      it { should assign_to :event }
-      it { should_not assign_to :plannable }
-      it { should render_template :new }
-      it { should respond_with :success }
+      it { should set_the_flash }
+      it { should redirect_to(Event) }
     end
 
-    describe 'when an invalid plannable id is given' do
-      before  { Chapter.stub(:find) { raise ActiveRecord::RecordNotFound } }
-      before  { new }
+    context 'when an invalid plannable id is given' do
+      before do
+        Chapter.stub(:find) { record_not_found }
+        get :new, :plannable => plannable_params
+      end
       subject { controller }
-      it { should assign_to :event }
-      it { should_not assign_to :plannable }
-      it { should render_template :new }
-      it { should respond_with :success }
+      it { should set_the_flash }
+      it { should redirect_to(Event) }
     end
   end
 
   describe "GET #edit" do
-    before  { Event.should_receive(:find).with(event.id) { event } }
-    before  { get :edit, :id => event.id }
+    before do
+      Event.should_receive(:find).with(event.id) { event }
+      get :edit, :id => event.id
+    end
     subject { controller }
-    it { should assign_to(:event) }
+    it { should assign_to(:event).with(event) }
     it { should render_template :edit }
     it { should respond_with :success }
   end
   
   describe "POST #create" do
-    def create
-      post :create, :event => {"with"=>"params"}
+    before do
+      Event.should_receive(:new) { event }
+      event.should_receive(:attributes=).with(params)
+      Chapter.should_receive(:find).with(chapter.id) { chapter }
+      event.should_receive(:plannable=).with(chapter)
     end
 
-    before { mock_event.stub :attributes= }
-
-    describe 'when validation passes' do
-      before  { mock_event.stub :save! }
-      before  { create }
+    context 'when validation passes' do
+      before do
+        event.should_receive(:save!)
+        post :create, :event => params, :plannable => plannable_params
+      end
       subject { controller }
       it { should assign_to :event }
       it { should set_the_flash }
-      it { should redirect_to event_url(mock_event) }
+      it { should redirect_to(event) }
     end
 
-    describe 'when validation fails' do
-      before  { mock_event.stub(:save!) { record_invalid } }
-      before  { create }
+    context 'when validation fails' do
+      before do
+        event.stub(:save!) { record_invalid(event) }
+        post :create, :event => params, :plannable => plannable_params
+      end
       subject { controller }
       it { should assign_to :event }
       it { should render_template :new }
+      it { should respond_with :success }
     end
   end
   
   describe "PUT #update" do
-    def update
-      put :update, :id => 1, :event => {"with"=>"params"}
-    end
-
-    describe 'when validation passes' do
-      before { mock_event.stub :update_attributes! }
-      before  { update }
+    before { Event.should_receive(:find).with(event.id) { event } }
+    context 'when validation passes' do
+      before do
+        event.should_receive(:update_attributes!)
+        put :update, :id => event.id, :event => params
+      end
       subject { controller }
       it { should assign_to :event }
       it { should set_the_flash }
-      it { should redirect_to event_url(mock_event) }
+      it { should redirect_to(event) }
     end
 
-    describe 'when validation fails' do
-      before  { mock_event.stub(:update_attributes!) { record_invalid } }
-      before  { update }
+    context 'when validation fails' do
+      before do
+        event.stub(:update_attributes!) { record_invalid(event) }
+        put :update, :id => event.id, :event => params
+      end
       subject { controller }
       it { should assign_to :event }
       it { should render_template :edit }
       it { should respond_with :success }
     end
+  end
+
+  describe "DELETE #destroy" do
+    before do
+      Event.should_receive(:find).with(event.id) { event }
+      event.should_receive(:destroy)
+      delete :destroy, :id => event.id
+    end
+    subject { controller }
+    it { should set_the_flash }
+    it { should redirect_to(Event) }
   end
 end

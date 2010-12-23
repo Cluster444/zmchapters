@@ -31,10 +31,7 @@ describe TasksController do
   end
 
   describe "GET #new" do
-    before do
-      Task.should_receive(:new) { task }
-    end
-
+    before { Task.should_receive(:new) { task } }
     context 'when a valid taskable is given' do
       before do
         Chapter.should_receive(:find) { chapter }

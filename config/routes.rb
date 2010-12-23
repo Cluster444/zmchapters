@@ -22,7 +22,7 @@ Tzm::Application.routes.draw do
   
   resources :links
   resources :tasks
-  resources :events, :except => [:destroy]
+  resources :events
 
   resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show,:new,:create] do
     member do

@@ -28,12 +28,17 @@ class ApplicationController < ActionController::Base
     instance_variable_get("@#{params[:controller].singularize}")
   end
 
+  def index_url
+    eval "#{params[:controller]}_url"
+  end
+
   def load_polymorphic(type)
     raise NameError if params[type][:type].blank?
-    instance_name.taskable = eval "#{params[type][:type]}.find #{params[type][:id]}"
+    poly_value =  eval "#{params[type][:type]}.find #{params[type][:id]}"
+    instance_name.send("#{type}=", poly_value)
   rescue NameError
-    redirect_to Task, :alert => "#{params[:controller].singularize} needs to be created with a taskable type"
+    redirect_to index_url, :alert => "#{params[:controller].singularize} needs to be created with a taskable type"
   rescue ActiveRecord::RecordNotFound
-    redirect_to Task, :alert => "No #{params[type][:type]} found."
+    redirect_to index_url, :alert => "No #{params[type][:type]} found."
   end
 end

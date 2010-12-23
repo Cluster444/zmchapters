@@ -1,31 +1,23 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
 
+  before_filter :only => [:new, :create] do |controller|
+    controller.load_polymorphic :plannable
+  end
+
   respond_to :html, :xml, :only => :index
 
   def index
-    respond_with(@events = Event.search(index_params))
+    respond_with(@events = @events.search(index_params))
   end
 
-  def show
-    @event = Event.find params[:id]
-  end
+  def show; end
   
-  def new
-    @event = Event.new :starts_at => DateTime.now, :ends_at => DateTime.now + 1.hour
-    if params[:plannable_type] && params[:plannable_id]
-      begin
-        @plannable = instance_eval(params[:plannable_type]).find params[:plannable_id]
-      rescue; end
-    end
-  end
+  def new; end
 
-  def edit
-    @event = Event.find params[:id]
-  end
+  def edit; end
 
   def create
-    @event = Event.new params[:event]
     @event.save!
     redirect_to @event, :notice => "Event created successfully"
   rescue ActiveRecord::RecordInvalid
@@ -33,10 +25,14 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find params[:id]
     @event.update_attributes! params[:event]
     redirect_to @event, :notice => "Event updated successfully"
   rescue ActiveRecord::RecordInvalid
     render :edit
+  end
+
+  def destroy
+    @event.destroy
+    redirect_to Event, :notice => "Event removed successfully"
   end
 end
