@@ -23,4 +23,17 @@ class ApplicationController < ActionController::Base
     index_keys = [:search, :sort, :direction, :page, :per_page].collect{|k|k.to_s}
     params.select { |k,v| index_keys.include?(k) }
   end
+  
+  def instance_name
+    instance_variable_get("@#{params[:controller].singularize}")
+  end
+
+  def load_polymorphic(type)
+    raise NameError if params[type][:type].blank?
+    instance_name.taskable = eval "#{params[type][:type]}.find #{params[type][:id]}"
+  rescue NameError
+    redirect_to Task, :alert => "#{params[:controller].singularize} needs to be created with a taskable type"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to Task, :alert => "No #{params[type][:type]} found."
+  end
 end
