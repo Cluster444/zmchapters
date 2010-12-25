@@ -1,28 +1,10 @@
 require 'spec_helper'
 
-describe FeedbackRequestsController do
-  let(:feedback) { mock_model(FeedbackRequest) }
+describe FeedbacksController do
+  let(:feedback) { mock_model(Feedback) }
   let(:user)     { mock_model(User) }
   let(:admin)    { mock_model(User, :admin? => true) }
-  let(:params)   { Factory.attributes_for(:feedback_request).stringify_keys }
-
-  def mock_feedback
-    feedback
-  end
-
-  def mock_user
-    user
-  end
-
-  def mock_admin
-    admin
-  end
-
-  def create
-    post :create, :feedback_request => params
-  end
-
-  def record_invalid; raise ActiveRecord::RecordInvalid.new(feedback); end
+  let(:params)   { Factory.attributes_for(:feedback).stringify_keys }
 
   describe 'routing' do
     it { should route(:get,    '/feedback').to(       :action => :index)             }
@@ -37,7 +19,7 @@ describe FeedbackRequestsController do
   describe "GET 'index'" do
     before { User.stub(:new) { admin } }
     before do
-      FeedbackRequest.should_receive(:search) { [feedback] }
+      Feedback.should_receive(:search) { [feedback] }
       get :index
     end
 
@@ -50,7 +32,7 @@ describe FeedbackRequestsController do
   describe "GET 'show'" do
     before { User.stub(:new) { admin } }
     before do
-      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+      Feedback.should_receive(:find).with(feedback.id) { feedback }
       get :show, :id => feedback.id
     end
     
@@ -63,7 +45,7 @@ describe FeedbackRequestsController do
   describe "GET 'new'" do
     before { User.stub(:new) { admin } }
     before :each do
-      FeedbackRequest.should_receive(:new) { feedback }
+      Feedback.should_receive(:new) { feedback }
       get :new
     end
 
@@ -76,7 +58,7 @@ describe FeedbackRequestsController do
   describe "GET 'edit' " do
     before { User.stub(:new) { admin } }
     before :each do
-      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+      Feedback.should_receive(:find).with(feedback.id) { feedback }
       get :edit, :id => feedback.id
     end
 
@@ -88,11 +70,11 @@ describe FeedbackRequestsController do
 
   describe "POST 'create'" do
     def create
-      post :create, :feedback_request => params
+      post :create, :feedback => params
     end
 
     before do
-      FeedbackRequest.should_receive(:new) { feedback }
+      Feedback.should_receive(:new) { feedback }
       feedback.should_receive(:attributes=).with(params)
     end
 
@@ -100,7 +82,7 @@ describe FeedbackRequestsController do
       before do
         @admin = Factory(:admin)
         sign_in @admin
-        mock_feedback.stub :user=
+        feedback.stub :user=
       end
       
       context 'when validation passes' do
@@ -112,25 +94,26 @@ describe FeedbackRequestsController do
         subject { controller }
         it { should assign_to(:feedback).with(feedback) }
         it { should set_the_flash }
-        it { should redirect_to(feedback_request_path(mock_feedback)) }
+        it { should redirect_to(feedback) }
       end
 
       context 'when validation fails' do
         before do
-          feedback.stub(:save!) { record_invalid }
+          feedback.stub(:save!) { record_invalid(feedback) }
           create
         end
 
         subject { controller }
         it { should assign_to(:feedback).with(feedback) }
         it { should render_template :new }
+        it { should respond_with :success }
       end
     end
 
     describe "when not signed in" do
       before do
         SiteOption.stub(:find_by_key) { mock_model(SiteOption, :value => 'public') }
-        FeedbackRequest.should_receive(:new) { feedback }
+        Feedback.should_receive(:new) { feedback }
         feedback.should_receive(:save!)
         create
       end
@@ -144,35 +127,33 @@ describe FeedbackRequestsController do
 
   describe "PUT 'update'" do
     before { User.stub(:new) { admin } }
-    def update
-      put :update, :id => feedback.id, :feedback_request => params
-    end
 
     before do
-      FeedbackRequest.should_receive(:find).with(feedback.id) { feedback }
+      Feedback.should_receive(:find).with(feedback.id) { feedback }
     end
     
     context 'when validation passes' do
       before do
         feedback.should_receive(:update_attributes!).with(params)
-        update
+        put :update, :id => feedback.id, :feedback => params
       end
 
       subject { controller }
       it { should assign_to(:feedback).with(feedback) }
       it { should set_the_flash }
-      it { should redirect_to(feedback_request_url(feedback)) }
+      it { should redirect_to(feedback) }
     end
 
     context 'when validation fails' do
       before do
-        feedback.stub(:update_attributes!) { record_invalid }
-        update
+        feedback.stub(:update_attributes!) { record_invalid(feedback) }
+        put :update, :id => feedback.id, :feedback => params
       end
 
       subject { controller }
       it { should assign_to(:feedback).with(feedback) }
       it { should render_template :edit }
+      it { should respond_with :success }
     end
   end
 end

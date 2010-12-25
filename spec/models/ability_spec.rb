@@ -23,7 +23,7 @@ end
 describe 'Ability' do
   let(:user)        { mock_model(User) }
   let(:site_option) { mock_model(SiteOption) }
-  let(:feedback)    { mock_model(FeedbackRequest) }
+  let(:feedback)    { mock_model(Feedback) }
   let(:chapter)     { mock_model(Chapter) }
   let(:link)        { mock_model(Link) }
   let(:task)        { mock_model(Task) }
@@ -63,6 +63,7 @@ describe 'Ability' do
     it { should be_able_to(:manage, link) }
     it { should be_able_to(:manage, task) }
     it { should be_able_to(:manage, event) }
+    it { should be_able_to(:create, Feedback) }
   end
 
   describe 'when user is a member' do
@@ -84,13 +85,13 @@ describe 'Ability' do
 
     it { should_not be_able_to(:read, SiteOption) }
     it { should_not be_able_to(:create, User) }
-    it { should_not be_able_to(:read, mock_model(FeedbackRequest, :user_id => (user.id+1))) }
+    it { should_not be_able_to(:read, mock_model(Feedback, :user_id => (user.id+1))) }
     it { should_not be_able_to(:update, mock_model(User)) }
 
     describe 'and feedback is open' do
       before { site_option.stub :value => 'open' }
       subject { ability }
-      it { should be_able_to(:create, FeedbackRequest) }
+      it { should be_able_to(:create, Feedback) }
     end
   end
 
@@ -115,7 +116,7 @@ describe 'Ability' do
     describe 'and feedback is open to public' do
       before  { site_option.stub :value => 'public' }
       subject { ability }
-      it      { should be_able_to(:create, FeedbackRequest) }
+      it      { should be_able_to(:create, Feedback) }
     end
   end
 end

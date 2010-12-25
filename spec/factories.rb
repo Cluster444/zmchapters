@@ -28,11 +28,11 @@ Factory.define :user_event, :parent => :event do |f|
   f.association :plannable, :factory => :user
 end
 
-Factory.define :feedback_request do |f|
+Factory.define :feedback do |f|
   f.subject "Test Subject"
   f.message "Test Message"
   f.email "test@test.com"
-  f.category FeedbackRequest::CATEGORIES.first
+  f.category Feedback::CATEGORIES.first
 end
 
 Factory.define :link do |f|

@@ -7,7 +7,7 @@ Tzm::Application.routes.draw do
   end
 
   resources :coordinators, :only => [:new, :create, :destroy]
-  resources :feedback_requests, :path => 'feedback', :except => [:destroy]
+  resources :feedbacks, :path => 'feedback', :except => [:destroy]
   
   resources :chapters, :except => [:destroy] do
     collection do

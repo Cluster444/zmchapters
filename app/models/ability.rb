@@ -7,17 +7,18 @@ class Ability
     can :manage, :all and return if user.admin?
     if user.new_record?
       can :create, User if registration_open?
-      can :create, FeedbackRequest if feedback_public?
+      can :create, Feedback if feedback_public?
     elsif user.coordinator?
       coordinator = Coordinator.find_by_user_id user.id
       can :manage, Link, :linkable => coordinator.chapter
       can :manage, Task, :taskable => coordinator.chapter
       can :manage, Event, :plannable => coordinator.chapter
+      can :create, Feedback
     else
       can :update, user
       can :join_chapter, user
-      can :create, FeedbackRequest if feedback_open?
-      can :read, FeedbackRequest, :user_id => user.id
+      can :create, Feedback if feedback_open?
+      can :read, Feedback, :user_id => user.id
     end
     can :read, Chapter
     can :read, Coordinator

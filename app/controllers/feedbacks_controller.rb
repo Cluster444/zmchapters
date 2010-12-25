@@ -1,20 +1,20 @@
-class FeedbackRequestsController < ApplicationController
+class FeedbacksController < ApplicationController
   load_and_authorize_resource
   
   helper_method :sort_column, :sort_direction
 
   def index
-    @feedbacks = FeedbackRequest.search(index_params)
+    @feedbacks = @feedbacks.search(index_params)
   end
 
-  def show; @feedback = @feedback_request; end
+  def show; end
 
-  def new; @feedback = @feedback_request; end
+  def new; end
 
-  def edit; @feedback = @feedback_request; end
+  def edit; end
 
   def create
-    @feedback = (user_signed_in? ? @feedback_request : FeedbackRequest.new)
+    @feedback = (user_signed_in? ? @feedback : Feedback.new)
     @feedback.user = current_user if user_signed_in?
     @feedback.save!
     redirect_to (user_signed_in? ? @feedback : home_url), :notice => "Feedback submitted successfully"
@@ -23,8 +23,7 @@ class FeedbackRequestsController < ApplicationController
   end
 
   def update
-    @feedback = @feedback_request
-    @feedback.update_attributes! params[:feedback_request]
+    @feedback.update_attributes! params[:feedback]
     redirect_to @feedback, :notice => "Feedback updated successfully"
   rescue ActiveRecord::RecordInvalid
     render :edit
@@ -34,7 +33,7 @@ private
   
   def sort_column
     params[:sort] ||= "created_at"
-    FeedbackRequest.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    Feedback.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
   end
 
   def sort_direction

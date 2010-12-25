@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101220190845) do
+ActiveRecord::Schema.define(:version => 20101224031515) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
@@ -39,11 +39,10 @@ ActiveRecord::Schema.define(:version => 20101220190845) do
     t.string   "plannable_type"
   end
 
-  create_table "feedback_requests", :force => true do |t|
+  create_table "feedbacks", :force => true do |t|
     t.integer  "user_id"
     t.string   "email"
     t.string   "category"
-    t.string   "status"
     t.string   "subject"
     t.text     "message"
     t.datetime "created_at"
