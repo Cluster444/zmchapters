@@ -20,6 +20,16 @@ describe Task do
   it { expect { Factory(:task) }.to change { Task.count }.by(1) }
 
   # Mass Assignment
+  it { should allow_mass_assignment_of :status }
+  it { should allow_mass_assignment_of :priority }
+  it { should allow_mass_assignment_of :category }
+  it { should allow_mass_assignment_of :subject }
+  it { should allow_mass_assignment_of :description }
+  it { should allow_mass_assignment_of :starts_at }
+  it { should allow_mass_assignment_of :due_at }
+  it { should allow_mass_assignment_of :percent_complete }
+  it { should_not allow_mass_assignment_of :taskable_type }
+  it { should_not allow_mass_assignment_of :taskable_id }
 
   # Associations
   it { should belong_to :taskable }

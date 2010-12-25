@@ -10,6 +10,8 @@ class Task < ActiveRecord::Base
     %w(low normal high urgent)
   end
 
+  attr_accessible :status, :priority, :category, :subject, :description, :starts_at, :due_at, :percent_complete
+
   validates :status,           :presence => true, :inclusion => {:in => valid_states}
   validates :priority,         :presence => true, :inclusion => {:in => valid_priorities}
   validates :category,         :presence => true, :length => {:maximum => 255 }
