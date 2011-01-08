@@ -1,7 +1,5 @@
 Factory.define :chapter do |f|
   f.name "Test Chapter"
-  f.category Chapter::CATEGORIES.first
-  f.association :geographic_location, :factory => :location
 end
 
 Factory.define :coordinator do |f|
@@ -41,7 +39,7 @@ Factory.define :link do |f|
   f.association :linkable, :factory => :chapter
 end
 
-Factory.define :location, :class => GeographicLocation do |f|
+Factory.define :location do |f|
   f.name "Test Geo"
   f.lat "0"
   f.lng "0"

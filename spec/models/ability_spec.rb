@@ -74,7 +74,7 @@ describe 'Ability' do
     it { should be_able_to(:read, Chapter) }
     it { should be_able_to(:read, Coordinator) }
     it { should be_able_to(:read, Event) }
-    it { should be_able_to(:read, GeographicLocation) }
+    it { should be_able_to(:read, Location) }
     it { should be_able_to(:read, Link) }
     it { should be_able_to(:read, Page) }
     it { should be_able_to(:read, User) }
@@ -100,7 +100,7 @@ describe 'Ability' do
     it { should be_able_to(:read, Chapter) }
     it { should be_able_to(:read, Coordinator) }
     it { should be_able_to(:read, Event) }
-    it { should be_able_to(:read, GeographicLocation) }
+    it { should be_able_to(:read, Location) }
     it { should be_able_to(:read, Link) }
     it { should be_able_to(:read, Page) }
     it { should be_able_to(:read, User) }

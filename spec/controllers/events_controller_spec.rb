@@ -73,7 +73,7 @@ describe EventsController do
       before { get :new, :plannable_type => "NotAModel", :plannable_id => 1 }
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Event) }
+      it { should redirect_to(root_url) }
     end
 
     context 'when an invalid plannable id is given' do
@@ -83,7 +83,7 @@ describe EventsController do
       end
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Event) }
+      it { should redirect_to(root_url) }
     end
   end
 

@@ -23,12 +23,7 @@ Tzm::Application.routes.draw do
   resources :links
   resources :tasks
   resources :events
-
-  resources :geographic_locations, :as => 'geo', :path => 'geo', :only => [:index,:show,:new,:create] do
-    member do
-      get :territory_options
-    end
-  end
+  resources :locations, :only => [:index, :show, :new, :create]
 
   resources :site_options, :only => [:index,:edit,:update]
   

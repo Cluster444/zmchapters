@@ -23,7 +23,7 @@ class Ability
     can :read, Chapter
     can :read, Coordinator
     can :read, Event
-    can :read, GeographicLocation
+    can :read, Location
     can :read, Link
     can :read, Page
     can :read, Task

@@ -8,8 +8,8 @@ class ChaptersController < ApplicationController
   end
 
   def index
-    @chapters = Chapter.search(index_params)
-    @map = GeographicLocation.map_hash
+    @chapters = @chapters.search(index_params)
+    @map = Location.map_hash
   end
   
   def show
@@ -23,55 +23,13 @@ class ChaptersController < ApplicationController
     @coordinators = @chapter.coordinators
   end
   
-  def select_country_for_new
-  end
-
-  def select_territory_for_new
-    @parent = GeographicLocation.find(params[:parent_id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to Chapter, :notice => "Could not find the parent country."
-  end
-
-  def new
-    @location = GeographicLocation.find_by_id params[:location_id]
-    if @location.nil?
-      redirect_to Chapter, :alert => "Invalid location for new chapter."
-    else
-      @map = @location.map_hash.merge(:events => true)
-      @chapter.geographic_location = @location
-      @chapter.name = @location.name
-      if @location.is_country?
-        @chapter.category = 'country'
-      elsif @location.is_territory?
-        if params[:category] == "subchapter"
-          store_location(new_chapter_path)
-          redirect_to new_geo_url(:parent_id => @location.id)
-        end
-      end
-    end
-  end
+  def new; end
 
   def create
-    @location = GeographicLocation.find params[:location_id]
-    unless params[:location].nil?
-      @location.update_attributes params[:location]
-    end 
-    @chapter.geographic_location = @location
     @chapter.save!
-    redirect_to chapter_path(@chapter.name), :notice => "Chapter created successfully"
+    redirect_to new_location_url(:locateable_type => 'Chapter', :locateable_id => @chapter.id, :return_to => "Chapter##{@chapter.id}")
   rescue ActiveRecord::RecordInvalid
-    @map = @location.map_hash.merge(:events => true)
     render :new
-  end
-
-  def create_link
-    @link = Link.new params[:link]
-    @link.linkable = @chapter
-    @link.save!
-    redirect_to chapter_path(@chapter.name), :notice => "Link added successfully"
-  rescue ActiveRecord::RecordInvalid
-    load_edit_models
-    render :edit
   end
 
   def edit
@@ -79,20 +37,8 @@ class ChaptersController < ApplicationController
   end
   
   def update
-    if params[:location]
-      @chapter.location.update_attributes params[:location]
-    end
     @chapter.update_attributes! params[:chapter]
     redirect_to chapter_path(@chapter.name), :notice => "Chapter updated successfully"
-  rescue ActiveRecord::RecordInvalid
-    load_edit_models
-    render :edit
-  end
-
-  def update_link
-    @link = Link.find params[:link_id]
-    @link.update_attributes! params[:link]
-    redirect_to chapter_path(@chapter.name), :notice => "Link updated successfully"
   rescue ActiveRecord::RecordInvalid
     load_edit_models
     render :edit
@@ -108,6 +54,7 @@ private
   end
 
   def sort_column
+    #Chapter.sortable_columns.include?(params[:sort]) ? params[:sort] : "name"
     Chapter.column_names.include?(params[:sort]) ? params[:sort] : "name"
   end
 

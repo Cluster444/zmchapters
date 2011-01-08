@@ -10,12 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101224031515) do
+ActiveRecord::Schema.define(:version => 20110102083923) do
 
   create_table "chapters", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "geographic_location_id"
     t.string   "name"
     t.string   "category"
     t.string   "status"
@@ -49,20 +48,6 @@ ActiveRecord::Schema.define(:version => 20101224031515) do
     t.datetime "updated_at"
   end
 
-  create_table "geographic_locations", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
-    t.string   "name"
-    t.integer  "geoname_id"
-    t.string   "lat"
-    t.string   "lng"
-    t.string   "zoom"
-  end
-
   create_table "links", :force => true do |t|
     t.string   "title"
     t.string   "url"
@@ -70,6 +55,22 @@ ActiveRecord::Schema.define(:version => 20101224031515) do
     t.string   "linkable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.integer  "geoname_id"
+    t.string   "lat"
+    t.string   "lng"
+    t.string   "zoom"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locatable_id"
+    t.string   "locatable_type"
   end
 
   create_table "pages", :force => true do |t|

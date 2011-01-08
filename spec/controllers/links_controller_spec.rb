@@ -64,7 +64,7 @@ describe LinksController do
       end
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Link) }
+      it { should redirect_to(root_url) }
     end
 
     context 'when an invalid plannable id is given' do
@@ -74,7 +74,7 @@ describe LinksController do
       end
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Link) }
+      it { should redirect_to(root_url) }
     end
   end
 

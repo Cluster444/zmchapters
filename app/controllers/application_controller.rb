@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     poly_value =  eval "#{params[type][:type]}.find #{params[type][:id]}"
     instance_name.send("#{type}=", poly_value)
   rescue NameError
-    redirect_to index_url, :alert => "#{params[:controller].singularize} needs to be created with a taskable type"
+    redirect_to root_url, :alert => "#{params[:controller].singularize} needs to be created with a #{type} type"
   rescue ActiveRecord::RecordNotFound
-    redirect_to index_url, :alert => "No #{params[type][:type]} found."
+    redirect_to root_url, :alert => "No #{params[type][:type]} found."
   end
 end

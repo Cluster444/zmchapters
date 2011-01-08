@@ -60,7 +60,7 @@ describe TasksController do
       end
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Task) }
+      it { should redirect_to(root_url) }
     end
 
     context 'when an invalid taskable id is given' do
@@ -70,7 +70,7 @@ describe TasksController do
       end
       subject { controller }
       it { should set_the_flash }
-      it { should redirect_to(Task) }
+      it { should redirect_to(root_url) }
     end
   end
 

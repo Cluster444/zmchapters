@@ -3,13 +3,13 @@ require 'spec_helper'
 module LocationMatchers
   extend RSpec::Matchers::DSL
 
-  matcher(:be_continent)    { match { |location| location.is_continent? } }
-  matcher(:be_country)      { match { |location| location.is_country? } }
-  matcher(:be_territory)    { match { |location| location.is_territory? } }
-  matcher(:be_subterritory) { match { |location| location.is_territory? } }
+  matcher(:be_continent)    { match { |location| location.is_continentalal? } }
+  matcher(:be_nation)      { match { |location| location.is_national? } }
+  matcher(:be_region)       { match { |location| location.is_regional? } }
+  matcher(:be_local)        { match { |location| location.is_local? } }
 end
 
-describe GeographicLocation do
+describe Location do
   include LocationMatchers
   
   it 'is deprecated' do
@@ -17,7 +17,7 @@ describe GeographicLocation do
   end
 
   before :each do
-    GeographicLocation.delete_all
+    Location.delete_all
   end
   
   def create(name=nil, opts={})
@@ -31,16 +31,16 @@ describe GeographicLocation do
 
   def make_geo_set
     @continent = create("Continent")
-    @country   = create("Country")
-    @territory = create("Territory")
-    @city      = create("City")
-    @country.move_to_child_of(@continent)
-    @territory.move_to_child_of(@country)
-    @city.move_to_child_of(@territory)
+    @nation   = create("Country")
+    @region = create("Territory")
+    @local      = create("City")
+    @nation.move_to_child_of(@continent)
+    @region.move_to_child_of(@nation)
+    @local.move_to_child_of(@region)
   end
   
   # Factories
-  it { expect { Factory.create(:location) }.to change { GeographicLocation.count }.by(1) }
+  it { expect { Factory.create(:location) }.to change { Location.count }.by(1) }
 
   # Mass Assignment
   it { should allow_mass_assignment_of :name }
@@ -49,10 +49,9 @@ describe GeographicLocation do
   it { should allow_mass_assignment_of :zoom }
 
   # Assocation
-  it { should have_many :users }
-  it { should have_many :chapters }
   it { should have_many :children }
   it { should belong_to :parent }
+  it { should belong_to :locatable }
 
   # Validations
   it { should validate_presence_of :name }
@@ -80,7 +79,7 @@ describe GeographicLocation do
   end
 
   it 'should provide a hash of default map information' do
-    map = GeographicLocation.map_hash
+    map = Location.map_hash
     map.should have_key(:lat)
     map.should have_key(:lng)
     map.should have_key(:zoom)
@@ -93,11 +92,11 @@ describe GeographicLocation do
       make_geo_set
     end
 
-    subject { GeographicLocation }
-    its(:continents)     { should == [@continent] }
-    its(:countries)      { should == [@country] }
-    its(:territories)    { should == [@territory] }
-    its(:subterritories) { should == [@city] }
+    subject { Location }
+    its(:continents) { should == [@continent] }
+    its(:nations)    { should == [@nation] }
+    its(:regions)    { should == [@region] }
+    its(:locals)     { should == [@local] }
   end
 
   describe "type queries" do
@@ -106,31 +105,31 @@ describe GeographicLocation do
     end
     
     it 'should tell if the location is a continent' do
-      @continent.is_continent?.should be_true
-      @continent.is_country?.should be_false
-      @continent.is_territory?.should be_false
-      @continent.is_subterritory?.should be_false
+      @continent.is_continental?.should be_true
+      @continent.is_national?.should be_false
+      @continent.is_regional?.should be_false
+      @continent.is_local?.should be_false
     end
 
-    it 'should tell if the location is a country' do
-      @country.is_continent?.should be_false
-      @country.is_country?.should be_true
-      @country.is_territory?.should be_false
-      @country.is_subterritory?.should be_false
+    it 'should tell if the location is a nation' do
+      @nation.is_continental?.should be_false
+      @nation.is_national?.should be_true
+      @nation.is_regional?.should be_false
+      @nation.is_local?.should be_false
     end
 
-    it 'should tell if the location is a territory' do
-      @territory.is_continent?.should be_false
-      @territory.is_country?.should be_false
-      @territory.is_territory?.should be_true
-      @territory.is_subterritory?.should be_false
+    it 'should tell if the location is a region' do
+      @region.is_continental?.should be_false
+      @region.is_national?.should be_false
+      @region.is_regional?.should be_true
+      @region.is_local?.should be_false
     end
 
-    it 'should tell if the location is a subterritory' do
-      @city.is_continent?.should be_false
-      @city.is_country?.should be_false
-      @city.is_territory?.should be_false
-      @city.is_subterritory?.should be_true
+    it 'should tell if the location is a subregion' do
+      @local.is_continental?.should be_false
+      @local.is_national?.should be_false
+      @local.is_regional?.should be_false
+      @local.is_local?.should be_true
     end
   end
 
@@ -144,23 +143,23 @@ describe GeographicLocation do
     end
 
     it 'should provide a name with ancestors for state' do
-      @territory.self_and_ancestors_name.should == "#{@territory.name}, #{@country.name}, #{@continent.name}"
+      @region.self_and_ancestors_name.should == "#{@region.name}, #{@nation.name}, #{@continent.name}"
     end
 
-    it 'should provide a name with ancestors for country' do
-      @country.self_and_ancestors_name.should == "#{@country.name}, #{@continent.name}"
+    it 'should provide a name with ancestors for nation' do
+      @nation.self_and_ancestors_name.should == "#{@nation.name}, #{@continent.name}"
     end
 
     it 'should provide a name with ancestors for continent' do
       @continent.self_and_ancestors_name.should == "#{@continent.name}"
     end
 
-    it 'should provide aname with parent for territory' do
-      @territory.self_and_parent_name.should == "#{@territory.name}, #{@country.name}"
+    it 'should provide aname with parent for region' do
+      @region.self_and_parent_name.should == "#{@region.name}, #{@nation.name}"
     end
 
-    it 'should provide a name with parent for country' do
-      @country.self_and_parent_name.should == "#{@country.name}, #{@continent.name}"
+    it 'should provide a name with parent for nation' do
+      @nation.self_and_parent_name.should == "#{@nation.name}, #{@continent.name}"
     end
 
     it 'should provide a name with parent for continent' do
